@@ -1,6 +1,7 @@
 {
-  "name": "~TODO~",
+  "name": "ny-cirkus-dk",
   "version": "0.0.1",
+  "license": "MIT",
   "scripts": {
     "dev": "svelte-kit dev",
     "build": "svelte-kit build",
@@ -27,6 +28,11 @@
   "dependencies": {
     "@fontsource/fira-mono": "^4.2.2",
     "@lukeed/uuid": "^2.0.0",
-    "cookie": "^0.4.1"
+    "cookie": "^0.4.1",
+    "d3": "6.7.0",
+    "d3-composite-projections": "1.4.0",
+    "leaflet": "1.7.1",
+    "throttle": "1.0.3",
+    "topojson": "3.0.2"
   }
 }
