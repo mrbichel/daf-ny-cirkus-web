@@ -7,233 +7,283 @@
 	import { feature } from "topojson";
 	import { tweened } from "svelte/motion";
 	import { interpolate } from "d3-interpolate";
-	import { locations } from "../locations";
-	import { _ } from "lodash"
+	import {locations as location_data } from "../locations";
+	import { _ } from "lodash";
+  //import { geoVoronoi } from "d3-geo-voronoi"
+//  import {delaunay} from "d3-delaunay"
 
-	import dkgeo from './dk.geo.json';
+	import dkgeo from './kommuner.geo.json' //'./dk.geo.json'; //'./rollercoaster.geo.json';
 
 	let data = [];
-	let initialWidth, width, initialHeight, height;
+	let width, height, initialWidth, initialHeight;
 	let g;
 	let svg, container;
 
+  const pinRadius = 8
+
+  // TODO: reverse address lookup
+  const locations = location_data.map((d, i) => {
+    d.id = i
+    d.active = false
+    return d
+  })
+
+  const mapWidth = 2880;
+  const mapHeight = 1800;
+  
 	const zoom = d3.zoom()
-      .scaleExtent([1, 8])
+      .scaleExtent([0.8, 80])
       .on("zoom", zoomed);
   
-	function zoomed(event) {
-    	const {transform} = event;
-      //console.log(event)
-    	g.attr("transform", transform);
-    	g.attr("stroke-width", 1 / transform.k);
+	function zoomed(e) {
+    	g.attr("transform", e.transform);
+    	g.attr("stroke-width", 1 / e.transform.k);
 
-		d3.selectAll(".tooltip")
-			.data(locations)
-			.style("left", function (d) { return transform.x + (transform.k * projection([d.lon, d.lat])[0]) + "px" })
-			.style("top",  function (d) { return transform.y + (transform.k * projection([d.lon, d.lat])[1]) + "px" })
+      markers
+      .attr("r", () => pinRadius / e.transform.k )
+      .style("stroke-width", () => (pinRadius*0.3) / e.transform.k )
+
+
+      popovers
+			//.style("left", (d) => ll2pT(transform, d)[0] + "px" )
+			.style("top",  (d) => ll2pT(e.transform, d)[1] + "px" )
 
   	}
 
 	const land = dkgeo;
 	const projection = geoMercator()
+	const path = geoPath().projection(projection)
 
-	//$: aspect = width / height;
+  let mapFeatures, popovers, markers
+
+  function ll2pT(t, d) {
+    return ll2p(d).map((p, i) => (i === 0 ? t.x : t.y ) + (t.k * p))
+  }
+
+  function ll2p(d) {
+    return projection([d.lon, d.lat])
+  }
+
+  function renderPath() {
+    const pad = width*0.01;
+	  projection.fitExtent([[pad, pad], [width-pad*2, height-pad*2]], dkgeo)
+    mapFeatures.attr("d", path)
+  }
 
 	function renderMap() {
 
+	  renderPath();
+
+	  popovers
+		//.style("left", (d) => ll2p(d)[0] + "px" )
+		.style("top",  (d) => ll2p(d)[1] + "px" )
+
+		markers
+			.attr( "cx", (d) => ll2p(d)[0]  )
+			.attr( "cy", (d) => ll2p(d)[1]  )
+	}
+
+	onMount(async function() {
+
+    initialWidth = width;
+		initialHeight = height;
+
 		container = d3.select("#d3map")
 		svg = container.select("svg")
-		.attr("viewBox", [0, 0, width, height])
+    //svg.attr("width", width)
+    //.attr("height", height)
+    svg.attr("viewBox", [0, 0, width, height])
 
-	  //.attr("preserveAspectRatio", "xMinYMid")
-		
-	  projection
-      //.rotate([0, 0.0])
-      //.fitExtent([[0, 0], [width, height]], dkgeo.features)
-      //.center([10.77827338793981, 55.849415076631765])
-      //.scale(10000)
-      //.translate([width/2, height/2])
-      .fitExtent([[0, 0], [width, height]], dkgeo)
+    svg.call(zoom)
+		g = svg.select(".zoom-container")
 
-	  d3.selectAll(".tooltip")
-			.data(locations)
-			.style("left", function (d) { return projection([d.lon, d.lat])[0] + "px" })
-			.style("top",  function (d) { return projection([d.lon, d.lat])[1] + "px" })
-
-	  const path = geoPath().projection(projection)
-
-	  svg.call(zoom)
-	  g = svg.select("g")
-
-	  g.append("rect")
-	  .style("fill", "none")
- 	  .style("pointer-events", "all");
-
-	  g.select(".map-layer")
+    mapFeatures = g.select(".map-layer")
 		.selectAll("path")
 		.data(land.features)
 		.enter()
 		.append("path")
-		.attr("d", path)
-		.attr("fill", "grey")
-		.attr("stroke", "#FFF")
-		.attr("stroke-width", 0.5)
-		//.on("mouseover", mouseOverHandler)
-		//.on("mouseout", mouseOutHandler)
-		//.on("click", clickHandler);
+		.attr("fill", "#26547C")
+		//.attr("stroke", "none")
+		//.attr("stroke-width", 0.1)
 
-    g.select(".marker-layer").selectAll(".pin")
+    popovers = d3.selectAll(".popover")
 		.data(locations)
-    	.on("click", clicked)
-    	.on("mouseover", function(e, d){
-                //d3.selectAll("text").remove(); 
 
-              /*label.append("svg:text")
-                .attr("x", projection([d.lon, d.lat])[0])
-                .attr("y", projection([d.lon, d.lat])[1])
-                .attr("class", "halo")
-                .text(d.name);
-              label.append("svg:text")
-                .attr("x", projection([d.lon, d.lat])[0])
-                .attr("y", projection([d.lon, d.lat])[1])
-                .attr("class", "text")
-                .text(d.name);*/
-              })
-    .on("mouseout", function(){
-    })
-	/*.attr("transform", function(d) {
-			return "translate(" + projection([
-			d.lon,
-			d.lat
-			]) + ")";
-	});*/
+		markers = g.select(".marker-layer").selectAll(".pin")
+			.data(locations)
+      .style("stroke-width", pinRadius*0.3)
+      .style("stroke-color", (d) => {
+        if(d.type == "school") {
+          return "#"
+        }
+      })
+			.on("click", clicked)
+			.on("mouseover", function(e, d){
+        // TODO: rendering order, render last on top of other
+			})
+			.on("mouseout", function(){
+			})
+    
+    renderMap();
 
-		/*
-		{#each locations as location}
-		  <circle
-			class="location"
-			cx={projection([location.lon, location.lat])[0]}
-			cy={projection([location.lon, location.lat])[1]}
-			r=4
-			fill='white'
-			 />
-		{/each}
-		*/
-	}
+    const delaunay = d3.Delaunay.from(locations.map(d => {return [ ll2p(d)[0], ll2p(d)[1] ]}))
+    const voronoi = delaunay.voronoi([0, 0, width, height])
+    const cells = locations.map((d, i) => [[ll2p(d)[0], ll2p(d)[1]], voronoi.cellPolygon(i)]);
 
-	onMount(async function() {
-		initialWidth = width;
-		initialHeight = height;
-		renderMap();
+    //console.log(cells)
+    /*g.append("path")  
+      .attr("fill", "none")
+      .attr("stroke", "#ccc")
+      .attr("d", voronoi.render());
+
+    g.append("g")
+      .attr("stroke", "orange")
+    .selectAll("path")
+    .data(cells)
+    .join("path")
+      .attr("d", ([d, cell]) => `M${d3.polygonCentroid(cell)}L${d}`);
+    
+    g.append("path")
+      .attr("d", delaunay.renderPoints(null, 2));
+
+    */
+
 	});
 
-	function clicked(event, d) {
+
+
+	function clicked(e, d) {
+      e.stopPropagation();
       //const [[x0, y0], [x1, y1]] = path.bounds(d);
-
       const point = projection([d.lon, d.lat]);
-      const scale = 2
-      //zoom.scale(0.9);
-      //zoom.translate([-point[0] * 0.9, -point[1] * 0.9]);
-      //console.log(d)
-      event.stopPropagation();
-      
-      d3.selectAll('.pin').transition().style("fill", null);
-      d3.select(this).transition().style("fill", "red");
+      const minScale = 40
+      const t0 = d3.zoomTransform(svg.node());
+      const scale = (t0.k > minScale) ? t0.k : minScale;
 
-      svg.transition().duration(750).call(
+      const outScale = (t0.k < 2) ? t0.k : t0.k *0.5;
+
+
+      popovers.transition().duration(750)
+      .style("opacity", 0)
+      .on("end", function(_d) {
+        d3.select('#popover-id-'+_d.id).style("display", "none")
+      });
+
+      if(d.active) {
+        d.active = false
+
+        svg.transition().duration(750).call(
         zoom.transform,
         d3.zoomIdentity
-          .translate(width / 2, height / 2)
-          .scale(scale)
-          .translate((-point[0] * scale) / 2, (-point[1] * scale) / 2),
-        d3.pointer(event, svg.node())
+          .translate(-point[0]*outScale + width/2, -point[1]*outScale + height/2)
+          .scale(outScale),
+        d3.pointer(e, svg.node())
       );
 
-	  d3.selectAll('.tooltip').transition().duration(750)
-	  .style("opacity", 0)
-	  .on("end", function(e) {
-		d3.selectAll('#tooltip-id-'+e.id).style("display", "none")
-	  });
-	  
-	  d3.select('#tooltip-id-'+d.id)
-	  .style("display", "block") 
-	  .transition().duration(750)
-	  .style("opacity", 1)
-	  
-	 // .classed("active", true);
 
+      } else {
+        locations.forEach( (l) => l.active = false)
+        d.active = true
+
+        d3.select('#popover-id-'+d.id)
+        .style("display", "block") 
+        .transition().duration(750)
+        .style("opacity", 1)
+
+          svg.transition().duration(750).call(
+          zoom.transform,
+          d3.zoomIdentity
+            .translate(-point[0]*scale + width/2, -point[1]*scale + height/2)
+            .scale(scale),
+          d3.pointer(e, svg.node())
+        );
+
+      }
+
+      markers.classed("active", (m) => m.active)
+
+
+    
+    //svg.call(zoom.transform, t0);
+	 // .classed("active", true);
 	  //	.style("left", projection([d.lon, d.lat])[0] + "px" )
 	  //	.style("top", projection([d.lon, d.lat])[1] + "px" )
 
 	  
     }
+  
+
+  var throttledResize = _.throttle(resizeMap, 800, {leading: false, trailing: true});
+
+  function resize(event) {
+    //console.dir(event)
+	  //svg.attr("viewBox", [0, 0, width, height])
+	  //renderPath();
+    const wDiff = initialWidth - width;
+    const hDiff = initialHeight - height
+    //console.dir(wDiff)
+
+    //const t0 = d3.zoomTransform(svg.node());
+
+    //console.log()
+	  //popovers
+		//.style("left", (d) => ll2pT(t0, d)[0] - (wDiff*0.5) + "px" )
+		//.style("top",  (d) => ll2pT(t0, d)[1] - (hDiff*0.5) + "px" )
+
+    //svg.call(zoom.transform, t0);
+		/*markers
+			.attr( "cx", (d) => ll2p(d)[0]  )
+			.attr( "cy", (d) => ll2p(d)[1]  )
+    */  
+
+    // TODO: maybe only redraw if changed more than x amount, otherwise save offsets ?
+
+    throttledResize();
+
+  }
 
 	function resizeMap() {
 
-		// consider simply scaling map in a way preserving current interaction 
+    const t0 = d3.zoomTransform(svg.node());
 
-		d3.select("#d3map").select("svg").remove()
 		renderMap();
+    
+    /*popovers
+		.style("left", (d) => ll2pT(t0,d)[0] + "px" )
+		.style("top",  (d) => ll2pT(t0,d)[1] + "px" )
+*/
 
-		//svg.attr("viewBox", [0, 0, width, height])
-	  	//.attr("preserveAspectRatio", "xMinYMid")
-		
-		//projection
-		//.rotate([0, 0.0])
-		//.fitExtent([[0, 0], [width, height]], dkgeo.features)
-		//.center([10.77827338793981, 55.849415076631765])
-		//.scale(10000)
-		//.translate([width/2, height/2])
-		//.fitExtent([[0, 0], [width, height]], dkgeo)
+// TODO: preserve center
+    svg.call(zoom.transform, t0);
 
-		console.log("resize")
 		throttledResize.cancel();
-
-	//svg.attr("width", width)
-    //    .attr("height", height)
-		//svg.attr("viewBox", [0, 0, width, height])
-	
-	  //projection
-      //.rotate([0, 0.0])
-      //.fitExtent([[0, 0], [width, height]], dkgeo.features)
-      //.scale(10000)
-      //.translate([width/2, height/2])
-	  //.center([10.77827338793981, 55.849415076631765])
-
-      //.fitExtent([[0, 0], [width, height]], dkgeo)
 	}
 
-	var throttledResize = _.throttle(resizeMap, 800, {leading: false, trailing: true});
 
   </script>
 
-  <svelte:window on:resize={throttledResize} />
+  <svelte:window on:resize={resize} />
 
   <div id="d3map" bind:clientWidth={width} bind:clientHeight={height}>
 
 	{#each locations as d}	
-		<div class="tooltip" id="tooltip-id-{d.id}" data-lat="{d.lat}" data-lon="{d.lon}"
-		style="left: {projection([d.lon, d.lat])[0]} px; top: {projection([d.lon, d.lat])[1]} px">
+		<div class="popover {d.type}" id="popover-id-{d.id}">
 			<h1>{d.name}</h1>
 			<p>{d.address}</p>
-			<p>{d.website}</p>
-
+			<p><a href="{d.website}">{d.website}</a></p>
 		</div>	
   	{/each}
 
 	  <svg>
 		<g class="zoom-container">
-
-			<g class="map-layer"></g>
-
+			<rect style="fill: none; pointer-events: all;"></rect>
+			<g class="map-layer">
+      </g>
 			<g class="marker-layer">
-			{#each locations as location}
+			{#each locations as d}
 			<circle
-			  class="pin"
-			  cx={projection([location.lon, location.lat])[0]}
-			  cy={projection([location.lon, location.lat])[1]}
-			  r=4
-			  fill='white'
+			  class="pin {d.type}"
+			  r={pinRadius}
 			   />
 		  	{/each}
 			</g>
@@ -244,26 +294,77 @@
 
   </div>
   
-  <style>
+  <style lang="scss">
 	#d3map {
 		width: 100%;
 		height: 100%;
 		overflow: hidden;
-		background-color: black;
+		background-color: "#FCFCFC";
 	}
-	.tooltip {
-		position: absolute; 
+	.popover {
+		position: absolute;
+    left: 0;
+    right: 0;
+    margin-top: -1px;
 		opacity: 0;
+    display: none;
 		color: white;
-		padding: 10px;
-		background-color: black;
+    border-top:solid #FCFCFC 2px;
+		padding: 2px 30px;
+		background-color: rgba(0, 0, 0, 0.5);
+    pointer-events: none;
 
+    &.company {
+      //border-color: #EF476F;
+      background-color: #EF476F;
+    }
+    &.school {
+      //border-color: #06D6A0;
+      background-color: #06D6A0;
+    }
+    &.festival {
+      //border-color: #FFD166;
+      background-color: #FFD166;
+    }
+    h1 {
+      margin-top: 0.5em;
+    }
+    h1, h2, h3, h4, h5, h6, p, a, span {
+      pointer-events: auto;
+    }
 	}
-
 	.pin {
 		cursor: pointer;
-		fill: white;
+    stroke: #FCFCFC;
+    stroke-opacity: 0.2;
+		fill-opacity: 0.6;
+    &.company {
+      fill: #EF476F;
+    }
+    &.school {
+      fill: #06D6A0
+    }
+    &.festival {
+      fill: #FFD166
+    }
+
+    &:hover {
+      cursor: pointer;
+      //fill: white;
+      fill-opacity: 1;
+      stroke-opacity: 0.8;
+    }
+    &.active {
+      fill: #FCFCFC;
+      fill-opacity: 1;
+      stroke-opacity: 1;
+    }
+
 	}
+
+  .polygons {
+        stroke: #444;
+    }
 
 
   </style>
