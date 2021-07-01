@@ -1,12 +1,7 @@
 <script>
 	import * as d3 from 'd3'
-	import { geoMercator, geoPath, geoProjection } from "d3-geo";
-	import { scaleLinear, scaleSqrt } from "d3-scale";
-	import { extent } from "d3-array";
+	import { geoMercator, geoPath } from "d3-geo";
 	import { onMount } from "svelte";
-	import { feature } from "topojson";
-	import { tweened } from "svelte/motion";
-	import { interpolate } from "d3-interpolate";
 	import {locations as location_data } from "../locations";
 	import { _ } from "lodash";
 

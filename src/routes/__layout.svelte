@@ -1,9 +1,9 @@
 <script lang="ts">
-	import Header from '$lib/Header/index.svelte';
+	import Navigation from '$lib/Navigation/index.svelte';
 	import '../app.css';
 </script>
 
-<!--<Header />-->
+<Navigation />
 
 <main>
 	<slot />
