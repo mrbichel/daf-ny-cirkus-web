@@ -1,10 +1,14 @@
 export const locations = [
     { 
       type: "school",
-      name: "AFUK - The Academy of Untamed creativity", website: "http://afuk.dk", 
+      name: "AFUK - The Academy of Untamed creativity", 
+      about: "The Artistline is a preparatory program aimed at those who want to work in the entertainment industry, with contemporary circus, events, music halls, physical and visual theatre, or as a circus teacher. It is a good starting point from which to apply for admission to Vocational and Higher Education Circus Schools, work as a circus teacher or start your own company. About 50 students are on the Circus Programme."
+      website: "www.afuk.dk", 
       address: "Enghavevej 82B, 2450 Copenhagen SV", 
-      phone: "+45 32542095",
+      phone: "+45 32 54 20 95",
       email: "afuk@afuk.dk",
+      instagram: "www.instagram.com/artistlinien_afuk"
+      facebook: "www.facebook.com/afukremisen"
       lat: 55.66230820175756, lon: 12.539834935878755,  },
     { 
       type: "school",
