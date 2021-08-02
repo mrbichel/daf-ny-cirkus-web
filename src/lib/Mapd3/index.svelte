@@ -327,8 +327,38 @@
 	{#each locations as d}	
 		<div class="popover {d.type}" id="popover-id-{d.id}">
 			<h1>{d.name}</h1>
+
+      {#if d.about}
+      <p>{d.about}</p>
+      {/if}
+
+      {#if d.address}
 			<p>{d.address}</p>
-			<p><a href="{d.website}">{d.website}</a></p>
+      {/if}
+
+      {#if d.email}
+			<a href="mailto:{d.email}">{d.email}</a>
+      {/if}
+
+      {#if d.phone}
+			<p>{d.phone}</p>
+      {/if}
+
+      <ul>
+      {#if d.website}
+			<li><a href="{d.website}">{d.website}</a></li>
+      {/if}
+
+      {#if d.facebook}
+      <li><a href="{d.facebook}">facebook</a></li>
+      {/if}
+
+      {#if d.instagram}
+      <li><a href="{d.instagram}">instagram</a></li>
+      {/if}
+      </ul>
+
+
 		</div>	
   	{/each}
 
