@@ -13,8 +13,8 @@ export const locations = [
     { 
       type: "school",
       name: "Gøglerskolen (FGU Århus)",
-      about: "Preparatory education - the education lasts up to 2 years and is for you under 25 years of age who have not completed a youth education or are not in a full-time job."
-      adress: "Olof Palmes Allé 39, 8200 Aarhus N",
+      about: "Preparatory education - the education lasts up to 2 years and is for you under 25 years of age who have not completed a youth education or are not in a full-time job.",
+      address: "Olof Palmes Allé 39, 8200 Aarhus N",
       phone: "+45 87 40 86 00",
       email: "ab@fguaarhus.dk",
       website: "www.fguaarhus.dk/musisk-og-kunstnerisk-produktion", 
