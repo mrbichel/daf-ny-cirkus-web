@@ -3,9 +3,10 @@
 	import { geoMercator, geoPath } from "d3-geo";
 	import { onMount } from "svelte";
 	import {locations as location_data } from "../locations";
-	import { _ } from "lodash";
+  import lodash_pkg from 'lodash';
+  const { _ } = lodash_pkg;  
 
-// color palette 1: https://coolors.co/ef476f-06d6a0-ffd166-fcfcfc-26547c
+  // color palette 1: https://coolors.co/ef476f-06d6a0-ffd166-fcfcfc-26547c
 
   //import { geoVoronoi } from "d3-geo-voronoi"
   //import {delaunay} from "d3-delaunay"
