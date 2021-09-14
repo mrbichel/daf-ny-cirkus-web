@@ -225,6 +225,18 @@ export const locations = [
         instagram: "www.instagram.com/rightwaydowncircus",
         lat: , lon:,
       },
+     {
+        type: "company"
+        name: "Kristján Ingimarsson Company",
+        about: "KIC is an award winning, world-touring physical theatre company under the artistic direction of Kristján Ingimarsson, a critically acclaimed Denmark-based Icelandic performer and director. Characteristic of KIC’s productions is their almost limitless physical expression along with endless curiosity.",
+        adress: "Færgegaardsvej 17 d, 4760 Vordingborg",
+        phone: "+ 45 25 53 55 13",
+        email: "info@kicompany.dk",
+        website: "www.kicompany.dk",
+        facebook: "www.facebook.com/kicompanydk",
+        instagram: "www.instagram.com/kristjan_ingimarsson_company",
+        lat: , lon:,
+      },
         {
         type: "association"
         name: "Cirkus Panik"
@@ -260,51 +272,46 @@ export const locations = [
         lat: , lon:,
       },
           {
-        type:
-        name: 
-        about:
-        adress: 
-        phone:
-        email:
-        website:
-        facebook:
-        instagram:
+        type: "association",
+        name: "Innercirq",
+        about: "If you want to try your hand at circus disciplines such as: aerial acrobatics, trapeze, floor acrobatics, partner acrobatics, Innercirq offers new circus training for children, young people and adults at all levels, from beginners to professionals.",
+        adress: "Enghavevej 82B, 2450 København",
+        phone: "+ 45 20 72 06 60",
+        email: "info@innercirq.dk",
+        website: "www.innercirq.dk",
+        instagram: "www.instagram.com/innercirq",
         lat: , lon:,
       },
           {
-        type:
-        name: 
-        about:
-        adress: 
-        phone:
-        email:
-        website:
-        facebook:
-        instagram:
+        type: "association",
+        name: "PACE"
+        about: "Trainingspace and masterclasses for professionals.",
+        adress: "Enghavevej 82B, 2450 København",
+        phone: "+ 45 26 45 81 41",
+        email: "pacecph@gmail.com",
+        website: "www.pacecph.dk",
+        facebook: "www.facebook.com/pacecph",
         lat: , lon:,
       },
           {
-        type:
-        name: 
-        about:
-        adress: 
-        phone:
-        email:
-        website:
-        facebook:
-        instagram:
+        type: "association",
+        name: "The Circus Playground",
+        about: "The Circus Playground is an open space, where we explore movement, circus and acrobatics in an open creative community.",
+        adress: "Finlandkaj 6, 5000 Odense C"
+        email: "thecircusplayground@gmail.com",
+        facebook: "www.facebook.com/circusplayground",
         lat: , lon:,
       },
           {
-        type:
-        name: 
-        about:
-        adress: 
-        phone:
-        email:
-        website:
-        facebook:
-        instagram:
+        type: "festival",
+        name: "Waves Festival",
+        about: "WAVES FESTIVAL is an international festival for new, original and experimental theatre and performing arts that takes place every second year in Vordingborg. Artists from around the world present the latest and most exciting trends in theater, dance, comedy and performance art.",
+        adress: "Færgegårdsvej 15, 4760 Vordingborg",
+        phone: "+45 55 34 01 19", 
+        email: "teater@cantabile2.dk",
+        website: "www.wavesfestival.dk",
+        facebook: "www.facebook.com/TheWavesFestival",
+        instagram: "www.instagram.com/wavesfestivalofficial",
         lat: , lon:,
       },
           {
