@@ -390,7 +390,7 @@ export const locations = [
         adress: "Finlandkaj 6, 5000 Odense C",
         phone: "+ 45 26 52 49 77",
         email: "info@dynamoworkspace.dk",
-        website: "www.dynamoworkspace.dk",
+        website: "www.dynamoworkspace.dk/festival",
         facebook: "www.facebook.com/dynamoworkspace",
         instagram: "www.instagram.com/dynamo_workspace",
         lat: , lon:,
@@ -407,18 +407,64 @@ export const locations = [
         lat: , lon:,
       },
       {
-        type:
-        name: 
-        about:
-        adress: 
-        phone:
-        email:
-        website:
-        facebook:
-        instagram:
+        type: "residencyandstage",
+        name: "Dynamo Workspace",
+        about: "DYNAMO is a stage and a workspace for circus and performing arts located in the middle of Denmark at Odense city harbor.",
+        adress: "Finlandkaj 6, 5000 Odense C",
+        phone: "+ 45 26 52 49 77",
+        email: "info@dynamoworkspace.dk",
+        website: "www.dynamoworkspace.dk",
+        facebook: "www.facebook.com/dynamoworkspace",
+        instagram: "www.instagram.com/dynamo_workspace",
         lat: , lon:,
       },
       {
+        type: "residencyandstage",
+        name: "AFUK Scene"
+        about: "AFUK Scene presents own productions, guest performances, co-productions and festivals, primarily within new circus, physical theater and cross-over.",
+        adress: "Enghavevej 82B, 2450 København V",
+        phone: "+45 29 77 29 98",
+        email: "afuk@afuk.dk",
+        website: "www.afuk.dk/scene",
+        facebook: "https://www.facebook.com/afukremisen",
+        lat: , lon:,
+      },
+     {
+        type: "support",
+        name: "Udviklingsplatformen",
+        about: "The purpose of the development platform is to develop and upskill independent performing arts throughout Denmark."
+        adress: "Farvergade 27, opgang D, 3 sal, 1463 København",
+        phone: "+45 29 91 04 34",
+        email: "admin@udviklingsplatformen.dk",
+        website: "www.udviklingsplatformen.dk",
+        facebook: "www.facebook.com/udviklingsplatformen",
+        instagram: "www.instagram.com/udviklingsplatformen",
+        lat: , lon:,
+      },
+     {
+        type: "support",
+        name: "Performing Arts Platform"
+        about: "Performing Arts Platform is Aarhus’ development and networking platform for the performing arts. The platform brings together, facilitates and frames a strong cluster of performing art actors in and around Aarhus. Through the sharing and the communication of resources, skills and knowledge we generate development and supporting initiatives in the performing arts community.",
+        adress: "Valdemarsgade 1G, 1. tv, 8000 Aarhus",
+        phone: "+45 50 87 32 40",
+        email: "theplatform@theplatform.dk",
+        website: "www.theplatform.dk/en/home",
+        facebook: "www.facebook.com/performingartsplatform",
+        instagram: "www.instagram.com/performingartsplatform",
+        lat: , lon:,
+      },
+     {
+        type: "support"
+        name: "Prfrm - Production And Dissemination Of Performing Arts"
+        about: "A production community that has come together to ensure small and medium-sized companies as well as performing artists in the free field the necessary production assistance, which we are noticing an increasing demand for.",
+        adress: "Hothers Plads 25, 3. sal, 2200 København N",
+        phone: "+45 61 69 93 14",
+        email: "info@prfrm.dk",
+        website: "www.prfrm.dk",
+        facebook: "www.facebook.com/prfrm.dk",
+        lat: , lon:,
+      },
+     {
         type:
         name: 
         about:
