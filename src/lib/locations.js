@@ -315,6 +315,42 @@ export const locations = [
         lat: , lon:,
       },
           {
+        type: "festival",
+        name: "Passage Festival",
+        about: "Passage Festival is a living street theater festival that is constantly evolving and expanding, not least in relation to what is going on around us. Urban space, audiences and artists are equal focal points in street theater in the public space.",
+        adress: "Helsingør Teater, Strandgade 72, 1. 3000 Helsingør",
+        phone: "+45 53 86 08 11",
+        email: "th@helsingor-teater.dk",
+        website: "www.passagefestival.nu",
+        facebook: "www.facebook.com/passagefestival",
+        instagram: "www.instagram.com/passagefestival",
+        lat: , lon:,
+      },
+          {
+        type: "festival"
+        name: "Bornholms International Street Theater Festival",
+        about: "BigF presents every summer Danish and international street theater and new circus for locals and for the many summer tourists regardless of age and nationality. All for FREE. BigF was started in 2011 by the international street theater group, Dansk Rakkerpak in collaboration with Theater Society Bornholm.",
+        adress: "Teaterstræde 2, 3700 Rønne",
+        phone: "+45 51 50 52 95",
+        email: "bornholmsgadeteater@gmail.com",
+        website: "www.bigf.dk",
+        facebook: "www.facebook.com/BigF.dk",
+        instagram: "www.instagram.com/bornholms.gadeteaterfestival",
+        lat: , lon:,
+      },
+          {
+        type: "festival",
+        name: "Danmarks Internationale Gadeteater festivaler",
+        about: "DIG (Denmark's International Street Theater Festivals) has existed since 2013 and offers free performing arts of international distinction in the middle of the street scene. Our performances fall into genres such as new circus, acrobatics, juggling, street parade, puppet theater, comedy and much more. We visit 10 Danish summer towns and present approx. 200 performances free of charge for the audience - for the benefit of young and old.",
+        adress: "Strandvejen 100, 3. sal. 2900 Hellerup",
+        phone: "+45 40 98 71 43",
+        email: "info@gadeteaterfestival.dk",
+        website: "www.gadeteaterfestival.dk",
+        facebook: "www.facebook.com/gadeteater",
+        instagram: "www.instagram.com/gadeteater",
+        lat: , lon:,
+      },
+      {
         type:
         name: 
         about:
@@ -326,7 +362,7 @@ export const locations = [
         instagram:
         lat: , lon:,
       },
-          {
+      {
         type:
         name: 
         about:
@@ -338,7 +374,43 @@ export const locations = [
         instagram:
         lat: , lon:,
       },
-          {
+      {
+        type:
+        name: 
+        about:
+        adress: 
+        phone:
+        email:
+        website:
+        facebook:
+        instagram:
+        lat: , lon:,
+      },
+      {
+        type:
+        name: 
+        about:
+        adress: 
+        phone:
+        email:
+        website:
+        facebook:
+        instagram:
+        lat: , lon:,
+      },
+      {
+        type:
+        name: 
+        about:
+        adress: 
+        phone:
+        email:
+        website:
+        facebook:
+        instagram:
+        lat: , lon:,
+      },
+      {
         type:
         name: 
         about:
