@@ -183,9 +183,8 @@ export const locations = [
         name: "Vice Versa Circus",
         about: "Danish circus company by two static trapeze artists.",
         adress: "Trunderup Dongsvej 30, Kværndrup",
-        phone: 
+        phone: "+ 45 27 12 39 80",
         email: "triotriskela@gmail.com",
-        website: 
         facebook: "www.facebook.com/Viceversacircus",
         instagram: "www.instagram.com/viceversacircus",
         lat: , lon:,
@@ -271,6 +270,16 @@ export const locations = [
         instagram: "www.instagram.com/afuk.orkenfortet/",
         lat: , lon:,
       },
+     {
+        type: "association",
+        name: "Cirkusrummet",
+        about: "Training space for professionals and amateurs.",
+        adress: "Frederiksø 2, bygning K, 5700 Svendborg",
+        phone: "+ 45 27 12 39 80",
+        email: "cirkusrummet@gmail.com",
+        facebook: "www.facebook.com/cirkusrummet",
+        lat: , lon:,
+      },
           {
         type: "association",
         name: "Innercirq",
@@ -351,51 +360,50 @@ export const locations = [
         lat: , lon:,
       },
       {
-        type:
-        name: 
-        about:
-        adress: 
-        phone:
-        email:
-        website:
-        facebook:
-        instagram:
+        type: "festival",
+        name: "C!CAF - Copenhagen Circus Arts Festival",
+        about: "Copenhagen Circus Arts Festival is a biennale that shows international high-quality new circus art. Performances that catch you where the boundaries between circus and art are erased. Where something new and unique is created!",
+        adress: "Kitt Johnson X-act, Rubinsteinsvej 47, 2450 København SV",
+        phone: "+45 29 91 87 13",
+        email: "x-act@kittjohnson.dk",
+        website: "www.ccaf.nu/en/about-ccaf/",
+        facebook: "www.facebook.com/CopenhagenCircusArtsFestival",
+        instagram: "www.instagram.com/copenhagencircusartsfestival",
         lat: , lon:,
       },
       {
-        type:
-        name: 
-        about:
-        adress: 
-        phone:
-        email:
-        website:
-        facebook:
-        instagram:
+        type: "festival",
+        name: "Metropolis"
+        about: "Metropolis is a meeting point for performance, art and the city – an art-based metropolitan laboratory for the performative, site-specific, international art. It is Københavns Internationale Teater (KIT) that is behind Metropolis as the latest of a large number of festivals and projects in Copenhagen created and initiated by KIT.",
+        adress: "c/o Københavns Internationale Teater, Refshalevej 163A, 1, 1432 København",
+        phone: "+45 33 15 15 64",
+        email: "info@kit.dk",
+        website: "www.metropolis.dk/en/about-metropolis",
+        facebook: "www.facebook.com/metropoliskbh",
+        instagram: "www.instagram.com/metropoliskbh",
         lat: , lon:,
       },
       {
-        type:
-        name: 
-        about:
-        adress: 
-        phone:
-        email:
-        website:
-        facebook:
-        instagram:
+        type: "festival"
+        name: "Dynamo Circus Festival",
+        about: "DYNAMO Circus Festival: four days of contemporary circus, music, talks, films, workshops and cultural togetherness.",
+        adress: "Finlandkaj 6, 5000 Odense C",
+        phone: "+ 45 26 52 49 77",
+        email: "info@dynamoworkspace.dk",
+        website: "www.dynamoworkspace.dk",
+        facebook: "www.facebook.com/dynamoworkspace",
+        instagram: "www.instagram.com/dynamo_workspace",
         lat: , lon:,
       },
       {
-        type:
-        name: 
-        about:
-        adress: 
-        phone:
-        email:
-        website:
-        facebook:
-        instagram:
+        type: "festival",
+        name: "Cirkus i Soldalen"
+        about: "This festival will give access to ''new-circus'' productions from all over Europe, showing that circus is much more than glitter, clowns and elephants. The performers combine circus with a variety of other arts; such as theatre, dance and music, so there will be something for everyone’s taste.",
+        adress: "Maegårdsvej 4, 3770 Allinge, Danmark",
+        phone: "+45 71 62 74 60",
+        email: "cirkus.i.soldalen@gmail.com",
+        website: "www.cirkusisoldalen.com",
+        facebook: "www.facebook.com/Cirkus.i.Soldalen",
         lat: , lon:,
       },
       {
