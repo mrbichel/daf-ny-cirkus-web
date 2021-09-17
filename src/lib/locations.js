@@ -54,7 +54,6 @@ export const locations = [
         phone: "+45 61 66 87 94",
         email: "lalla@borderlinecircus.com",
         facebook: "www.facebook.com/BorderlineCircus",
-        lat: , lon: ,  
       },
      {
         type: "company",
@@ -66,13 +65,12 @@ export const locations = [
         website: "www.theamazingother.simplesite.com",
         instagram: "www.instagram.com/the.amazing.other",
         facebook: "www.facebook.com/BorderlineCircus",
-        lat: , lon: 
      },
     
       {
         type: "company",
         name: "Cikaros",
-        about: "“Cikaros is a collective with 3 circus artists that works to strengthen Danish new circus and put Danish circus art on the world map. Since its formation in 2005, Cikaros has produced and toured with new circus performances throughout Denmark and in Sweden, Norway, the Netherlands, France, Spain, Croatia, Russia, Egypt and Oman.”,
+        about: "Cikaros is a collective with 3 circus artists that works to strengthen Danish new circus and put Danish circus art on the world map. Since its formation in 2005, Cikaros has produced and toured with new circus performances throughout Denmark and in Sweden, Norway, the Netherlands, France, Spain, Croatia, Russia, Egypt and Oman.",
         address: "Dagmarsgade 41, 4. tv, 2200 København N",
         phone: "+45 29 82 69 60",  
         email: "cikaros@gmail.com",
@@ -92,7 +90,6 @@ export const locations = [
         facebook: "www.facebook.com/TeaterKimone",
         lat: 55.68861093552779, lon: 12.547068083271975,  
       },
-
 
       {
         type: "company",
@@ -135,7 +132,7 @@ export const locations = [
         type: "company",
         name: "Sputnik & Wild Wonders",
         about: "Our base is contemporary circus, with inspiration from the old style smokey salons, but with new redefined twists and concepts. To our wild wonders we invite fabulous and equally multi talented guest artists. We create and taylor sight specific cabarets, cross-over art collaborations, and are also available with our slack rope, acrobatic and cyr wheel skills to join inspiring projects.",
-        adress: "Egegade 18, 3 th, 2200 KBH N"
+        adress: "Egegade 18, 3 th, 2200 KBH N",
         phone: "+ 45 26 80 76 88",
         email: "sputnikandwildwonders@gmail.com",
         website: "www.sputnikandwildwonders.com",
@@ -145,7 +142,7 @@ export const locations = [
       },
       {
         type: "company",
-        name: "Sparrow Dance"
+        name: "Sparrow Dance",
         about: "Sparrow Dance is an aerial dance and cross disciplinary stage art association formed by Esther Wrobel. The motivation behind Sparrow Dance is to promote and explore vertical dance and other suspended dance techniques to further expand the versatility of the performing arts. It aims to expand the possibilities of dance and develop the use of architecture as an active player in influencing movement.  Sparrow Dance aspires to challenge and play with the spatial perceptions of both the audience and the performers and explore alternate ways of looking at the world.",
         adress: "(c/o) Dansehallerne, H.C. Andersens Boulevard 25, 3. sal, DK-1553 København V",
         phone: "+ 45 31 75 03 09",
@@ -165,18 +162,16 @@ export const locations = [
         website: "www.outofbalanz.com",
         facebook: "www.facebook.com/outofbalanz",
         instagram: "www.instagram.com/outofbalanz",
-        lat: , lon:,
       },
     {
         type: "company",
         name: "Offspring Production",
         about: "We want to nurture and increase the use of physical performing arts in Denmark and abroad. Coming from niches within moving, like circus and the dance style electric boogie, we are exploring ways of mixing styles and how we can incorporate more storytelling in nonverbal expression forms.",
-        adress: "Va11a, Siljangade 3, 2300 København S,
+        adress: "Va11a, Siljangade 3, 2300 København S",
         phone: "+ 45 20 30 21 95",
         email: "mail@offspringproduction.dk",
         website: "www.offspringproduction.dk",
         instagram: "www.instagram.com/offspringproduction",
-        lat: , lon:,
       },
     {
         type: "company",
@@ -187,7 +182,6 @@ export const locations = [
         email: "triotriskela@gmail.com",
         facebook: "www.facebook.com/Viceversacircus",
         instagram: "www.instagram.com/viceversacircus",
-        lat: , lon:,
       },
     {
         type: "company",
@@ -198,7 +192,6 @@ export const locations = [
         email: "djvolantes@gmail.com",
         website: "www.volantes.dk",
         instagram: "www.instagram.com/volantescompany",
-        lat: , lon:,
       },
     {
         type: "company",
@@ -210,11 +203,10 @@ export const locations = [
         website: "www.tanter.dk",
         facebook: "www.facebook.com/tanterkompani",
         instagram: "www.instagram.com/tanterkompani",
-        lat: , lon:,
       },
           {
         type: "company",
-        name: "Right Way Down"
+        name: "Right Way Down",
         about: "Experimenting with the absurdity of reality upturned, you are invited to see the world the right way down.",
         adress: "Finlandkaj 6, 5000 Odense C",
         phone: "+45 22 96 50 79",
@@ -222,10 +214,9 @@ export const locations = [
         website: "www.rightwaydown.com",
         facebook: "www.facebook.com/rightwaydown",
         instagram: "www.instagram.com/rightwaydowncircus",
-        lat: , lon:,
       },
      {
-        type: "company"
+        type: "company",
         name: "Kristján Ingimarsson Company",
         about: "KIC is an award winning, world-touring physical theatre company under the artistic direction of Kristján Ingimarsson, a critically acclaimed Denmark-based Icelandic performer and director. Characteristic of KIC’s productions is their almost limitless physical expression along with endless curiosity.",
         adress: "Færgegaardsvej 17 d, 4760 Vordingborg",
@@ -234,11 +225,10 @@ export const locations = [
         website: "www.kicompany.dk",
         facebook: "www.facebook.com/kicompanydk",
         instagram: "www.instagram.com/kristjan_ingimarsson_company",
-        lat: , lon:,
       },
         {
-        type: "association"
-        name: "Cirkus Panik"
+        type: "association",
+        name: "Cirkus Panik",
         about: "Cirkus Panik is one of the few surviving old-fashioned clown families and circus blood flows in our veins. We have been touring around and abroad for more than 35 years, with both classic circus performances, circus schools and workshops as well as rental of unique cotton circus tents.",
         adress: "Skjulhøj Allé 21, 2720 Vanløse",
         phone: "+ 45 24 27 93 40",
@@ -246,18 +236,16 @@ export const locations = [
         website: "www.cirkuspanik.dk",
         facebook: "www.facebook.com/cirkuspanik",
         instagram: "www.instagram.com/cirkuspanik",
-        lat: , lon:,
       },
         {
         type: "association",
         name: "Cirkus Tværs",
-        about: "Cirkus Tværs is a fully equipped children's and youth circus based in Gellerup, Brabrand. We work with the circus as a pedagogical tool, and thereby help children and young people to develop competencies, both personal, social, practical and "professional.",
+        about: "Cirkus Tværs is a fully equipped children's and youth circus based in Gellerup, Brabrand. We work with the circus as a pedagogical tool, and thereby help children and young people to develop competencies, both personal, social, practical and professional.",
         adress: "Gudrunsvej 78, 8220 Brabrand",
         phone: "+ 45 86 25 87 80",
         email: "cirkus@mail.dk",
         website: "www.cirkustvaers.dk",
         instagram: "www.instagram.com/cirkustvaers",
-        lat: , lon:,
       },
         {
         type: "association",
@@ -268,7 +256,6 @@ export const locations = [
         email: "fortet@afuk.dk",
         website: "www.afuk.dk/foreninger/hold/",
         instagram: "www.instagram.com/afuk.orkenfortet/",
-        lat: , lon:,
       },
      {
         type: "association",
@@ -278,7 +265,6 @@ export const locations = [
         phone: "+ 45 27 12 39 80",
         email: "cirkusrummet@gmail.com",
         facebook: "www.facebook.com/cirkusrummet",
-        lat: , lon:,
       },
           {
         type: "association",
@@ -289,27 +275,24 @@ export const locations = [
         email: "info@innercirq.dk",
         website: "www.innercirq.dk",
         instagram: "www.instagram.com/innercirq",
-        lat: , lon:,
       },
           {
         type: "association",
-        name: "PACE"
+        name: "PACE",
         about: "Trainingspace and masterclasses for professionals.",
         adress: "Enghavevej 82B, 2450 København",
         phone: "+ 45 26 45 81 41",
         email: "pacecph@gmail.com",
         website: "www.pacecph.dk",
         facebook: "www.facebook.com/pacecph",
-        lat: , lon:,
       },
           {
         type: "association",
         name: "The Circus Playground",
         about: "The Circus Playground is an open space, where we explore movement, circus and acrobatics in an open creative community.",
-        adress: "Finlandkaj 6, 5000 Odense C"
+        adress: "Finlandkaj 6, 5000 Odense C",
         email: "thecircusplayground@gmail.com",
         facebook: "www.facebook.com/circusplayground",
-        lat: , lon:,
       },
           {
         type: "festival",
@@ -321,7 +304,6 @@ export const locations = [
         website: "www.wavesfestival.dk",
         facebook: "www.facebook.com/TheWavesFestival",
         instagram: "www.instagram.com/wavesfestivalofficial",
-        lat: , lon:,
       },
           {
         type: "festival",
@@ -333,10 +315,9 @@ export const locations = [
         website: "www.passagefestival.nu",
         facebook: "www.facebook.com/passagefestival",
         instagram: "www.instagram.com/passagefestival",
-        lat: , lon:,
       },
           {
-        type: "festival"
+        type: "festival",
         name: "Bornholms International Street Theater Festival",
         about: "BigF presents every summer Danish and international street theater and new circus for locals and for the many summer tourists regardless of age and nationality. All for FREE. BigF was started in 2011 by the international street theater group, Dansk Rakkerpak in collaboration with Theater Society Bornholm.",
         adress: "Teaterstræde 2, 3700 Rønne",
@@ -345,7 +326,6 @@ export const locations = [
         website: "www.bigf.dk",
         facebook: "www.facebook.com/BigF.dk",
         instagram: "www.instagram.com/bornholms.gadeteaterfestival",
-        lat: , lon:,
       },
           {
         type: "festival",
@@ -357,7 +337,6 @@ export const locations = [
         website: "www.gadeteaterfestival.dk",
         facebook: "www.facebook.com/gadeteater",
         instagram: "www.instagram.com/gadeteater",
-        lat: , lon:,
       },
       {
         type: "festival",
@@ -369,11 +348,10 @@ export const locations = [
         website: "www.ccaf.nu/en/about-ccaf/",
         facebook: "www.facebook.com/CopenhagenCircusArtsFestival",
         instagram: "www.instagram.com/copenhagencircusartsfestival",
-        lat: , lon:,
       },
       {
         type: "festival",
-        name: "Metropolis"
+        name: "Metropolis",
         about: "Metropolis is a meeting point for performance, art and the city – an art-based metropolitan laboratory for the performative, site-specific, international art. It is Københavns Internationale Teater (KIT) that is behind Metropolis as the latest of a large number of festivals and projects in Copenhagen created and initiated by KIT.",
         adress: "c/o Københavns Internationale Teater, Refshalevej 163A, 1, 1432 København",
         phone: "+45 33 15 15 64",
@@ -381,10 +359,9 @@ export const locations = [
         website: "www.metropolis.dk/en/about-metropolis",
         facebook: "www.facebook.com/metropoliskbh",
         instagram: "www.instagram.com/metropoliskbh",
-        lat: , lon:,
       },
       {
-        type: "festival"
+        type: "festival",
         name: "Dynamo Circus Festival",
         about: "DYNAMO Circus Festival: four days of contemporary circus, music, talks, films, workshops and cultural togetherness.",
         adress: "Finlandkaj 6, 5000 Odense C",
@@ -393,18 +370,16 @@ export const locations = [
         website: "www.dynamoworkspace.dk/festival",
         facebook: "www.facebook.com/dynamoworkspace",
         instagram: "www.instagram.com/dynamo_workspace",
-        lat: , lon:,
       },
       {
         type: "festival",
-        name: "Cirkus i Soldalen"
+        name: "Cirkus i Soldalen",
         about: "This festival will give access to ''new-circus'' productions from all over Europe, showing that circus is much more than glitter, clowns and elephants. The performers combine circus with a variety of other arts; such as theatre, dance and music, so there will be something for everyone’s taste.",
         adress: "Maegårdsvej 4, 3770 Allinge, Danmark",
         phone: "+45 71 62 74 60",
         email: "cirkus.i.soldalen@gmail.com",
         website: "www.cirkusisoldalen.com",
         facebook: "www.facebook.com/Cirkus.i.Soldalen",
-        lat: , lon:,
       },
       {
         type: "residencyandstage",
@@ -416,34 +391,31 @@ export const locations = [
         website: "www.dynamoworkspace.dk",
         facebook: "www.facebook.com/dynamoworkspace",
         instagram: "www.instagram.com/dynamo_workspace",
-        lat: , lon:,
       },
       {
         type: "residencyandstage",
-        name: "AFUK Scene"
+        name: "AFUK Scene",
         about: "AFUK Scene presents own productions, guest performances, co-productions and festivals, primarily within new circus, physical theater and cross-over.",
         adress: "Enghavevej 82B, 2450 København V",
         phone: "+45 29 77 29 98",
         email: "afuk@afuk.dk",
         website: "www.afuk.dk/scene",
         facebook: "https://www.facebook.com/afukremisen",
-        lat: , lon:,
       },
      {
         type: "support",
         name: "Udviklingsplatformen",
-        about: "The purpose of the development platform is to develop and upskill independent performing arts throughout Denmark."
+        about: "The purpose of the development platform is to develop and upskill independent performing arts throughout Denmark.",
         adress: "Farvergade 27, opgang D, 3 sal, 1463 København",
         phone: "+45 29 91 04 34",
         email: "admin@udviklingsplatformen.dk",
         website: "www.udviklingsplatformen.dk",
         facebook: "www.facebook.com/udviklingsplatformen",
         instagram: "www.instagram.com/udviklingsplatformen",
-        lat: , lon:,
       },
      {
         type: "support",
-        name: "Performing Arts Platform"
+        name: "Performing Arts Platform",
         about: "Performing Arts Platform is Aarhus’ development and networking platform for the performing arts. The platform brings together, facilitates and frames a strong cluster of performing art actors in and around Aarhus. Through the sharing and the communication of resources, skills and knowledge we generate development and supporting initiatives in the performing arts community.",
         adress: "Valdemarsgade 1G, 1. tv, 8000 Aarhus",
         phone: "+45 50 87 32 40",
@@ -451,20 +423,18 @@ export const locations = [
         website: "www.theplatform.dk/en/home",
         facebook: "www.facebook.com/performingartsplatform",
         instagram: "www.instagram.com/performingartsplatform",
-        lat: , lon:,
       },
      {
-        type: "support"
-        name: "Prfrm - Production And Dissemination Of Performing Arts"
+        type: "support",
+        name: "Prfrm - Production And Dissemination Of Performing Arts",
         about: "A production community that has come together to ensure small and medium-sized companies as well as performing artists in the free field the necessary production assistance, which we are noticing an increasing demand for.",
         adress: "Hothers Plads 25, 3. sal, 2200 København N",
         phone: "+45 61 69 93 14",
         email: "info@prfrm.dk",
         website: "www.prfrm.dk",
         facebook: "www.facebook.com/prfrm.dk",
-        lat: , lon:,
       },
-     {
+     /*{
         type:
         name: 
         about:
@@ -475,5 +445,5 @@ export const locations = [
         facebook:
         instagram:
         lat: , lon:,
-      },
+      },*/
   ];
