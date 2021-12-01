@@ -110,6 +110,7 @@
         filter: blur(1px) brightness(30%);
         pointer-events: all;
         background-size: cover;
+        background-position: center;
         opacity: 0.8;
     }
 
