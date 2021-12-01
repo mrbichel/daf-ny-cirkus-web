@@ -30,7 +30,6 @@
 		<li>info@ny-cirkus.dk</li>
 		<li>copyright 2021 Dansk Artist Forbund</li>
 		<li><a rel="external" href="https://artisten.dk">artisten.dk</a></li>
-
 	</ul>
 </footer>
 
@@ -50,9 +49,7 @@ footer {
 		justify-content: flex-end;
 
 		font-size: 0.6em;
-
 		border-top: 1px solid grey ;
-
 
 		ul {
 				margin: 0.1em 0;

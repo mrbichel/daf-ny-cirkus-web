@@ -107,9 +107,10 @@
         top: -5%; left: -5%;
         width: 110%; height: 110%;
         background-image: url('static/amocbilleder-057-scaled-test-image.jpeg');
-        filter: blur(2px) brightness(20%);
+        filter: blur(1px) brightness(30%);
         pointer-events: all;
-        opacity: 0.85;
+        background-size: cover;
+        opacity: 0.8;
     }
 
     .detail-wrapper {
