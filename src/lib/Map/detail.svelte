@@ -41,13 +41,14 @@
 <!--<h1>Detail view {randomNumber}</h1>-->
 
 {#if d}
+<div class="detail-wrapper">
 
 <div class="top-info">
-        <address>
-            {#if d.address}{d.address}{/if }
-        </address>
+    <address>
+        {#if d.address}{d.address}{/if }
+    </address>
         
-        <ul class="links">
+    <ul class="links">
             {#if d.website}
                 <li><a rel="external" title="website" alt="Website of {d.name}" href="{d.website}" target="new"><Icon data={externalLinkSquare}/></a></li>
             {/if}
@@ -90,18 +91,38 @@
 
 
         </div>
-		
+</div>
 {/if}
 
 <style lang="scss">
-    address {
 
+
+    h1, h2, h3, h4, h5, h6, p, a, span {
+      pointer-events: auto;
+    }
+    .detail-wrapper::before {
+        content: "";
+        position: absolute;
+        z-index: -1;
+        top: -5%; left: -5%;
+        width: 110%; height: 110%;
+        background-image: url('static/amocbilleder-057-scaled-test-image.jpeg');
+        filter: blur(2px) brightness(20%);
+        pointer-events: all;
+        opacity: 0.85;
+    }
+
+    .detail-wrapper {
+        position: relative;
+        padding: 2px 2em;
+    }
+
+    address {
     }
     h1 {
         font-size: 1.5em;
         margin-top: 0.1em;
     }
-
     .top-info {
         font-size: 0.9em;
         margin-top: 0.8em;
@@ -126,7 +147,7 @@
             padding: 0;
             li {
                 list-style: none;
-                padding: 0 1.5em 1em 0;
+                padding: 0 1.5em 0 0;
                 .icon {
                     padding-right: 0.1em;
                     vertical-align: middle;

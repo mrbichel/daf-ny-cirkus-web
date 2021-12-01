@@ -171,7 +171,7 @@
 		.enter()
 		.append("path")
 
-    popover = d3.select("#popover")
+    popover = d3.select(".popover")
     .on("wheel", (e) => {
       //console.log("scroll", e)
       e.preventDefault();
@@ -397,7 +397,7 @@
 
   <section id="map" bind:clientWidth={width} bind:clientHeight={height}>
   
-    <div id="popover" class="{ activeLocation ? `${activeLocation.type} ${activeLocation.active ? 'active' : ''}` : '' }" >
+    <div class="popover { activeLocation ? `${activeLocation.type} ${activeLocation.active ? 'active' : ''}` : '' }" >
       <!--{$page.params.slug}-->
       <MapDetail d={activeLocation}/>
     </div>
@@ -471,7 +471,7 @@
     fill: #26547C;
   }
 
-	#popover {
+	.popover {
 		position: absolute;
     left: 0;
     right: 0;
@@ -482,7 +482,6 @@
     overflow: hidden;
 		color: white;
     border-top:solid #FCFCFC 2px;
-		padding: 2px 30px;
     pointer-events: all;
 
     transform: scaleY(0);    
@@ -516,12 +515,6 @@
 
     }
 
-    h1 {
-      margin-top: 0.5em;
-    }
-    h1, h2, h3, h4, h5, h6, p, a, span {
-      pointer-events: auto;
-    }
 	}
 	.marker {
     .circle {
