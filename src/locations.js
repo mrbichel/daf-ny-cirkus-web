@@ -7,8 +7,8 @@ export const locations = [
       phone: "+45 32 54 20 95",
       email: "afuk@afuk.dk",
       website: "www.afuk.dk", 
-      instagram: "www.instagram.com/artistlinien_afuk",
-      facebook: "www.facebook.com/afukremisen",
+      instagram: "artistlinien_afuk",
+      facebook: "afukremisen",
       lat: 55.66230820175756, lon: 12.539834935878755,  },
     { 
       type: "school",
@@ -18,8 +18,8 @@ export const locations = [
       phone: "+45 87 40 86 00",
       email: "ab@fguaarhus.dk",
       website: "www.fguaarhus.dk/musisk-og-kunstnerisk-produktion", 
-      instagram: "www.instagram.com/fgu.aarhus",
-      facebook: "www.facebook.com/FGUmidtby",
+      instagram: "fgu.aarhus",
+      facebook: "FGUmidtby",
       lat: 56.18928838143087, lon: 10.182195269797058,  },
 
     { 
@@ -30,8 +30,8 @@ export const locations = [
         phone: "+ 45 74 83 01 04",
         email: "kontor@musikogteater.dk",
         website: "www.musikogteater.dk/scenekunst", 
-        instagram: "www.instagram.com/musikogteaterhoejskolen",
-        facebook: "www.facebook.com/musikogteater.dk",
+        instagram: "musikogteaterhoejskolen",
+        facebook: "musikogteater.dk",
         lat: 55.19151330817705, lon: 9.065917498602422,  
     },
       {
@@ -42,8 +42,8 @@ export const locations = [
         phone: "+45 42 63 66 86",
         email: "info@glimt.info",
         website: "www.glimt.info/da",
-        instagram: "www.instagram.com/glimt.info",
-        facebook: "www.facebook.com/glimt.info",
+        instagram: "glimt.info",
+        facebook: "glimt.info",
         lat: 55.661289604180695, lon: 12.5968790697805,  
       },
 
@@ -53,7 +53,7 @@ export const locations = [
         address: "Borrelyngen 3, 2770 Kastrup",
         phone: "+45 61 66 87 94",
         email: "lalla@borderlinecircus.com",
-        facebook: "www.facebook.com/BorderlineCircus",
+        facebook: "BorderlineCircus",
       },
      {
         type: "company",
@@ -63,8 +63,8 @@ export const locations = [
         phone: "+45 61 66 87 94",
         email: "lalla@borderlinecircus.com",
         website: "www.theamazingother.simplesite.com",
-        instagram: "www.instagram.com/the.amazing.other",
-        facebook: "www.facebook.com/BorderlineCircus",
+        instagram: "the.amazing.other",
+        facebook: "BorderlineCircus",
      },
     
       {
@@ -75,7 +75,7 @@ export const locations = [
         phone: "+45 29 82 69 60",  
         email: "cikaros@gmail.com",
         website: "www.cikaros.dk",
-        facebook: "www.facebook.com/profile.php?id=100039202342357",
+        facebook: "profile.php?id=100039202342357",
         lat: 55.69885739597575, lon: 12.545222540945232,  
       },
 
@@ -87,7 +87,7 @@ export const locations = [
         phone: "+45 21 29 24 60", 
         email: "info@kimone.dk",
         website: "www.kimone.dk",
-        facebook: "www.facebook.com/TeaterKimone",
+        facebook: "TeaterKimone",
         lat: 55.68861093552779, lon: 12.547068083271975,  
       },
 
@@ -99,8 +99,8 @@ export const locations = [
         phone: "+45 22 31 72 63",
         email: "info@rapideye.dk",
         website: "www.rapideye.dk",
-        facebook: "www.facebook.com/RapidEyeContemporaryCircus",
-        instagram: "www.instagram.com/rapideyetheatre",
+        facebook: "RapidEyeContemporaryCircus",
+        instagram: "rapideyetheatre",
         lat: 55.65969229060026, lon: 12.54942552745344,  
       },
 
@@ -112,8 +112,8 @@ export const locations = [
         phone: " + 45 22 66 53 67",
         email: "info@tincancompany.dk",
         website: "www.tincancompany.dk",
-        facebook: "www.facebook.com/tincancompany",
-        instagram: "www.instagram.com/tincancompany",
+        facebook: "tincancompany",
+        instagram: "tincancompany",
         lat: 55.40830551005386, lon: 10.379748540936205,  
       },
       {
@@ -124,8 +124,8 @@ export const locations = [
         phone: "+ 45 29 91 87 13",
         email: "x-act@kittjohnson.dk",
         website: "www.kittjohnson.dk",
-        facebook: "www.facebook.com/kittjohnsonxact",
-        instagram: "www.instagram.com/kittjohnsonxact",
+        facebook: "kittjohnsonxact",
+        instagram: "kittjohnsonxact",
         lat: 55.687098940204606, lon: 12.549599812108411,  
       },
       {
@@ -136,8 +136,8 @@ export const locations = [
         phone: "+ 45 26 80 76 88",
         email: "sputnikandwildwonders@gmail.com",
         website: "www.sputnikandwildwonders.com",
-        facebook: "www.facebook.com/sputnikandwildwonders",
-        instagram: "www.instagram.com/sputnikandwildwonders",
+        facebook: "sputnikandwildwonders",
+        instagram: "sputnikandwildwonders",
         lat: 55.690899512894866, lon: 12.558613898617903,  
       },
       {
@@ -148,8 +148,8 @@ export const locations = [
         phone: "+ 45 31 75 03 09",
         email: "sparrowdance.info@gmail.com",
         website: "www.sparrowdance.dk",
-        facebook: "www.facebook.com/sparrowdance",
-        instagram: "www.instagram.com/sparrowdance.dk",
+        facebook: "sparrowdance",
+        instagram: "sparrowdance.dk",
         lat: 55.674394029359206, lon: 12.571465254440337,  
       },
     {
@@ -160,8 +160,8 @@ export const locations = [
         phone: "+ 45 52 73 92 68",
         email: "outofbalanz@gmail.com",
         website: "www.outofbalanz.com",
-        facebook: "www.facebook.com/outofbalanz",
-        instagram: "www.instagram.com/outofbalanz",
+        facebook: "outofbalanz",
+        instagram: "outofbalanz",
       },
     {
         type: "company",
@@ -171,7 +171,7 @@ export const locations = [
         phone: "+ 45 20 30 21 95",
         email: "mail@offspringproduction.dk",
         website: "www.offspringproduction.dk",
-        instagram: "www.instagram.com/offspringproduction",
+        instagram: "offspringproduction",
       },
     {
         type: "company",
@@ -180,8 +180,8 @@ export const locations = [
         adress: "Trunderup Dongsvej 30, Kværndrup",
         phone: "+ 45 27 12 39 80",
         email: "triotriskela@gmail.com",
-        facebook: "www.facebook.com/Viceversacircus",
-        instagram: "www.instagram.com/viceversacircus",
+        facebook: "Viceversacircus",
+        instagram: "viceversacircus",
       },
     {
         type: "company",
@@ -191,7 +191,7 @@ export const locations = [
         phone: " +45 30 35 29 54",
         email: "djvolantes@gmail.com",
         website: "www.volantes.dk",
-        instagram: "www.instagram.com/volantescompany",
+        instagram: "volantescompany",
       },
     {
         type: "company",
@@ -201,8 +201,8 @@ export const locations = [
         phone: "+ 45 22 88 67 96",
         email: "tanter@tanter.dk",
         website: "www.tanter.dk",
-        facebook: "www.facebook.com/tanterkompani",
-        instagram: "www.instagram.com/tanterkompani",
+        facebook: "tanterkompani",
+        instagram: "tanterkompani",
       },
           {
         type: "company",
@@ -212,8 +212,8 @@ export const locations = [
         phone: "+45 22 96 50 79",
         email: "rightwaydowncircus@gmail.com",
         website: "www.rightwaydown.com",
-        facebook: "www.facebook.com/rightwaydown",
-        instagram: "www.instagram.com/rightwaydowncircus",
+        facebook: "rightwaydown",
+        instagram: "rightwaydowncircus",
       },
      {
         type: "company",
@@ -223,8 +223,8 @@ export const locations = [
         phone: "+ 45 25 53 55 13",
         email: "info@kicompany.dk",
         website: "www.kicompany.dk",
-        facebook: "www.facebook.com/kicompanydk",
-        instagram: "www.instagram.com/kristjan_ingimarsson_company",
+        facebook: "kicompanydk",
+        instagram: "kristjan_ingimarsson_company",
       },
         {
         type: "association",
@@ -234,8 +234,8 @@ export const locations = [
         phone: "+ 45 24 27 93 40",
         email: "cirkus@cirkuspanik.dk",
         website: "www.cirkuspanik.dk",
-        facebook: "www.facebook.com/cirkuspanik",
-        instagram: "www.instagram.com/cirkuspanik",
+        facebook: "cirkuspanik",
+        instagram: "cirkuspanik",
       },
         {
         type: "association",
@@ -245,7 +245,7 @@ export const locations = [
         phone: "+ 45 86 25 87 80",
         email: "cirkus@mail.dk",
         website: "www.cirkustvaers.dk",
-        instagram: "www.instagram.com/cirkustvaers",
+        instagram: "cirkustvaers",
       },
         {
         type: "association",
@@ -255,7 +255,7 @@ export const locations = [
         phone: "+ 45 24 26 24 50",
         email: "fortet@afuk.dk",
         website: "www.afuk.dk/foreninger/hold/",
-        instagram: "www.instagram.com/afuk.orkenfortet/",
+        instagram: "afuk.orkenfortet/",
       },
      {
         type: "association",
@@ -264,7 +264,7 @@ export const locations = [
         adress: "Frederiksø 2, bygning K, 5700 Svendborg",
         phone: "+ 45 27 12 39 80",
         email: "cirkusrummet@gmail.com",
-        facebook: "www.facebook.com/cirkusrummet",
+        facebook: "cirkusrummet",
       },
           {
         type: "association",
@@ -274,7 +274,7 @@ export const locations = [
         phone: "+ 45 20 72 06 60",
         email: "info@innercirq.dk",
         website: "www.innercirq.dk",
-        instagram: "www.instagram.com/innercirq",
+        instagram: "innercirq",
       },
           {
         type: "association",
@@ -284,7 +284,7 @@ export const locations = [
         phone: "+ 45 26 45 81 41",
         email: "pacecph@gmail.com",
         website: "www.pacecph.dk",
-        facebook: "www.facebook.com/pacecph",
+        facebook: "pacecph",
       },
           {
         type: "association",
@@ -292,7 +292,7 @@ export const locations = [
         about: "The Circus Playground is an open space, where we explore movement, circus and acrobatics in an open creative community.",
         adress: "Finlandkaj 6, 5000 Odense C",
         email: "thecircusplayground@gmail.com",
-        facebook: "www.facebook.com/circusplayground",
+        facebook: "circusplayground",
       },
           {
         type: "festival",
@@ -302,8 +302,8 @@ export const locations = [
         phone: "+45 55 34 01 19", 
         email: "teater@cantabile2.dk",
         website: "www.wavesfestival.dk",
-        facebook: "www.facebook.com/TheWavesFestival",
-        instagram: "www.instagram.com/wavesfestivalofficial",
+        facebook: "TheWavesFestival",
+        instagram: "wavesfestivalofficial",
       },
           {
         type: "festival",
@@ -313,8 +313,8 @@ export const locations = [
         phone: "+45 53 86 08 11",
         email: "th@helsingor-teater.dk",
         website: "www.passagefestival.nu",
-        facebook: "www.facebook.com/passagefestival",
-        instagram: "www.instagram.com/passagefestival",
+        facebook: "passagefestival",
+        instagram: "passagefestival",
       },
           {
         type: "festival",
@@ -324,8 +324,8 @@ export const locations = [
         phone: "+45 51 50 52 95",
         email: "bornholmsgadeteater@gmail.com",
         website: "www.bigf.dk",
-        facebook: "www.facebook.com/BigF.dk",
-        instagram: "www.instagram.com/bornholms.gadeteaterfestival",
+        facebook: "BigF.dk",
+        instagram: "bornholms.gadeteaterfestival",
       },
           {
         type: "festival",
@@ -335,8 +335,8 @@ export const locations = [
         phone: "+45 40 98 71 43",
         email: "info@gadeteaterfestival.dk",
         website: "www.gadeteaterfestival.dk",
-        facebook: "www.facebook.com/gadeteater",
-        instagram: "www.instagram.com/gadeteater",
+        facebook: "gadeteater",
+        instagram: "gadeteater",
       },
       {
         type: "festival",
@@ -346,8 +346,8 @@ export const locations = [
         phone: "+45 29 91 87 13",
         email: "x-act@kittjohnson.dk",
         website: "www.ccaf.nu/en/about-ccaf/",
-        facebook: "www.facebook.com/CopenhagenCircusArtsFestival",
-        instagram: "www.instagram.com/copenhagencircusartsfestival",
+        facebook: "CopenhagenCircusArtsFestival",
+        instagram: "copenhagencircusartsfestival",
       },
       {
         type: "festival",
@@ -357,8 +357,8 @@ export const locations = [
         phone: "+45 33 15 15 64",
         email: "info@kit.dk",
         website: "www.metropolis.dk/en/about-metropolis",
-        facebook: "www.facebook.com/metropoliskbh",
-        instagram: "www.instagram.com/metropoliskbh",
+        facebook: "metropoliskbh",
+        instagram: "metropoliskbh",
       },
       {
         type: "festival",
@@ -368,8 +368,8 @@ export const locations = [
         phone: "+ 45 26 52 49 77",
         email: "info@dynamoworkspace.dk",
         website: "www.dynamoworkspace.dk/festival",
-        facebook: "www.facebook.com/dynamoworkspace",
-        instagram: "www.instagram.com/dynamo_workspace",
+        facebook: "dynamoworkspace",
+        instagram: "dynamo_workspace",
       },
       {
         type: "festival",
@@ -379,7 +379,7 @@ export const locations = [
         phone: "+45 71 62 74 60",
         email: "cirkus.i.soldalen@gmail.com",
         website: "www.cirkusisoldalen.com",
-        facebook: "www.facebook.com/Cirkus.i.Soldalen",
+        facebook: "Cirkus.i.Soldalen",
       },
       {
         type: "residencyandstage",
@@ -389,8 +389,8 @@ export const locations = [
         phone: "+ 45 26 52 49 77",
         email: "info@dynamoworkspace.dk",
         website: "www.dynamoworkspace.dk",
-        facebook: "www.facebook.com/dynamoworkspace",
-        instagram: "www.instagram.com/dynamo_workspace",
+        facebook: "dynamoworkspace",
+        instagram: "dynamo_workspace",
       },
       {
         type: "residencyandstage",
@@ -400,7 +400,7 @@ export const locations = [
         phone: "+45 29 77 29 98",
         email: "afuk@afuk.dk",
         website: "www.afuk.dk/scene",
-        facebook: "https://www.facebook.com/afukremisen",
+        facebook: "https://afukremisen",
       },
      {
         type: "support",
@@ -410,8 +410,8 @@ export const locations = [
         phone: "+45 29 91 04 34",
         email: "admin@udviklingsplatformen.dk",
         website: "www.udviklingsplatformen.dk",
-        facebook: "www.facebook.com/udviklingsplatformen",
-        instagram: "www.instagram.com/udviklingsplatformen",
+        facebook: "udviklingsplatformen",
+        instagram: "udviklingsplatformen",
       },
      {
         type: "support",
@@ -421,8 +421,8 @@ export const locations = [
         phone: "+45 50 87 32 40",
         email: "theplatform@theplatform.dk",
         website: "www.theplatform.dk/en/home",
-        facebook: "www.facebook.com/performingartsplatform",
-        instagram: "www.instagram.com/performingartsplatform",
+        facebook: "performingartsplatform",
+        instagram: "performingartsplatform",
       },
      {
         type: "support",
@@ -432,7 +432,7 @@ export const locations = [
         phone: "+45 61 69 93 14",
         email: "info@prfrm.dk",
         website: "www.prfrm.dk",
-        facebook: "www.facebook.com/prfrm.dk",
+        facebook: "prfrm.dk",
       },
      /*{
         type:

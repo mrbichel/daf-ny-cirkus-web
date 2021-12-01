@@ -1,5 +1,11 @@
 
 <script lang="ts">
+
+    import Icon from 'svelte-awesome/components/Icon.svelte'
+    import { phoneSquare, envelopeSquare, facebookSquare, instagram, externalLinkSquare } from 'svelte-awesome/icons';
+
+
+
     import { onMount } from 'svelte';
 
     //let photos = [];
@@ -25,6 +31,7 @@
 	export let instagram : string
 	export let facebook : string*/
 
+
 </script>
 
 <!--<svelte:head>
@@ -34,40 +41,101 @@
 <!--<h1>Detail view {randomNumber}</h1>-->
 
 {#if d}
+
+<div class="top-info">
+        <address>
+            {#if d.address}{d.address}{/if }
+        </address>
+        
+        <ul class="links">
+            {#if d.website}
+                <li><a rel="external" title="website" alt="Website of {d.name}" href="{d.website}" target="new"><Icon data={externalLinkSquare}/></a></li>
+            {/if}
+
+            {#if d.instagram}
+            <li><a rel="external" title="instagram" alt="{d.name} on instagram" href="https://instagram.com/{d.instagram}"><Icon data={instagram}/></a></li>
+            {/if}
+
+            {#if d.facebook}
+            <li><a rel="external" title="facebook" alt="{d.name} on facebook" href="https://facebook.com/{d.facebook}"><Icon data={facebookSquare}/></a></li>
+            {/if}
+            
+
+        </ul>
+    </div>
+
 		<h1>{d.name}</h1>
 
 		{#if d.about}
 		<p>{d.about}</p>
 		{/if}
 		
-		{#if d.address}
-		<p>{d.address}</p>
-		{/if}
+        <div class="bottom-info">
+
+        <ul>
+         {#if d.email}
+         <li>
+            <span class="icon"><Icon data={envelopeSquare}/></span> <a href="mailto:{d.email}">{d.email}</a>
+        </li>
+            {/if}
+  
+            
+            {#if d.phone}
+            <li>
+            <span class="icon"><Icon data={phoneSquare}/></span> {d.phone}
+            </li>
+            {/if}
+
+        </ul>
+
+
+        </div>
 		
-		{#if d.email}
-			<a href="mailto:{d.email}">{d.email}</a>
-		{/if}
-		
-		{#if d.phone}
-			<p>{d.phone}</p>
-		{/if}
-		
-		<ul>
-		{#if d.website}
-			<li><a href="{d.website}">{d.website}</a></li>
-		{/if}
-		
-		{#if d.facebook}
-		<li><a href="{d.facebook}">facebook</a></li>
-		{/if}
-		
-		{#if d.instagram}
-		<li><a href="{d.instagram}">instagram</a></li>
-		{/if}
-		</ul>
 {/if}
 
 <style lang="scss">
+    address {
+
+    }
+    h1 {
+        font-size: 1.5em;
+        margin-top: 0.1em;
+    }
+
+    .top-info {
+        font-size: 0.9em;
+        margin-top: 0.8em;
+        display: flex;
+        justify-content: space-between;
+    }
+    .links {
+        display: inline-flex;
+        padding: 0;
+        margin: 0;
+        li {
+            list-style: none;
+            padding: 0 0.2em;
+        }
+    }
+    .bottom-info {
+        font-size: 1em;
+        margin: 0.8em 0;
+        ul {
+            display: flex;
+            margin: 0;
+            padding: 0;
+            li {
+                list-style: none;
+                padding: 0 1.5em 1em 0;
+                .icon {
+                    padding-right: 0.1em;
+                    vertical-align: middle;
+                }
+            }
+
+        }
+
+    }
 </style>
 	
 
