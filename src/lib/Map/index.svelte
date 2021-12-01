@@ -261,13 +261,15 @@
       const minScale = markerRadius*3 / distance // zoom in so dots are seperated by atleast 1 marker radius
       const scale : number = (t0.k > minScale) ? t0.k : minScale
 
+      const targetPoint = [-point[0]*scale + width*0.5, -point[1]*scale + height*0.38]
+
       if(d.active) {
         locations[d.id].active = activeLocation.active = false
         
         svg.transition().duration(750).call(
           zoom.transform,
           d3.zoomIdentity 
-            .translate(-point[0]*outScale + width/2, -point[1]*outScale + height/2)
+            .translate( targetPoint[0], targetPoint[1]  )
             .scale(outScale),
           d3.pointer(e, svg.node())        
         ).on("end", async () => {
@@ -313,7 +315,7 @@
         svg.transition().duration(750).call(
           zoom.transform,
           d3.zoomIdentity
-            .translate(-point[0]*scale + width/2, -point[1]*scale + height/2)
+            .translate(targetPoint[0], targetPoint[1])
             .scale(scale),
           d3.pointer(e, svg.node())
         );
