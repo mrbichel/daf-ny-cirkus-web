@@ -27,7 +27,7 @@
 
 <footer>
 	<ul>
-		<li>email</li>
+		<li>info@ny-cirkus.dk</li>
 		<li>copyright 2021 Dansk Artist Forbund</li>
 		<li><a rel="external" href="https://artisten.dk">artisten.dk</a></li>
 
