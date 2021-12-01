@@ -6,7 +6,7 @@ import fs from 'fs'
 
 import StreamValues from 'stream-json/streamers/StreamValues.js'
 //const { StreamValues } = pkg
-import { locations } from './src/lib/locations.js'
+import { locations } from './src/locations.js'
 
 //console.log(StreamValues)
 

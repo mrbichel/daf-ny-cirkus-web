@@ -11,28 +11,28 @@
     "format": "prettier --write ."
   },
   "devDependencies": {
-    "@sveltejs/kit": "next",
     "@sveltejs/adapter-vercel": "next",
+    "@sveltejs/kit": "next",
     "@turf/tag": "6.4.0",
     "@turf/turf": "6.4.0",
-    "@typescript-eslint/eslint-plugin": "^4.28.1",
-    "@typescript-eslint/parser": "^4.28.1",
-    "eslint": "^7.29.0",
+    "@typescript-eslint/eslint-plugin": "^4.33.0",
+    "@typescript-eslint/parser": "^4.33.0",
+    "eslint": "^7.32.0",
     "eslint-config-prettier": "^8.3.0",
-    "eslint-plugin-svelte3": "^3.2.0",
+    "eslint-plugin-svelte3": "^3.2.1",
     "mapshaper": "0.5.60",
     "node-sass": "^6.0.1",
     "prettier": "~2.2.1",
-    "prettier-plugin-svelte": "^2.3.1",
+    "prettier-plugin-svelte": "^2.5.0",
     "rollup": "2.52.6",
-    "svelte": "^3.41.0",
-    "svelte-preprocess": "^4.7.4",
-    "tslib": "^2.3.0",
-    "typescript": "^4.3.5",
-    "vite": "^2.3.8"
+    "svelte": "^3.44.2",
+    "svelte-preprocess": "^4.9.8",
+    "tslib": "^2.3.1",
+    "typescript": "^4.5.2",
+    "vite": "^2.6.14"
   },
   "dependencies": {
-    "@fontsource/fira-mono": "^4.4.5",
+    "@fontsource/fira-mono": "^4.5.0",
     "@lukeed/uuid": "^2.0.0",
     "cookie": "^0.4.1",
     "d3": "6.7.0",
@@ -42,6 +42,8 @@
     "d3-geo-voronoi": "1.6.0",
     "d3-scale": "4.0.0",
     "lodash": "4.17.21",
+    "slug": "5.1.0",
+    "svelte-awesome": "2.4.2",
     "throttle": "1.0.3"
   }
 }

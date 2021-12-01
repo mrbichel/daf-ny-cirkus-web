@@ -1,42 +1,70 @@
-<script>
-	import * as d3 from 'd3'
-	import { geoMercator, geoPath } from "d3-geo";
+<script context="module" lang="ts">
+
+  interface location {
+    readonly type: string;
+    readonly name: string;
+    lat?: number;
+    lon?: number;
+    id?: number;
+    readonly about?: string;
+    readonly address?: string;
+    readonly phone?: string;
+    readonly email?: string;
+    readonly website?: string;
+    readonly instagram?: string;
+    readonly facebook?: string;
+    active?: boolean;
+    slug?: string;
+    closestNeighbour?: {
+      distance: number;
+      location: location;
+    };
+    [propName: string]: any;
+  }
+
+  let isLoaded = false;
+
+</script>
+
+<script lang="ts">
+
+  import { page } from '$app/stores';
+  //import { activeLocation, locations } from '$lib/Map/stores'
+
+  import { goto, invalidate, prefetch, prefetchRoutes } from '$app/navigation';
 	import { onMount } from "svelte";
-	import {locations as location_data } from "../locations";
+
+  import slug from 'slug'
+  import * as d3 from 'd3'
+	import { geoMercator, geoPath } from "d3-geo";
+  
+	import {locations as location_data } from "../../locations";
+
   import lodash_pkg from 'lodash';
-  const { _ } = lodash_pkg;  
+  const { _ } = lodash_pkg;
 
-  // color palette 1: https://coolors.co/ef476f-06d6a0-ffd166-fcfcfc-26547c
+  import dkgeo from './map.geo.json' //'./dk.geo.json'; //'./rollercoaster.geo.json';
 
-  //import { geoVoronoi } from "d3-geo-voronoi"
-  //import {delaunay} from "d3-delaunay"
-	import dkgeo from './map.geo.json' //'./dk.geo.json'; //'./rollercoaster.geo.json';
+  import MapDetail from './detail.svelte';
 
-	let data = [];
-	let width, height, initialWidth, initialHeight;
-	let g;
-	let svg, container;
-
+  const land = dkgeo;
+	const projection = geoMercator()
+	const path = geoPath().projection(projection)
   const markerRadius = 8
 
-  // TODO: reverse address lookup
-  const locations = location_data.map( (d, i) => {
-    d.active = false
-    d.id = i
 
-    const neighbours = location_data.filter(n => n != d).map( n => {
-      return {
-        distance: d3.geoDistance([n.lon, n.lat], [d.lon, d.lat]),
-        location: n
-      }
-    })
-    //d.closestNeighbours = _.sortBy( neighbours, 'distance');
-    d.closestNeighbour = _.sortBy( neighbours, 'distance')[0];
-    return d
-  })
+  let activeLocation : location = undefined;
 
-  const mapWidth = 2880;
-  const mapHeight = 1800;
+  // color palette 1: https://coolors.co/ef476f-06d6a0-ffd166-fcfcfc-26547c
+  //import { geoVoronoi } from "d3-geo-voronoi"
+  //import {delaunay} from "d3-delaunay"
+
+	let width: number, height: number, initialWidth: number, initialHeight: number;
+	let g, svg, container;
+
+
+  //const mapWidth = 2880;
+  //const mapHeight = 1800;
   
 	const zoom = d3.zoom()
       .scaleExtent([0.8, 80])
@@ -51,22 +79,23 @@
       //.transition().duration(80)
       .attr("transform", () => `scale(${1/e.transform.k})`)
 
-      popovers
-			//.style("left", (d) => ll2pT(transform, d)[0] + "px" )
-			.style("top",  (d) => ll2pT(e.transform, d)[1] + "px" )
+      // TODO: update popover position if active
+      if(activeLocation) {
+        popover
+			  //.style("left", (d) => ll2pT(transform, d)[0] + "px" )
+			  .style("top", ll2pT(e.transform, activeLocation)[1] + "px" )
+      }
+
+      
   }
 
-	const land = dkgeo;
-	const projection = geoMercator()
-	const path = geoPath().projection(projection)
+  let mapFeatures, popover, markers
 
-  let mapFeatures, popovers, markers
-
-  function ll2pT(t, d) {
-    return ll2p(d).map((p, i) => (i === 0 ? t.x : t.y ) + (t.k * p))
+  function ll2pT(t: d3.zoomTransform, d: location) {
+    return ll2p(d).map((p, i: number) => (i === 0 ? t.x : t.y ) + (t.k * p))
   }
 
-  function ll2p(d) {
+  function ll2p(d: location) {
     return projection([d.lon, d.lat])
   }
 
@@ -79,22 +108,54 @@
 	function renderMap() {
 
 	  renderPath();
-	  popovers
+    // TODO: se pos if location active
+
+    if(activeLocation) {
+	  popover
 		//.style("left", (d) => ll2p(d)[0] + "px" )
-		.style("top",  (d) => ll2p(d)[1] + "px" )
+		.style("top", ll2p(activeLocation)[1] + "px" )
+    }
 
 		markers
-      .attr("transform", (d) => "translate(" + ll2p(d)[0] + "," + ll2p(d)[1] + ")")
+      .attr("transform", (d: location) => "translate(" + ll2p(d)[0] + "," + ll2p(d)[1] + ")")
 			//.attr( "x", (d) => ll2p(d)[0]  )
 			//.attr( "y", (d) => ll2p(d)[1]  )
 	}
 
+  let locations = location_data.map( (d, i) => {
+    
+    if(d.lat === undefined) {
+      d.lat = 0;   // TODO: reverse address lookup
+    }
+    if(d.lon === undefined) {
+      d.lon = 0; 
+    }
+
+    d.active = false
+    d.id = i // TODO: change to database id and require in interface 
+    
+    d.slug = slug(d.name)
+
+    const neighbours = location_data.filter(n => n != d).map( n => {
+      return {
+        distance: d3.geoDistance([n.lon, n.lat], [d.lon, d.lat]),
+        location: n
+      }
+    })
+    //d.closestNeighbours = _.sortBy( neighbours, 'distance');
+    d.closestNeighbour = _.sortBy( neighbours, 'distance')[0];
+    return d
+  })
+
 	onMount(async function() {
+
+    console.log("onMount isloaded:", isLoaded)    
+    isLoaded = true;
 
     initialWidth = width;
 		initialHeight = height;
 
-		container = d3.select("#d3map")
+		container = d3.select("#map")
 		svg = container.select("svg")
     //svg.attr("width", width)
     //.attr("height", height)
@@ -110,11 +171,9 @@
 		.enter()
 		.append("path")
 
-    popovers = d3.selectAll(".popover")
-		.data(locations)
-    .classed("active", (d) => d.active)
+    popover = d3.select("#popover")
     .on("wheel", (e) => {
-      console.log("scroll", e)
+      //console.log("scroll", e)
       e.preventDefault();
       const eventClone = new e.constructor(e.type, {
         clientX: e.clientX, 
@@ -127,26 +186,28 @@
 
     markers = g.select(".marker-layer").selectAll(".marker")
 			.data(locations)
-      .classed("active", (d) => d.active)
 
 		markers
       .select (".circle")
 			.on("click", clicked)
-			.on("mouseover", function(e, d){
+			.on("mouseover", function(e, d: location){
         // TODO: rendering order, render last on top of other
 			})
 			.on("mouseout", function(){
 			})
     
     renderMap();
-
-    const delaunay = d3.Delaunay.from(locations.map(d => {return [ ll2p(d)[0], ll2p(d)[1] ]}))
+    /*
+    const delaunay = d3.Delaunay.from(locations.map( ll2p ))
     const voronoi = delaunay.voronoi([0, 0, width, height])
-    const cells = locations.map((d, i) => [[ll2p(d)[0], ll2p(d)[1]], voronoi.cellPolygon(i)]);
+    
+    const cells = locations.map((d, i) => {
+      return [[ll2p(d)], voronoi.cellPolygon(i)]
+    });
 
     //console.log(cells)
     
-    /*g.append("path")  
+    g.append("path")  
       .attr("fill", "none")
       .attr("stroke", "#ccc")
       .attr("d", voronoi.render());
@@ -157,81 +218,97 @@
     .data(cells)
     .join("path")
       .attr("d", ([d, cell]) => `M${d3.polygonCentroid(cell)}L${d}`);
-    */
-    //g.append("path")
-    //  .attr("d", delaunay.renderPoints(null, 2));
-
     
+    g.append("path")
+      .attr("d", delaunay.renderPoints(null, 2));
+    */
 
 	});
 
-
-
-  function outsideClick(e) {
-    const active = _.find(locations, (d) => d.active == true)
-    if(active) {
+  async function outsideClick(e) {
+    
+    if(activeLocation) {
       e.stopPropagation()
-      active.active = false;
+      locations[activeLocation.id].active = activeLocation.active = false;
       
-      markers.classed("active", (d) => d.active)
-      popovers.classed("active", (d) => d.active)
-
-      d3.select(`#marker-${active.id}`).select(".circle").transition().duration(750)
-        .attrTween("d", (d) => {
+      d3.select(`#marker-${activeLocation.id}`).select(".circle").transition().duration(750)
+        .attrTween("d", (d: location) => {
             const angleEnd= d3.interpolateNumber(90, 270);
-            return function(t) { return describeArc(0,0, markerRadius, -90, angleEnd(t)) };
+            return function(t: number) { return describeArc(0,0, markerRadius, -90, angleEnd(t)) };
         })
+        .on("end", async () => {
+          activeLocation = undefined
+          await goto(`/`) 
+        });
     }
+
   }
 
+	async function clicked(e, d: location) {
 
-
-	function clicked(e, d) {
-      e.stopPropagation();
+      e.stopPropagation()
       //const [[x0, y0], [x1, y1]] = path.bounds(d);
-      const point = projection([d.lon, d.lat]);
-      const t0 = d3.zoomTransform(svg.node());
-      const outScale = (t0.k < 2) ? t0.k : t0.k *0.8;
+      const point = projection([d.lon, d.lat])
+      const t0 = d3.zoomTransform(svg.node())
+      const outScale : number = (t0.k < 2) ? t0.k : t0.k *0.8
 
       // get pixel distance 
-      const pointNeighbour = projection([d.closestNeighbour.location.lon, d.closestNeighbour.location.lat]);
-      var a = pointNeighbour[0] - point[0];
-      var b = pointNeighbour[1] - point[1];
-      var distance = Math.sqrt(a * a + b * b);
+      const pointNeighbour = projection([d.closestNeighbour.location.lon, d.closestNeighbour.location.lat])
+      var a = pointNeighbour[0] - point[0]
+      var b = pointNeighbour[1] - point[1]
+      var distance = Math.sqrt(a * a + b * b)
 
-      const minScale =  markerRadius*3 / distance; // zoom in so dots are sperated by atleast 1 marker radius
-      const scale = (t0.k > minScale) ? t0.k : minScale;
+      const minScale = markerRadius*3 / distance // zoom in so dots are seperated by atleast 1 marker radius
+      const scale : number = (t0.k > minScale) ? t0.k : minScale
 
       if(d.active) {
-        d.active = false
+        locations[d.id].active = activeLocation.active = false
+        
         svg.transition().duration(750).call(
           zoom.transform,
-          d3.zoomIdentity
+          d3.zoomIdentity 
             .translate(-point[0]*outScale + width/2, -point[1]*outScale + height/2)
             .scale(outScale),
           d3.pointer(e, svg.node())        
-        );
-
-        d3.select(`#marker-${d.id}`).select(".circle").transition().duration(750)
-        .attrTween("d", (d) => {
-            const angleEnd= d3.interpolateNumber(90, 270);
-            return function(t) { return describeArc(0,0, markerRadius, -90, angleEnd(t)) };
+        ).on("end", async () => {
+          activeLocation = undefined
+          await goto(`/`) 
         })
 
+        d3.select(`#marker-${d.id}`).select(".circle").transition().duration(750)
+        .attrTween("d", (d: location) => {
+            const angleEnd= d3.interpolateNumber(90, 270)
+            return function(t: number) { return describeArc(0,0, markerRadius, -90, angleEnd(t)) }
+        })
 
       } else {
-        const active = _.find(locations, (d) => d.active == true)
-        if(active) {
-          active.active = false;
-          d3.select(`#marker-${active.id}`).select(".circle").transition().duration(750)
-            .attrTween("d", (d) => {
-                const angleEnd= d3.interpolateNumber(90, 270);
-                return function(t) { return describeArc(0,0, markerRadius, -90, angleEnd(t)) };
-            })
-        }
         
-        d.active = true
-        //console.log(d)
+        /*await new Promise(resolve => {
+        });*/
+
+          await new Promise(resolve => {
+            console.log(activeLocation)
+            if(activeLocation) {
+               
+              locations[activeLocation.id].active = activeLocation.active = false
+
+              d3.select(`#marker-${activeLocation.id}`).select(".circle").transition().duration(500)
+                .attrTween("d", (d: location) => {
+                    const angleEnd= d3.interpolateNumber(90, 270)
+                    return function(t: number) { return describeArc(0,0, markerRadius, -90, angleEnd(t)) }
+                }).on("end", async () => {
+                  resolve('end');
+              })
+            } else {
+              resolve('end')
+            }
+
+          });
+        
+        //d.active = true
+        locations[d.id].active = true 
+        await goto(`/${d.slug}`)  //TODO: make slug
+        activeLocation = d
 
         svg.transition().duration(750).call(
           zoom.transform,
@@ -242,34 +319,31 @@
         );
 
         d3.select(`#marker-${d.id}`).select(".circle").transition().duration(750)
-        .attrTween("d", (d) => {
+        .attrTween("d", (d: location) => {
             const angleEnd= d3.interpolateNumber(270, 90);
-            return function(t) { return describeArc(0,0, markerRadius, -90, angleEnd(t)) };
+            return function(t: number) { return describeArc(0,0, markerRadius, -90, angleEnd(t)) };
         })
 
-      }
-
-      markers.classed("active", (d) => d.active)
-      popovers.classed("active", (d) => d.active)
-	  
+      }	  
     }
   
-  function polarToCartesian(x, y, r, angleDeg) {
+  function polarToCartesian(x: number, y: number, r: number, angleDeg: number) : [x: number, y: number] {
       const rad = (angleDeg-90) * Math.PI / 180.0;
         return [
           x + (r * Math.cos(rad)),
           y + (r * Math.sin(rad))
-        ];
-  }
+        ]; 
+  } 
 
 
-  function describeArc(x, y, radius, startAngle=0, endAngle=360){
+  function describeArc(x: number, y: number, radius: number, startAngle: number=0, endAngle: number=360) :
+  string {
 
       const start = polarToCartesian(x, y, radius, endAngle - 0.01);
       const end = polarToCartesian(x, y, radius, startAngle);
 
-      const largeArcFlag = endAngle - startAngle <= 180 ? "0" : "1";
-      const arcSweep = endAngle - startAngle <= 180 ? '0' : '1';
+      //const largeArcFlag = endAngle - startAngle <= 180 ? "0" : "1";
+      const arcSweep : '0'|'1' = endAngle - startAngle <= 180 ? '0' : '1';
 
       return `M ${start[0]} ${start[1]} A ${radius} ${radius} 0 ${arcSweep} 0 ${end[0]} ${end[1]} ${(endAngle - startAngle === 360) ? 'Z' : ''}`;     
   }
@@ -300,13 +374,11 @@
     // TODO: maybe only redraw if changed more than x amount, otherwise save offsets ?
 
     throttledResize();
-
   }
 
 	function resizeMap() {
 
     const t0 = d3.zoomTransform(svg.node());
-
 		renderMap();
     
     /*popovers
@@ -323,9 +395,14 @@
 
   <svelte:window on:resize={resize} />
 
-  <div id="d3map" bind:clientWidth={width} bind:clientHeight={height}>
+  <section id="map" bind:clientWidth={width} bind:clientHeight={height}>
+  
+    <div id="popover" class="{ activeLocation ? `${activeLocation.type} ${activeLocation.active ? 'active' : ''}` : '' }" >
+      <!--{$page.params.slug}-->
+      <MapDetail d={activeLocation}/>
+    </div>
 
-	{#each locations as d}	
+	<!--{#each locations as d}	
 		<div class="popover {d.type}" id="popover-id-{d.id}">
 			<h1>{d.name}</h1>
 
@@ -358,10 +435,8 @@
       <li><a href="{d.instagram}">instagram</a></li>
       {/if}
       </ul>
-
-
 		</div>	
-  	{/each}
+  	{/each}-->
 
 	  <svg>
 		<g class="zoom-container">
@@ -370,26 +445,22 @@
       </g>
 			<g class="marker-layer">
 			{#each locations as d}
-        <g class="marker {d.type}" id="marker-{d.id}">
-
+        <g class="marker {d.type} {d.active ? 'active' : ''}" id="marker-{d.id}">
           <path class="circle" id="circle-{d.id}"
               d="{describeArc(0,0,markerRadius)}"
               stroke-width={markerRadius*0.6}
           />
-
-
         </g>
 		  {/each}
 			</g>
 
 		</g>
-
 	  </svg>
-
-  </div>
+  </section>
   
   <style lang="scss">
-	#d3map {
+	
+	#map {
 		width: 100%;
 		height: 100%;
 		overflow: hidden;
@@ -400,7 +471,7 @@
     fill: #26547C;
   }
 
-	.popover {
+	#popover {
 		position: absolute;
     left: 0;
     right: 0;
@@ -439,10 +510,9 @@
     }
 
     &.support {
-
     }
 
-    &.resstage {
+    &.residency-stage {
 
     }
 
@@ -491,8 +561,5 @@
     }
 
 	}
-
-
-
 
   </style>
