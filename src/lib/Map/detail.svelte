@@ -1,36 +1,25 @@
 
 <script lang="ts">
+    export let slug: string
 
     import Icon from 'svelte-awesome/components/Icon.svelte'
     import { phoneSquare, envelopeSquare, facebookSquare, instagram, externalLinkSquare } from 'svelte-awesome/icons';
-
-
-
     import { onMount } from 'svelte';
 
-    //let photos = [];
-    let randomNumber = 0;
+    let d;
 
     onMount(async () => {
         // const res = await fetch(`https://jsonplaceholder.typicode.com/photos?_limit=20`);
         // photos = await res.json();
 
-        // TODO: load images and more details
-        randomNumber = Math.random()
+        const url = `/api/locations/${slug}.json`;
+
+        const res = await fetch(url);
+        if(res.ok) {
+            d = await res.json()
+        }
 
     });
-
-    export let d
-	//export let slug: string
-	/*export let name : string
-	export let about : string
-	export let address : string
-	export let email : string
-	export let phone : string
-	export let website : string
-	export let instagram : string
-	export let facebook : string*/
-
 
 </script>
 
@@ -49,23 +38,23 @@
     </address>
         
     <ul class="links">
-            {#if d.website}
-                <li><a rel="external" title="website" alt="Website of {d.name}" href="{d.website}" target="new"><Icon data={externalLinkSquare}/></a></li>
+            {#if d.web}
+                <li><a rel="external" title="website" alt="Website of {d.n}" href="{d.web}" target="new"><Icon data={externalLinkSquare}/></a></li>
             {/if}
 
-            {#if d.instagram}
-            <li><a rel="external" title="instagram" alt="{d.name} on instagram" href="https://instagram.com/{d.instagram}"><Icon data={instagram}/></a></li>
+            {#if d.ig}
+            <li><a rel="external" title="instagram" alt="{d.n} on instagram" href="https://instagram.com/{d.ig}"><Icon data={instagram}/></a></li>
             {/if}
 
-            {#if d.facebook}
-            <li><a rel="external" title="facebook" alt="{d.name} on facebook" href="https://facebook.com/{d.facebook}"><Icon data={facebookSquare}/></a></li>
+            {#if d.fb}
+            <li><a rel="external" title="facebook" alt="{d.n} on facebook" href="https://facebook.com/{d.fb}"><Icon data={facebookSquare}/></a></li>
             {/if}
             
 
         </ul>
     </div>
-
-		<h1>{d.name}</h1>
+        
+		<h1>{d.n}</h1>
 
 		{#if d.about}
 		<p>{d.about}</p>
@@ -74,9 +63,9 @@
         <div class="bottom-info">
 
         <ul>
-         {#if d.email}
+         {#if d.mail}
          <li>
-            <span class="icon"><Icon data={envelopeSquare}/></span> <a href="mailto:{d.email}">{d.email}</a>
+            <span class="icon"><Icon data={envelopeSquare}/></span> <a href="mailto:{d.mail}">{d.mail}</a>
         </li>
             {/if}
   
@@ -106,7 +95,7 @@
         z-index: -1;
         top: -5%; left: -5%;
         width: 110%; height: 110%;
-        background-image: url('static/amocbilleder-057-scaled-test-image.jpeg');
+        background-image: url('/amocbilleder-057-scaled-test-image.jpeg');
         filter: blur(1px) brightness(30%);
         pointer-events: all;
         background-size: cover;

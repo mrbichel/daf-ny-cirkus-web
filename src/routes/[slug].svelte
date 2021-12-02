@@ -7,7 +7,7 @@
 	/** @type {import('@sveltejs/kit').Load} */
 	export async function load({ page, fetch, session, stuff }) {
 
-		const url = `/${page.params.slug}.json`;
+		const url = `/api/locations/${page.params.slug}.json`;
 		const res = await fetch(url);
 
 		if (res.ok) {

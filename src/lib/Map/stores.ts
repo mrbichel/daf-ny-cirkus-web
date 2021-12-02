@@ -2,8 +2,6 @@ import { writable } from 'svelte/store';
 
 export const activeLocation = writable()
 
-
-
 function locationsStore() {
 	const { subscribe, set, update } = writable([]);
 
