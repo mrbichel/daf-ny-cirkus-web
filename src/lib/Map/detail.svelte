@@ -1,25 +1,32 @@
 
-<script lang="ts">
-    export let slug: string
+<script context="module" lang="ts">
 
-    import Icon from 'svelte-awesome/components/Icon.svelte'
-    import { phoneSquare, envelopeSquare, facebookSquare, instagram, externalLinkSquare } from 'svelte-awesome/icons';
+
+</script>
+
+<script lang="ts">
+
     import { onMount } from 'svelte';
 
-    let d;
+    import Icon from 'svelte-awesome/components/Icon.svelte'
+    /*import { phoneSquare, envelopeSquare, facebookSquare, instagram, externalLinkSquare } from 'svelte-awesome/icons';*/
 
+    let d;
     onMount(async () => {
         // const res = await fetch(`https://jsonplaceholder.typicode.com/photos?_limit=20`);
         // photos = await res.json();
 
-        const url = `/api/locations/${slug}.json`;
+        /*const url = `/api/locations/${slug}.json`;
 
         const res = await fetch(url);
         if(res.ok) {
             d = await res.json()
-        }
+        }*/
 
+        // fetch images here
     });
+
+    export let location
 
 </script>
 
@@ -30,7 +37,7 @@
 <!--<h1>Detail view {randomNumber}</h1>-->
 
 {#if d}
-<div class="detail-wrapper">
+<div class="detail-wrapper" >
 
 <div class="top-info">
     <address>

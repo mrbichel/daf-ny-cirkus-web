@@ -1,28 +1,12 @@
 <script lang="ts">
 	import Navigation from '$lib/Navigation/index.svelte';
-	import '../app.css';
-
 	import { onMount } from 'svelte';
-
-	let Map;
-
-	onMount(async () => {
-		const module = await import('$lib/Map/index.svelte');
-		Map = module.default;
-
-	});
-
 </script>
 
 <Navigation />
 
 <main>
-	
-	<svelte:component this={Map}>
-	</svelte:component>
-	
 	<slot/>
-
 </main>
 
 <footer>
@@ -34,16 +18,20 @@
 </footer>
 
 <style lang="scss">
-main {
-    height: 100vh;
-    //display: flex;
-}
-
-footer {
+	:global {
+		@import 'src/lib/style/app.scss';
+	}
+	@import 'src/lib/style/variables.scss';
+	
+	main {
+		height: 100vh;
+		//display: flex;
+	}
+	footer {
 		position: absolute;
 		bottom: 0;
 		z-index: 1;
-		background: rgba(255,255,255,0.8);
+		background: rgba($background-color,0.8);
 		width: 100%;
 		display: flex;
 		justify-content: flex-end;
@@ -52,9 +40,9 @@ footer {
 		border-top: 1px solid grey ;
 
 		ul {
-				margin: 0.1em 0;
-				padding: 0;
-				display: inline-flex;
+			margin: 0.1em 0;
+			padding: 0;
+			display: inline-flex;
 			li {
 				list-style: none;
 				padding: 0.5em;
