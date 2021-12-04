@@ -16,12 +16,12 @@ export async function handle({ request, resolve }) {
 
 	const response = await resolve(request);
     
-    //console.log(response)
 
 	return {
 		...response,
 		headers: {
 			...response.headers,
+            'Cache-Control': 'max-age=0, s-maxage=86400'
 		}
 	};
 }

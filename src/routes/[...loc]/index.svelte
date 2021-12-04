@@ -14,13 +14,13 @@
 			data = d;
 		});
 
-		console.log(data)
+		//console.log(data)
 
 		async function fetchAll() { // TODO: cache
 			const res = await fetch('/api/locations.json')
 
 			if(!res.ok) {
-				throw "Error fetching locations"
+				throw "Error fetching locations" // FIXME
 			}
 
 			return await res.json()	
@@ -35,7 +35,7 @@
 		const props = { title: "Ny Cirkus", locations: locationStore }
 		
 		if(page.params.loc === '') {
-			unsubscribe()
+			unsubscribe() // TODO make method to always unsub
 			return {
 				props
 			}
@@ -51,6 +51,8 @@
 		if (res.ok) {		
 			const loc = await res.json()
 			locationStore.updateLocation(loc)
+
+			// TODO: empty return if no loc to enable matching for other routes
 
 			props.title = loc.n
 			return {
