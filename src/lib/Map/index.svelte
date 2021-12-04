@@ -1,7 +1,6 @@
 <script context="module" lang="ts">
 
-  import dkgeo from './map.geo.json' //'./dk.geo.json'; //'./rollercoaster.geo.json';
-  const land = dkgeo;
+
 
   let isLoaded = false;
   
@@ -9,11 +8,15 @@
 
 <script lang="ts">
 
+  import dkgeo from './map.geo.json' //'./dk.geo.json'; 
+  const land = dkgeo;
+  const features = land.features
+
   import { page } from '$app/stores';
   import { locationStore } from '$lib/Map/stores'
 
   import { goto, invalidate, prefetch, prefetchRoutes } from '$app/navigation';
-	import { onMount } from "svelte";
+	import { onMount, beforeUpdate, afterUpdate, onDestroy, setContext } from "svelte";
 
   import * as d3 from 'd3'
   import { zoom, zoomIdentity, zoomTransform } from 'd3-zoom'
@@ -25,14 +28,25 @@
   import lodash_pkg from 'lodash';
   const { _ } = lodash_pkg;
 
+  import MapDetail from './detail.svelte'
+import { map } from 'svelte-awesome/icons';
+
+  setContext(map, {
+		getProjection: () => projection,
+	});
+
   const markerRadius = 8
 
+  export let locations = []
 
-	$: projection = geoMercator()
-  $: expanded = _.find($locationStore, {expand: true})
+  $: projection = geoMercator()
   $: path = geoPath().projection(projection)
 
-	let width: number, height: number, initialWidth: number, initialHeight: number;
+  $: expanded = _.find($locationStore, {expand: true})
+  
+	let width: number = 2880, height: number = 1800 
+  let initialWidth: number = width, initialHeight: number = height
+
 	let g, svg, container;
 
   //const mapWidth = 2880;
@@ -47,16 +61,14 @@
 
       g.select(".marker-layer").selectAll(".marker")
       .select(".circle")
-      //.transition().duration(80)
       .attr("transform", () => `scale(${1/transform.k})`)
 
-      // TODO: update popover position if active
-      if(expanded) {
-        d3.select(".popover.expand").style("top", ll2pT(transform, expanded)[1] + "px" )
-      }
-  })
+      d3.selectAll(".popover-wrapper")
+      .style("top", (d) => {
+        return `${transform.y + projection(d.loc.coordinates)[1] * transform.k}px`
+      })
 
-  let mapFeatures
+  })
 
   function ll2pT(t: zoomTransform, d: location) {
     return projection(d.loc.coordinates).map((p, i: number) => (i === 0 ? t.x : t.y ) + (t.k * p))
@@ -65,22 +77,11 @@
   function renderPath() {
     const pad = width*0.01;
 	  projection.fitExtent([[pad, pad], [width-pad*2, height-pad*2]], dkgeo)
-    mapFeatures.attr("d", path)
   }
 
 	function renderMap() {
-
+    console.log("render map")
 	  renderPath();
-    // TODO: se pos if location active
-
-    if(expanded) {
-
-      d3.select(".popover.expand")
-      //.style("left", (d) => ll2p(d)[0] + "px" )
-      .style("top", `${projection(expanded.loc.coordinates)[1]} px` )
-
-    }
-
 	}
 
   function passWheelEvent(e, element) {
@@ -95,8 +96,21 @@
       element.node().dispatchEvent(eventClone);
   }
 
+  beforeUpdate(() => {
+		//console.log("before update")
+	});
+
+	afterUpdate(() => {
+		//console.log("after update")
+	});
+
 	onMount(async function() {
-    console.log("onMount isloaded:", isLoaded) 
+    console.log("onMount for map is run isloaded:", isLoaded) 
+
+    console.log(width, height)
+
+    projection = geoMercator()
+    path = geoPath().projection(projection)
 
     initialWidth = width
 	  initialHeight = height
@@ -104,22 +118,19 @@
     container = d3.select("#map")
     svg = container.select("svg")
 
-    svg.attr("viewBox", [0, 0, width, height])
-    .call(zoomHandler)
+    zoomHandler.extent([[0, 0], [width, height]])
+    svg.call(zoomHandler)
 
     g = svg.select(".zoom-container")
 
-    mapFeatures = g.select(".map-layer")
-		.selectAll("path")
-		.data(land.features)
-		.enter()
-		.append("path")
+    renderMap()
 
-    renderMap();
+    d3.selectAll('.marker').data(locations)
+    d3.selectAll('.popover-wrapper').data(locations)
     
-    const delaunay = d3.Delaunay.from($locationStore.map( (d) => { return projection(d.loc.coordinates)} ))
+    /*const delaunay = d3.Delaunay.from(locations.map( (d) => { return projection(d.loc.coordinates)} ))
     const voronoi = delaunay.voronoi([0, 0, width, height])
-    const cells = $locationStore.map((d, i) => {
+    const cells = locations.map((d, i) => {
       return [[projection(d.loc.coordinates)], voronoi.cellPolygon(i)]
     });
     
@@ -134,8 +145,7 @@
     .data(cells)
     .join("path")
       .attr("d", ([d, cell]) => `M${d3.polygonCentroid(cell)}L${d}`);
-    
-
+    */
     //g.append("path")
     //  .attr("d", delaunay.renderPoints(null, 2));
 
@@ -194,7 +204,6 @@
 
     e.stopPropagation()
 
-
     //const [[x0, y0], [x1, y1]] = path.bounds(d);
     const point = projection(d.loc.coordinates)
     const t0 = zoomTransform(svg.node())
@@ -205,14 +214,11 @@
 
     const scale : number = (t0.k > minScale) ? t0.k : minScale
 
-
-
     if(d.expand) {
 
       await goto(`/`) 
 
       console.log("location clicked, will close")
-
       locationStore.toggleExpand()
 
       const zOutPoint = [-point[0]*outScale + width*0.5, -point[1]*outScale + height*0.5]
@@ -324,25 +330,31 @@
 
   <section id="map" bind:clientWidth={width} bind:clientHeight={height}>
 
-    {#each $locationStore as d}
-      <div class="popover {d.type} {d.expand ? 'expand' : ''}"
-       on:wheel={ (e) => passWheelEvent(e, svg) }>
-        {$page.params.slug}
-        <!--<MapDetail slug={$page.params.slug}/>-->
-      </div>
-	  {/each}
+    {#each locations as d}
+    <div class="popover-wrapper" on:wheel={ (e) => passWheelEvent(e, svg) } >
+        <MapDetail location={d} />
+    </div>
+    {/each}
 
-	  <svg on:click={outsideClick}> 
+    <!--viewBox="0 0 {initialWidth} {initialHeight}"-->
+
+	  <svg viewBox="0 0 {width} {height}" on:click={outsideClick}> 
 		<g class="zoom-container">
 			<rect style="fill: none; pointer-events: all;"></rect>
-			<g class="map-layer">
+
+      <g class="map-layer">
+      {#each features as feature}
+      <path
+        d={path(feature)} />
+       {/each}
       </g>    
+
 			<g class="marker-layer">
-			{#each $locationStore as d}
+			{#each locations as d}
         <g class="marker {d.type} {d.expand ? 'expand' : ''}" id="marker-{d._id}" 
         transform="{`translate(${projection(d.loc.coordinates)})`}"
               on:mouseover={ () => { if(!d.expand) {prefetch(`/${d.slug}`) }} }
-              on:focus={ () => { if(!d.expand) {prefetch(`/${d.slug}`) }} }>
+              on:focus={ () => { return } }>
 
           <path class="circle"
               on:click={ (e) => clicked(e, d)  }
@@ -356,11 +368,24 @@
 
 		</g>
 	  </svg>
+
+
+
   </section>
 
 
   <style lang="scss">
-	
+  
+  .popover-wrapper {
+    pointer-events: all;
+    position: absolute;
+    left: 0;
+    right: 0;
+  }
+  svg {  
+    width: 100%;
+    height: 100%;
+  }
 	#map {
 		width: 100%;
 		height: 100%;
@@ -372,49 +397,7 @@
     fill: #26547C;
   }
 
-	.popover {
-		position: absolute;
-    left: 0;
-    right: 0;
-    margin-top: -1px;
-		//opacity: 0;
-    //max-height: 0;
-    display: block;
-    overflow: hidden;
-		color: white;
-    border-top:solid #FCFCFC 2px;
-    pointer-events: all;
 
-    transform: scaleY(0);    
-    transform-origin: top;
-    transition: transform 0.2s cubic-bezier(0.645, 0.045, 0.355, 1.000);
-
-    &.expand {
-      transform: scaleY(1); 
-    }
-    &.company {
-      //border-color: #EF476F;
-      background-color: rgba(#EF476F, 0.8);
-    }
-    &.school {
-      //border-color: #06D6A0;
-      background-color: rgba(#06D6A0, 0.8);
-    }
-    &.festival {
-      //border-color: #FFD166;
-      background-color: rgba(#FFD166, 0.8);
-    }
-
-    &.association {
-      background-color: rgba(#FFD166, 0.8);
-    }
-
-    &.support {
-    }
-    &.residency-stage {
-    }
-
-	}
 	.marker {
 
     &:focus {

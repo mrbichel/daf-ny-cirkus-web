@@ -3,11 +3,11 @@
 	import { locationStore } from '$lib/Map/stores'
 	import _ from 'lodash'
 
-    export const prerender = false;
+    //export const prerender = false;
 	/** @type {import('@sveltejs/kit').Load} */
 	export async function load({ page, fetch, session, stuff }) {
 
-		console.log("load is run")
+		console.log("load for route is run")
 
 		async function fetchAll() { // TODO: cache
 			const res = await fetch('/api/locations.json')
@@ -25,14 +25,17 @@
         		locationStore.update(locations)
 			//}
 
-
+		const props = { title: "Ny Cirkus", locations: locationStore }
+		
 		if(page.params.slug === '') {
 			return {
-				props: {
-					title: "Ny Cirkus",
-				}
+				props
 			}
 		}
+
+		/*if(!page.params.slug.match(/^[\w-]+$/)) {
+			return {}
+		}*/
 		
 		const url = `/api/locations/${page.params.slug}.json`;
 		const res = await fetch(url);
@@ -41,11 +44,9 @@
 			const loc = await res.json()
 			locationStore.updateLocation(loc)
 
+			props.title = loc.n
 			return {
-				props: {
-					slug: `${page.params.slug}`,
-					title: loc.n
-				}
+				props
 			};
 		}
 
@@ -58,18 +59,18 @@
 
 <script lang="ts">
     export let title
+	export let locations
 
 	import { onMount } from 'svelte';
+	import Map from '$lib/Map/index.svelte'
 
-	let Map;
+	//let Map;
 	onMount(async () => {
-		const module = await import('$lib/Map/index.svelte');
+		/*const module = await import('$lib/Map/index.svelte');
 		Map = module.default;
-
+*/
 		console.log("onMount for route is run")
-
 		//console.log($locationStore)
-
 	});
 
 </script>
@@ -78,8 +79,13 @@
 	<title>{title}</title>
 </svelte:head>
 
-<svelte:component this='{Map}'>
-</svelte:component>
+<Map locations={$locations} >
+
+<!--<div slot="detail">
+	<h1>hello</h1>
+</div>-->
+
+</Map>
 
 <style lang="scss">		
 </style>

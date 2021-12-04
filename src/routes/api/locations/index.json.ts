@@ -1,15 +1,12 @@
 
 import _ from 'lodash'
-import slug from 'slug'
-//const { _ } = lodash_pkg;  
+//import slug from 'slug'
 
-import connect from '$lib/mongodb-client'
 import { Location } from './_location.schema'
 import { geoDistance } from 'd3-geo'
 
 /** @type {import('@sveltejs/kit').RequestHandler} */
 export async function get({ params }) {
-    await connect();
 
     const result = await Location.find({loc: { $ne: null } }, 'n slug loc type' )
 

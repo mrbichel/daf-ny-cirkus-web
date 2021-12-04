@@ -1,7 +1,5 @@
 
 <script context="module" lang="ts">
-
-
 </script>
 
 <script lang="ts">
@@ -9,7 +7,7 @@
     import { onMount } from 'svelte';
 
     import Icon from 'svelte-awesome/components/Icon.svelte'
-    /*import { phoneSquare, envelopeSquare, facebookSquare, instagram, externalLinkSquare } from 'svelte-awesome/icons';*/
+    import { phoneSquare, envelopeSquare, facebookSquare, instagram, externalLinkSquare } from 'svelte-awesome/icons';
 
     let d;
     onMount(async () => {
@@ -17,7 +15,6 @@
         // photos = await res.json();
 
         /*const url = `/api/locations/${slug}.json`;
-
         const res = await fetch(url);
         if(res.ok) {
             d = await res.json()
@@ -27,75 +24,116 @@
     });
 
     export let location
+    //export let topOffset
 
 </script>
 
-<!--<svelte:head>
-	<title>{d.name}</title>
-</svelte:head>-->
+    
+<div class="popover {location.type} {location.expand ? 'expand' : ''}" >
+ 
+    {#if location.expand }
 
-<!--<h1>Detail view {randomNumber}</h1>-->
-
-{#if d}
 <div class="detail-wrapper" >
 
-<div class="top-info">
-    <address>
-        {#if d.address}{d.address}{/if }
-    </address>
-        
-    <ul class="links">
-            {#if d.web}
-                <li><a rel="external" title="website" alt="Website of {d.n}" href="{d.web}" target="new"><Icon data={externalLinkSquare}/></a></li>
-            {/if}
-
-            {#if d.ig}
-            <li><a rel="external" title="instagram" alt="{d.n} on instagram" href="https://instagram.com/{d.ig}"><Icon data={instagram}/></a></li>
-            {/if}
-
-            {#if d.fb}
-            <li><a rel="external" title="facebook" alt="{d.n} on facebook" href="https://facebook.com/{d.fb}"><Icon data={facebookSquare}/></a></li>
-            {/if}
+    <div class="top-info">
+        <address>
+            {#if location.address}{location.address}{/if }
+        </address>
             
-
-        </ul>
-    </div>
-        
-		<h1>{d.n}</h1>
-
-		{#if d.about}
-		<p>{d.about}</p>
-		{/if}
-		
-        <div class="bottom-info">
-
-        <ul>
-         {#if d.mail}
-         <li>
-            <span class="icon"><Icon data={envelopeSquare}/></span> <a href="mailto:{d.mail}">{d.mail}</a>
-        </li>
-            {/if}
-  
-            
-            {#if d.phone}
-            <li>
-            <span class="icon"><Icon data={phoneSquare}/></span> {d.phone}
-            </li>
-            {/if}
-
-        </ul>
-
-
+        <ul class="links">
+                {#if location.web}
+                    <li><a rel="external" title="website" alt="Website of {location.n}" href="{location.web}" target="new"><Icon data={externalLinkSquare}/></a></li>
+                {/if}
+    
+                {#if location.ig}
+                <li><a rel="external" title="instagram" alt="{location.n} on instagram" href="https://instagram.com/{location.ig}"><Icon data={instagram}/></a></li>
+                {/if}
+    
+                {#if location.fb}
+                <li><a rel="external" title="facebook" alt="{location.n} on facebook" href="https://facebook.com/{location.fb}"><Icon data={facebookSquare}/></a></li>
+                {/if}
+                
+            </ul>
         </div>
+            
+            <h1>{location.n}</h1>
+    
+            {#if location.about}
+            <p>{location.about}</p>
+            {/if}
+            
+            <div class="bottom-info">
+    
+            <ul>
+             {#if location.mail}
+             <li>
+                <span class="icon"><Icon data={envelopeSquare}/></span> <a href="mailto:{location.mail}">{location.mail}</a>
+            </li>
+                {/if}
+                
+                {#if location.phone}
+                <li>
+                <span class="icon"><Icon data={phoneSquare}/></span> {location.phone}
+                </li>
+                {/if}
+    
+            </ul>
+    
+            </div>
+    </div>
+
+    {/if}
 </div>
-{/if}
+
 
 <style lang="scss">
 
+    .popover {
+        position: absolute;
+        left: 0;
+        right: 0;
+        margin-top: -1px;
+            //opacity: 0;
+        //max-height: 0;
+        display: block;
+        overflow: hidden;
+        color: white;
+        border-top:solid #FCFCFC 2px;
+        pointer-events: all;
+
+        transform: scaleY(0);    
+        transform-origin: top;
+        transition: transform 0.2s cubic-bezier(0.645, 0.045, 0.355, 1.000);
+
+        &.expand {
+        transform: scaleY(1); 
+        }
+        &.company {
+        //border-color: #EF476F;
+        background-color: rgba(#EF476F, 0.8);
+        }
+        &.school {
+        //border-color: #06D6A0;
+        background-color: rgba(#06D6A0, 0.8);
+        }
+        &.festival {
+        //border-color: #FFD166;
+        background-color: rgba(#FFD166, 0.8);
+        }
+
+        &.association {
+        background-color: rgba(#FFD166, 0.8);
+        }
+        &.support {
+        }
+        &.residency-stage {
+        }
+	}
 
     h1, h2, h3, h4, h5, h6, p, a, span {
       pointer-events: auto;
     }
+
     .detail-wrapper::before {
         content: "";
         position: absolute;
