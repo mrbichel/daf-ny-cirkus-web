@@ -35,10 +35,6 @@ async function connect() {
         return 
     }
 
-
-    
-
-
     await mongoose.connect(uri, options)
 }
 

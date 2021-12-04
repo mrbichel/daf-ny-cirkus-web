@@ -9,6 +9,13 @@
 
 		console.log("load for route is run")
 
+		let data
+		const unsubscribe = locationStore.subscribe(d => {
+			data = d;
+		});
+
+		console.log(data)
+
 		async function fetchAll() { // TODO: cache
 			const res = await fetch('/api/locations.json')
 
@@ -20,24 +27,25 @@
 		}
 			
 			// TODO: only fetch all on actual refresh
-			//if(locationStore < 1) {
-				const locations = await fetchAll()
-        		locationStore.update(locations)
-			//}
+		if(data.length < 1) {
+			const locations = await fetchAll()
+        	locationStore.update(locations)
+		}
 
 		const props = { title: "Ny Cirkus", locations: locationStore }
 		
-		if(page.params.slug === '') {
+		if(page.params.loc === '') {
+			unsubscribe()
 			return {
 				props
 			}
 		}
 
-		/*if(!page.params.slug.match(/^[\w-]+$/)) {
+		/*if(!page.params.loc.match(/^[\w-]+$/)) {
 			return {}
 		}*/
 		
-		const url = `/api/locations/${page.params.slug}.json`;
+		const url = `/api/locations/${page.params.loc}.json`;
 		const res = await fetch(url);
 
 		if (res.ok) {		
@@ -50,6 +58,7 @@
 			};
 		}
 
+		unsubscribe()
 		return {
 			status: res.status,
 			error: new Error(`Could not load ${url}`)

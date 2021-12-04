@@ -1,13 +1,14 @@
 <script lang="ts">
 	import { page } from '$app/stores';
 	//import logo from './daf-logo.svg';
+
 </script>
 
 <header>
-
+	
 	<nav>
 		<ul>
-			<li class:active={$page.path === '/'}><a sveltekit:prefetch href="/">Map</a></li>
+			<li class:active={$page.params.loc !== undefined}><a sveltekit:prefetch href="/">Map</a></li>
 			<li class:active={$page.path === '/about'}><a sveltekit:prefetch href="/about">About</a></li>
 			<li class:active={$page.path === '/articles'}><a sveltekit:prefetch href="/articles">Articles</a></li>
 			<li class:active={$page.path === '/contact'}><a sveltekit:prefetch href="/contact">Contact</a></li>
