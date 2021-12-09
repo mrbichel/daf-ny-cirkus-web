@@ -1,3 +1,4 @@
+import type { Dayjs } from "dayjs";
 
 interface location {
     readonly _id: number;
@@ -17,8 +18,8 @@ interface location {
     readonly ig?: string;
     readonly fb?: string;
 
-    lastFetched?: Date;
-    lastFetchedDetail?: Date;
+    //lastFetched?: Date;
+    lastFetchedDetail?: Dayjs;
 
     expand?: boolean;
     closestNeighbour?: {

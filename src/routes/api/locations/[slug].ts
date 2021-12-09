@@ -8,7 +8,6 @@ export async function get({ params }) {
     if(loc) {
         const obj : location = loc.toObject()
         obj.lastFetched = new Date()
-        obj.lastFetchedDetail = new Date()
 
         return { 
             body: obj

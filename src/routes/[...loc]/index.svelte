@@ -59,7 +59,7 @@
 
 			if (res.ok) {		
 				const loc = await res.json()
-				locationStore.updateOne(loc)
+				locationStore.updateDetails(loc)
 				
 			} else {
 				// TODO: render in locations popover

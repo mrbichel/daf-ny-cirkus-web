@@ -9,6 +9,8 @@ const maxAgeSeconds = 120
 function createLocationStore() {
 	const { subscribe, update } = writable([]);
 
+	let lastFetched = undefined
+
 	const store = {
 		subscribe,
 		//getActive: () => update(n => n + 1),
@@ -31,10 +33,12 @@ function createLocationStore() {
 		//getById: (_id) => _.find(get(), {_id: _id}), derived store ?? 
 		//set,
 		update: (data) => {
-			return update(c => {
+			lastFetched = dayjs();
 
+			return update(c => {
 				return data.map(d => {
 					const i = _.findIndex(c, {_id: d._id})
+					
 					if(i != -1) {
 						return _.merge(c[i], d)
 
@@ -46,10 +50,11 @@ function createLocationStore() {
 				})
 			})
 		},
-		updateOne: (data) => {
+		updateDetails: (data) => {
 			return update(c => {
 				const i = _.findIndex(c, {_id: data._id})
 				c[i] = _.merge(c[i], data)
+				c[i].lastFetchedDetail = dayjs()
 				return c
 			})
 		},
@@ -75,14 +80,7 @@ function createLocationStore() {
 			}
 
 			
-			const result = _.find(current, (c) => {
-				if( isExp(c.lastFetched) ) {
-					return true
-				}
-			})
-
-			return (result != undefined)
-
+			return isExp(lastFetched)
 		},
 
 		getBySlug: (slug) => {

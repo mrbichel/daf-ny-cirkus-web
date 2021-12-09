@@ -28,7 +28,6 @@ export async function get({ params }) {
 
         //d.closestNeighbours = _.sortBy( neighbours, 'distance');
         d.closestNeighbour = _.sortBy( neighbours, 'dist')[0];
-        d.lastFetched = new Date()
 
         return d
     })
