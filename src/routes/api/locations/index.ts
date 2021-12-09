@@ -11,7 +11,7 @@ export async function get({ params }) {
     const result = await Location.find({loc: { $ne: null } }, 'n slug loc type' )
 
     // TODO: reverse address lookup if loc is missing
-    const objects = result.map(d => d.toObject())
+    const objects : location[] = result.map(d => d.toObject())
     //const locations = objects
 
     const locations = objects.map(d => {
@@ -28,11 +28,12 @@ export async function get({ params }) {
 
         //d.closestNeighbours = _.sortBy( neighbours, 'distance');
         d.closestNeighbour = _.sortBy( neighbours, 'dist')[0];
+        d.lastFetched = new Date()
+
         return d
     })
 
     //console.log(locations)
-    
     // 
 
     /*const update_dates = locations.map( (l) => {

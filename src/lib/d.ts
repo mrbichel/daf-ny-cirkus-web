@@ -17,6 +17,9 @@ interface location {
     readonly ig?: string;
     readonly fb?: string;
 
+    lastFetched?: Date;
+    lastFetchedDetail?: Date;
+
     expand?: boolean;
     closestNeighbour?: {
       dist: number;

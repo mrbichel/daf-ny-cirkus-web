@@ -1,12 +1,15 @@
-import { writable } from 'svelte/store';
+import { writable, get } from 'svelte/store';
 import _ from 'lodash'
 
+import dayjs from 'dayjs'
 //export const activeLocation = writable()
 
-function createLocationStore() {
-	const { subscribe, set, update } = writable([]);
+const maxAgeSeconds = 120
 
-	return {
+function createLocationStore() {
+	const { subscribe, update } = writable([]);
+
+	const store = {
 		subscribe,
 		//getActive: () => update(n => n + 1),
 		toggleExpand: (_id=undefined) => { // expands one at a time only 
@@ -43,15 +46,53 @@ function createLocationStore() {
 				})
 			})
 		},
-		updateLocation: (data) => {
+		updateOne: (data) => {
 			return update(c => {
 				const i = _.findIndex(c, {_id: data._id})
 				c[i] = _.merge(c[i], data)
 				return c
 			})
 		},
+		isExpired: (slug = undefined) => {
+
+			const current : location[] = get(store)
+
+			if(current.length < 1) return true
+
+			const isExp = (t) => {
+				if(!t) {
+					return true
+				}
+				return dayjs().isAfter(dayjs(t).add(maxAgeSeconds, 'seconds'))
+			}
+
+			if(slug) {
+				const l = _.find(current, {slug: slug})
+				if(!l || isExp(l.lastFetchedDetail)) {
+					return true
+				}
+				return false
+			}
+
+			
+			const result = _.find(current, (c) => {
+				if( isExp(c.lastFetched) ) {
+					return true
+				}
+			})
+
+			return (result != undefined)
+
+		},
+
+		getBySlug: (slug) => {
+			const current : location[] = get(store)
+			return _.find(current, {slug: slug})
+		}
 
 	  };
+
+	  return store
 }
 
 export const locationStore = createLocationStore()

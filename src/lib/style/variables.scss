@@ -1,1 +1,15 @@
-$background-color: #fcfcfc;
+$background-color: rgb(252, 252, 252);
+$map-primary-color: rgb(38, 84, 124);
+
+
+$company-color: rgb(239, 71, 111);
+$school-color: rgb(6, 214, 160);
+$festival-color: rgb(255, 209, 102);
+
+$locColorMap: (
+  company: $company-color,
+  school: $school-color,
+  festival: $festival-color
+);
+
+

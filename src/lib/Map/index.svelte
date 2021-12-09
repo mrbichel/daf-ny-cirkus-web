@@ -8,12 +8,12 @@
 
 <script lang="ts">
 
-  import dkgeo from './map.geo.json' //'./dk.geo.json'; 
+  import dkgeo from './map.geo.json'
   const land = dkgeo;
   const features = land.features
 
   import { page } from '$app/stores';
-  import { locationStore } from '$lib/Map/stores'
+  import { locationStore } from '$lib/stores'
 
   import { goto, invalidate, prefetch, prefetchRoutes } from '$app/navigation';
 	import { onMount, beforeUpdate, afterUpdate, onDestroy, setContext } from "svelte";
@@ -23,17 +23,16 @@
   import { interpolateNumber, interpolateZoom } from 'd3-interpolate'
 	import { geoMercator, geoPath } from "d3-geo";
 
-  import { describeArc } from './utils'
+  import { describeArc, getDistance } from './utils'
   
   import lodash_pkg from 'lodash';
   const { _ } = lodash_pkg;
 
   import MapDetail from './detail.svelte'
-import { map } from 'svelte-awesome/icons';
 
-  setContext(map, {
+  /*setContext(map, {
 		getProjection: () => projection,
-	});
+	});*/
 
   const markerRadius = 8
 
@@ -42,7 +41,28 @@ import { map } from 'svelte-awesome/icons';
   $: projection = geoMercator()
   $: path = geoPath().projection(projection)
 
-  $: expanded = _.find($locationStore, {expand: true})
+  $: expanded = _.find($locationStore, {expand: true}) // FIXME
+
+  const locTypes = {
+    company: {
+      title: "Companies",
+      color: "#EF476F"
+    },
+    school: {
+      title: "Schools", 
+      color: "#06D6A0"
+    },
+    festival: {
+      title: "Festivals", 
+      color: "#FFD166"
+    }
+  }
+
+  const getTypeCssVars = (key) => {
+    return Object.entries(locTypes[key])
+		.map(([key, value]) => `--${key}:${value}`)
+		.join(';');
+  }
   
 	let width: number = 2880, height: number = 1800 
   let initialWidth: number = width, initialHeight: number = height
@@ -67,12 +87,7 @@ import { map } from 'svelte-awesome/icons';
       .style("top", (d) => {
         return `${transform.y + projection(d.loc.coordinates)[1] * transform.k}px`
       })
-
   })
-
-  function ll2pT(t: zoomTransform, d: location) {
-    return projection(d.loc.coordinates).map((p, i: number) => (i === 0 ? t.x : t.y ) + (t.k * p))
-  }
 
   function renderPath() {
     const pad = width*0.01;
@@ -188,12 +203,6 @@ import { map } from 'svelte-awesome/icons';
         });
     }*/
 
-  }
-
-  function getDistance(a : [number, number], b : [number, number]) {
-      const A = a[0] - b[0]
-      const B = a[1] - b[1]
-    return Math.sqrt(A * A + B * B)
   }
 
   function getProjectedDistance(a : [number, number], b : [number, number]) {
@@ -336,6 +345,15 @@ import { map } from 'svelte-awesome/icons';
     </div>
     {/each}
 
+    <aside id="legend">
+      <ul>
+        {#each Object.keys(locTypes) as t}
+        <li style="{getTypeCssVars(t)}" class="{t}">{locTypes[t].title}</li>
+        {/each}
+      </ul>
+    </aside>
+
+
     <!--viewBox="0 0 {initialWidth} {initialHeight}"-->
 
 	  <svg viewBox="0 0 {width} {height}" on:click={outsideClick}> 
@@ -352,7 +370,7 @@ import { map } from 'svelte-awesome/icons';
 			<g class="marker-layer">
 			{#each locations as d}
         <g class="marker {d.type} {d.expand ? 'expand' : ''}" id="marker-{d._id}" 
-        transform="{`translate(${projection(d.loc.coordinates)})`}"
+        transform="{`translate(${projection(d.loc.coordinates)})`}" style="{getTypeCssVars(d.type)}"
               on:mouseover={ () => { if(!d.expand) {prefetch(`/${d.slug}`) }} }
               on:focus={ () => { return } }>
 
@@ -376,6 +394,22 @@ import { map } from 'svelte-awesome/icons';
 
   <style lang="scss">
   
+  @use "sass:color";
+  @import 'src/lib/style/variables.scss';
+
+  #legend {
+    position: absolute;
+    right: 1em;
+    top: 2em;
+    pointer-events: all;
+
+    @each $class, $color in $locColorMap {
+      li.#{$class} {
+        color: $color;
+      }
+    }
+
+  }
   .popover-wrapper {
     pointer-events: all;
     position: absolute;
@@ -394,7 +428,7 @@ import { map } from 'svelte-awesome/icons';
 	}
 
   .map-layer {
-    fill: #26547C;
+    fill: $map-primary-color;
   }
 
 
@@ -402,8 +436,6 @@ import { map } from 'svelte-awesome/icons';
 
     &:focus {
         outline: none;
-        .circle {
-        }
     }
     .circle {
       cursor: pointer;
@@ -420,21 +452,18 @@ import { map } from 'svelte-awesome/icons';
       }
       &:hover {
         cursor: pointer;
-      }
-    }
-    &.company .circle {
-      fill: #EF476F;
-      stroke: lighten(#EF476F, 20);
-    }
-    &.school .circle {
-      fill: #06D6A0;
-      stroke: lighten(#06D6A0, 20);
+      }      
 
     }
-    &.festival .circle {
-      fill: #FFD166;
-      stroke: lighten(#FFD166, 20);
-    }
+
+    @each $class, $color in $locColorMap {
+        &.#{$class} {
+          .circle {
+            fill: $color;
+            stroke: lighten($color, 20);
+          }
+       }
+      }
     &.expand .circle {
       //fill: #26547C;
       stroke: #FCFCFC;

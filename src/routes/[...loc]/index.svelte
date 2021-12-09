@@ -1,6 +1,6 @@
 <script context="module" lang="ts">
 
-	import { locationStore } from '$lib/Map/stores'
+	import { locationStore } from '$lib/stores'
 	import _ from 'lodash'
 
     //export const prerender = false;
@@ -9,33 +9,41 @@
 
 		console.log("load for route is run")
 
-		let data
+		const slug = page.params.loc
+
+		/*let data
 		const unsubscribe = locationStore.subscribe(d => {
 			data = d;
-		});
+		});*/
 
 		//console.log(data)
 
 		async function fetchAll() { // TODO: cache
-			const res = await fetch('/api/locations.json')
+			const url = '/api/locations'
+			const res = await fetch(url)
 
 			if(!res.ok) {
-				throw "Error fetching locations" // FIXME
+				return {
+					status: res.status,
+					error: new Error(`Could not load ${url}`)
+				}
 			}
 
 			return await res.json()	
 		}
 			
-			// TODO: only fetch all on actual refresh
-		if(data.length < 1) {
+		if(locationStore.isExpired() ) {
 			const locations = await fetchAll()
         	locationStore.update(locations)
 		}
 
-		const props = { title: "Ny Cirkus", locations: locationStore }
+		const props = {
+			title: 'Ny Cirkus',
+			location: undefined,
+			slug: slug
+		}
 		
-		if(page.params.loc === '') {
-			unsubscribe() // TODO make method to always unsub
+		if(slug === '') {
 			return {
 				props
 			}
@@ -44,33 +52,43 @@
 		/*if(!page.params.loc.match(/^[\w-]+$/)) {
 			return {}
 		}*/
-		
-		const url = `/api/locations/${page.params.loc}.json`;
-		const res = await fetch(url);
 
-		if (res.ok) {		
-			const loc = await res.json()
-			locationStore.updateLocation(loc)
+		if(locationStore.isExpired(page.params.loc)) {
+			const url = `/api/locations/${page.params.loc}`;
+			const res = await fetch(url);
 
-			// TODO: empty return if no loc to enable matching for other routes
+			if (res.ok) {		
+				const loc = await res.json()
+				locationStore.updateOne(loc)
+				
+			} else {
+				// TODO: render in locations popover
+				return {
+					status: res.status,
+					error: new Error(`Could not load ${url}`)
+				}
+			}
 
-			props.title = loc.n
+		}
+		const location = locationStore.getBySlug(slug)
+		if(!location) {
 			return {
-				props
-			};
+					status: '404',
+					error: new Error(`Location with slug ${slug} not found`)
+				}
 		}
 
-		unsubscribe()
-		return {
-			status: res.status,
-			error: new Error(`Could not load ${url}`)
-		};
+		props.location = location
+		props.title = props.location.n
+		return { props };
 	}
 </script>   
 
 <script lang="ts">
-    export let title
-	export let locations
+
+    export let title = "Ny Cirkus"
+	export let location
+	export let slug
 
 	import { onMount } from 'svelte';
 	import Map from '$lib/Map/index.svelte'
@@ -78,19 +96,19 @@
 	//let Map;
 	onMount(async () => {
 		/*const module = await import('$lib/Map/index.svelte');
-		Map = module.default;
-*/
+		Map = module.default;*/
 		console.log("onMount for route is run")
 		//console.log($locationStore)
 	});
 
+
 </script>
 
 <svelte:head>
-	<title>{title}</title>
+	<title>{ title }</title>
 </svelte:head>
 
-<Map locations={$locations} >
+<Map locations={$locationStore} >
 
 <!--<div slot="detail">
 	<h1>hello</h1>
