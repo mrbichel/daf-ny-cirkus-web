@@ -92,11 +92,6 @@
 	  projection.fitExtent([[pad, pad], [width-pad*2, height-pad*2]], dkgeo)
   }
 
-	function renderMap() {
-    console.log("render map")
-	  renderPath();
-	}
-
   function passWheelEvent(e, element) {
       e.preventDefault();
        const eventClone = new e.constructor(e.type, {
@@ -136,7 +131,7 @@
 
     g = svg.select(".zoom-container")
 
-    renderMap()
+    renderPath()
 
     d3.selectAll('.marker').data(locations)
     d3.selectAll('.popover-wrapper').data(locations)
@@ -302,6 +297,7 @@
     //console.dir(wDiff)
     //const t0 = zoomTransform(svg.node());
     //console.log()
+
 	  //popovers
 		//.style("left", (d) => ll2pT(t0, d)[0] - (wDiff*0.5) + "px" )
 		//.style("top",  (d) => ll2pT(t0, d)[1] - (hDiff*0.5) + "px" )
@@ -319,8 +315,17 @@
 
 	function resizeMap() {
 
+    // Just reset on resize
+    svg.call(zoomHandler.transform, zoomIdentity);
+
+    projection = geoMercator()
+    path = geoPath().projection(projection)
+
+    zoomHandler.extent([[0, 0], [width, height]])
     const t0 = zoomTransform(svg.node());
-		renderMap();
+
+
+		renderPath();
     
     /*popovers
 		.style("left", (d) => ll2pT(t0,d)[0] + "px" )
@@ -328,7 +333,7 @@
 */
 
 // TODO: preserve center
-    svg.call(zoomHandler.transform, t0);
+    //svg.call(zoomHandler.transform, t0);
 		throttledResize.cancel();
 	}
 
@@ -347,7 +352,7 @@
     <aside id="legend">
       <ul>
         {#each Object.keys(locTypes) as t}
-        <li style="{getTypeCssVars(t)}" class="{t}">{locTypes[t].title}</li>
+        <li class="{t}">{locTypes[t].title}</li>
         {/each}
       </ul>
     </aside>
@@ -369,7 +374,7 @@
 			<g class="marker-layer">
 			{#each locations as d}
         <g class="marker {d.type} {d.expand ? 'expand' : ''}" id="marker-{d._id}" 
-        transform="{`translate(${projection(d.loc.coordinates)})`}" style="{getTypeCssVars(d.type)}"
+        transform="{`translate(${projection(d.loc.coordinates)})`}"
               on:mouseover={ () => { if(!d.expand) {prefetch(`/${d.slug}`) }} }
               on:focus={ () => { return } }>
 
