@@ -390,7 +390,6 @@
 
   <style lang="scss">
   
-  @use "sass:color";
   @import 'src/lib/style/variables.scss';
 
   #legend {

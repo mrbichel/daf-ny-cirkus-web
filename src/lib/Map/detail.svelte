@@ -5,7 +5,6 @@
 <script lang="ts">
 
     import { onMount } from 'svelte';
-
     import Icon from 'svelte-awesome/components/Icon.svelte'
     import { phoneSquare, envelopeSquare, facebookSquare, instagram, externalLinkSquare } from 'svelte-awesome/icons';
 
@@ -88,17 +87,18 @@
 
 <style lang="scss">
 
+    @import 'src/lib/style/variables.scss';
     .popover {
         position: absolute;
         left: 0;
         right: 0;
         margin-top: -1px;
-            //opacity: 0;
+        //opacity: 0;
         //max-height: 0;
         display: block;
         overflow: hidden;
         color: white;
-        border-top:solid #FCFCFC 2px;
+        border-top:solid $background-color 2px;
         pointer-events: all;
 
         transform: scaleY(0);    
@@ -106,27 +106,13 @@
         transition: transform 0.2s cubic-bezier(0.645, 0.045, 0.355, 1.000);
 
         &.expand {
-        transform: scaleY(1); 
-        }
-        &.company {
-        //border-color: #EF476F;
-        background-color: rgba(#EF476F, 0.8);
-        }
-        &.school {
-        //border-color: #06D6A0;
-        background-color: rgba(#06D6A0, 0.8);
-        }
-        &.festival {
-        //border-color: #FFD166;
-        background-color: rgba(#FFD166, 0.8);
+            transform: scaleY(1); 
         }
 
-        &.association {
-        background-color: rgba(#FFD166, 0.8);
-        }
-        &.support {
-        }
-        &.residency-stage {
+        @each $class, $color in $locColorMap {
+            &.#{$class} {
+                background-color: rgba(darken($color, 0.2), 0.8);
+            }
         }
 	}
 
