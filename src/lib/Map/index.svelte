@@ -1,12 +1,10 @@
 <script context="module" lang="ts">
-
-
-
-  let isLoaded = false;
-  
+  let componentisLoaded = false;
 </script>
 
 <script lang="ts">
+
+  let loaded = false;
 
   import dkgeo from './map.geo.json'
   const land = dkgeo;
@@ -120,7 +118,7 @@
 	});
 
 	onMount(async function() {
-    console.log("onMount for map is run isloaded:", isLoaded) 
+    console.log("onMount for map is run componentisLoaded:", componentisLoaded) 
 
     console.log(width, height)
 
@@ -164,7 +162,8 @@
     //g.append("path")
     //  .attr("d", delaunay.renderPoints(null, 2));
 
-    isLoaded = true;
+    componentisLoaded = true
+    loaded = true
 
 	});
 
@@ -337,7 +336,7 @@
 
   <svelte:window on:resize={resize} />
 
-  <section id="map" bind:clientWidth={width} bind:clientHeight={height}>
+  <section id="map" class={loaded ? '' : 'loading'} bind:clientWidth={width} bind:clientHeight={height}>
 
     {#each locations as d}
     <div class="popover-wrapper" on:wheel={ (e) => passWheelEvent(e, svg) } >
@@ -387,10 +386,7 @@
 		</g>
 	  </svg>
 
-
-
   </section>
-
 
   <style lang="scss">
   
@@ -424,13 +420,20 @@
 		width: 100%;
 		height: 100%;
 		overflow: hidden;
-		background-color: #FCFCFC;
+		background-color: $background-color;
+
+    opacity: 1;
+    transition-property: opacity;
+    transition-duration: 0.6s;
+    &.loading {
+      opacity: 0;
+    }
+
 	}
 
   .map-layer {
     fill: $map-primary-color;
   }
-
 
 	.marker {
 
