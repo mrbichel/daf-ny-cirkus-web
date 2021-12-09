@@ -19,7 +19,7 @@ function createLocationStore() {
 				return c.map(v => {
 					//console.log(v)
 					if(v._id === _id) {
-						v.expand = !v.expand
+						v.expand = true
 					} else {
 						v.expand = false
 					}

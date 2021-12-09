@@ -1,12 +1,11 @@
 <script lang="ts">
 	import Navigation from '$lib/Navigation/index.svelte';
-	import { onMount } from 'svelte';
 </script>
 
 <Navigation />
 
 <main>
-	<slot/>
+	<slot></slot>
 </main>
 
 <footer>

@@ -98,9 +98,15 @@
 		/*const module = await import('$lib/Map/index.svelte');
 		Map = module.default;*/
 		console.log("onMount for route is run")
-		//console.log($locationStore)
 	});
 
+	$: if(location) {
+			locationStore.toggleExpand(location._id)
+			//console.log("expand", location)
+	} else {
+			locationStore.toggleExpand()
+			//console.log("close")
+	}
 
 </script>
 
@@ -108,13 +114,7 @@
 	<title>{ title }</title>
 </svelte:head>
 
-<Map locations={$locationStore} >
-
-<!--<div slot="detail">
-	<h1>hello</h1>
-</div>-->
-
-</Map>
+<Map locations={$locationStore} expanded={location} />
 
 <style lang="scss">		
 </style>

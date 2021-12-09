@@ -35,37 +35,33 @@
   const markerRadius = 8
 
   export let locations = []
+  export let expanded = undefined
 
   $: projection = geoMercator()
   $: path = geoPath().projection(projection)
 
-  $: expanded = _.find($locationStore, {expand: true}) // FIXME
-
   const locTypes = {
     company: {
       title: "Companies",
-      color: "#EF476F"
     },
     school: {
       title: "Schools", 
-      color: "#06D6A0"
     },
     festival: {
       title: "Festivals", 
-      color: "#FFD166"
     }
   }
 
-  const getTypeCssVars = (key) => {
+  /*const getTypeCssVars = (key) => {
     return Object.entries(locTypes[key])
 		.map(([key, value]) => `--${key}:${value}`)
 		.join(';');
-  }
+  }*/
   
 	let width: number = 2880, height: number = 1800 
   let initialWidth: number = width, initialHeight: number = height
 
-	let g, svg, container;
+	let g, svg, container
 
   //const mapWidth = 2880;
   //const mapHeight = 1800;
@@ -81,6 +77,8 @@
       .select(".circle")
       .attr("transform", () => `scale(${1/transform.k})`)
 
+      // FIXME: save transform and apply continuesly, this is not hit when loading on location slug
+      // FIXME: avoid calculating position from top for all non visible elements - maybe use svelte transitions ? 
       d3.selectAll(".popover-wrapper")
       .style("top", (d) => {
         return `${transform.y + projection(d.loc.coordinates)[1] * transform.k}px`
@@ -114,9 +112,7 @@
 
 	onMount(async function() {
     console.log("onMount for map is run componentisLoaded:", componentisLoaded) 
-
-    console.log(width, height)
-
+    //console.log(width, height)
     projection = geoMercator()
     path = geoPath().projection(projection)
 
@@ -125,17 +121,24 @@
 
     container = d3.select("#map")
     svg = container.select("svg")
-
     zoomHandler.extent([[0, 0], [width, height]])
+    renderPath()
+
     svg.call(zoomHandler)
+
+    const t = zoomTransform(svg.node())
+    d3.selectAll('.marker').data(locations)
+
+    d3.selectAll('.popover-wrapper').data(locations)
+      .style("top", (d) => {
+        return `${t.y + projection(d.loc.coordinates)[1] * t.k}px`
+      })
 
     g = svg.select(".zoom-container")
 
-    renderPath()
 
-    d3.selectAll('.marker').data(locations)
-    d3.selectAll('.popover-wrapper').data(locations)
     
+
     /*const delaunay = d3.Delaunay.from(locations.map( (d) => { return projection(d.loc.coordinates)} ))
     const voronoi = delaunay.voronoi([0, 0, width, height])
     const cells = locations.map((d, i) => {
@@ -159,7 +162,6 @@
 
     componentisLoaded = true
     loaded = true
-
 	});
 
   async function outsideClick(e) {
@@ -167,35 +169,15 @@
     console.log("Clicked outside")
 
     d3.select(`.marker.expand`).select(".circle").transition().duration(750)
-        .attrTween("d", (d: location) => {
+        .attrTween("d", () => {
             const angleEnd= interpolateNumber(90, 270);
             return function(t: number) { return describeArc(0,0, markerRadius, -90, angleEnd(t)) };
         })
-        .on("end", async () => {
-          // TODO: activeLocation = undefined
-          //await goto(`/`) 
-        });
 
     if($page.path != '/') {
-      locationStore.toggleExpand()
+      //locationStore.toggleExpand()
       await goto('/')
     }
-
-    
-
-    /*if(activeLocation) {
-      e.stopPropagation()
-      
-      d3.select(`#marker-${activeLocation._id}`).select(".circle").transition().duration(750)
-        .attrTween("d", (d: location) => {
-            const angleEnd= interpolateNumber(90, 270);
-            return function(t: number) { return describeArc(0,0, markerRadius, -90, angleEnd(t)) };
-        })
-        .on("end", async () => {
-          // TODO: activeLocation = undefined
-          await goto(`/`) 
-        });
-    }*/
 
   }
 
@@ -203,29 +185,26 @@
     return getDistance(projection(a), projection(b))
   }
 
-	async function clicked(e, d: location) {
+  async function expandLocation(d : location) {
+    // move expand location here from clicked and fire on load if it has slug
+  }
 
+	async function clicked(e, d: location) {
     e.stopPropagation()
 
     //const [[x0, y0], [x1, y1]] = path.bounds(d);
     const point = projection(d.loc.coordinates)
     const t0 = zoomTransform(svg.node())
     const outScale : number = (t0.k < 2) ? t0.k : t0.k *0.8
-
     const distance = getProjectedDistance(d.closestNeighbour.loc.coordinates, d.loc.coordinates)
     const minScale = markerRadius*3 / distance // zoom in so dots are seperated by atleast 1 marker radius
-
     const scale : number = (t0.k > minScale) ? t0.k : minScale
 
     if(d.expand) {
-
       await goto(`/`) 
-
       console.log("location clicked, will close")
-      locationStore.toggleExpand()
 
       const zOutPoint = [-point[0]*outScale + width*0.5, -point[1]*outScale + height*0.5]
-
 
       svg.transition().duration(750).call(
           zoomHandler.transform,
@@ -237,7 +216,7 @@
         })
 
         d3.select(`#marker-${d._id}`).select(".circle").transition().duration(750)
-        .attrTween("d", (d: location) => {
+        .attrTween("d", () => {
             const angleEnd= interpolateNumber(90, 270)
             return function(t: number) { return describeArc(0,0, markerRadius, -90, angleEnd(t)) }
         })
@@ -248,10 +227,8 @@
 
           await new Promise(resolve => {
             if(expanded) {
-              console.log("close other expanded")
-
               d3.select(`#marker-${expanded._id}`).select(".circle").transition().duration(500)
-                .attrTween("d", (d: location) => {
+                .attrTween("d", () => {
                     const angleEnd= interpolateNumber(90, 270)
                     return function(t: number) { return describeArc(0,0, markerRadius, -90, angleEnd(t)) }
                 }).on("end", async () => {
@@ -263,7 +240,6 @@
             }
           });
 
-        locationStore.toggleExpand(d._id)
         await goto(`/${d.slug}`)
 
         const zInPoint = [-point[0]*scale + width*0.5, -point[1]*scale + height*0.38]
@@ -322,11 +298,9 @@
     path = geoPath().projection(projection)
 
     zoomHandler.extent([[0, 0], [width, height]])
-    const t0 = zoomTransform(svg.node());
-
+    //const t0 = zoomTransform(svg.node());
 
 		renderPath();
-    
     /*popovers
 		.style("left", (d) => ll2pT(t0,d)[0] + "px" )
 		.style("top",  (d) => ll2pT(t0,d)[1] + "px" )
