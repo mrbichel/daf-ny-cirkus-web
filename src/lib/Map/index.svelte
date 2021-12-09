@@ -64,7 +64,7 @@
 	let width: number = 2880, height: number = 1800 
   let initialWidth: number = width, initialHeight: number = height
 
-	let zoomContainer, svg
+	let zoomContainer, svg, markerLayer
 
   //const mapWidth = 2880;
   //const mapHeight = 1800;
@@ -73,14 +73,12 @@
       .scaleExtent([0.8, 80])
       .on("zoom", ({transform}) => {
       
-        const g = d3.select(zoomContainer)
+        d3.select(zoomContainer).attr("transform", transform)
+        .attr("stroke-width", 1 / transform.k);
 
-        g.attr("transform", transform);
-        g.attr("stroke-width", 1 / transform.k);
-
-        g.select(".marker-layer").selectAll(".marker")
-      .select(".circle")
-      .attr("transform", () => `scale(${1/transform.k})`)
+        d3.select(markerLayer).selectAll(".marker")
+          .select(".circle")
+          .attr("transform", () => `scale(${1/transform.k})`)
 
       // FIXME: save transform and apply continuesly, this is not hit when loading on location slug
       // FIXME: avoid calculating position from top for all non visible elements - maybe use svelte transitions ? 
@@ -359,7 +357,7 @@
        {/each}
       </g>    
 
-			<g class="marker-layer">
+			<g class="marker-layer" bind:this={markerLayer}>
 			{#each locations as d}
         <g class="marker {d.type} {d.expand ? 'expand' : ''}" id="marker-{d._id}" 
         transform="{`translate(${projection(d.loc.coordinates)})`}"
