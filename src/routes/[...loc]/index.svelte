@@ -8,7 +8,6 @@
 	export async function load({ page, fetch, session, stuff }) {
 
 		console.log("load for route is run")
-
 		const slug = page.params.loc
 
 		/*let data
@@ -40,6 +39,7 @@
 		const props = {
 			title: 'Ny Cirkus',
 			location: undefined,
+			locations: locationStore,	
 			slug: slug
 		}
 		
@@ -88,6 +88,7 @@
 
     export let title = "Ny Cirkus"
 	export let location
+	export let locations
 	export let slug
 
 	import { onMount } from 'svelte';
@@ -101,10 +102,10 @@
 	});
 
 	$: if(location) {
-			locationStore.toggleExpand(location._id)
+			locations.toggleExpand(location._id)
 			//console.log("expand", location)
 	} else {
-			locationStore.toggleExpand()
+			locations.toggleExpand()
 			//console.log("close")
 	}
 
@@ -114,7 +115,7 @@
 	<title>{ title }</title>
 </svelte:head>
 
-<Map locations={$locationStore} expanded={location} />
+<Map locations={$locations} expanded={location} />
 
 <style lang="scss">		
 </style>

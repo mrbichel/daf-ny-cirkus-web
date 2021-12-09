@@ -1,24 +1,17 @@
 <script context="module" lang="ts">
   let componentisLoaded = false;
-</script>
-
-<script lang="ts">
-
-  let loaded = false;
 
   import dkgeo from './map.geo.json'
   const land = dkgeo;
   const features = land.features
 
   import { page } from '$app/stores';
-  import { locationStore } from '$lib/stores'
-
   import { goto, invalidate, prefetch, prefetchRoutes } from '$app/navigation';
 	import { onMount, beforeUpdate, afterUpdate, onDestroy, setContext } from "svelte";
 
   import * as d3 from 'd3'
   import { zoom, zoomIdentity, zoomTransform } from 'd3-zoom'
-  import { interpolateNumber, interpolateZoom } from 'd3-interpolate'
+  import { interpolateNumber } from 'd3-interpolate'
 	import { geoMercator, geoPath } from "d3-geo";
 
   import { describeArc, getDistance } from './utils'
@@ -27,6 +20,16 @@
   const { _ } = lodash_pkg;
 
   import MapDetail from './detail.svelte'
+
+
+</script>
+
+<script lang="ts">
+
+  let loaded = false;
+
+
+
 
   /*setContext(map, {
 		getProjection: () => projection,
@@ -61,7 +64,7 @@
 	let width: number = 2880, height: number = 1800 
   let initialWidth: number = width, initialHeight: number = height
 
-	let g, svg, container
+	let zoomContainer, svg
 
   //const mapWidth = 2880;
   //const mapHeight = 1800;
@@ -69,11 +72,13 @@
 	const zoomHandler = zoom()
       .scaleExtent([0.8, 80])
       .on("zoom", ({transform}) => {
+      
+        const g = d3.select(zoomContainer)
 
-    	g.attr("transform", transform);
-    	g.attr("stroke-width", 1 / transform.k);
+        g.attr("transform", transform);
+        g.attr("stroke-width", 1 / transform.k);
 
-      g.select(".marker-layer").selectAll(".marker")
+        g.select(".marker-layer").selectAll(".marker")
       .select(".circle")
       .attr("transform", () => `scale(${1/transform.k})`)
 
@@ -92,6 +97,7 @@
 
   function passWheelEvent(e, element) {
       e.preventDefault();
+      console.log("wheel event")
        const eventClone = new e.constructor(e.type, {
         clientX: e.clientX, 
         clientY: e.clientY,
@@ -107,7 +113,9 @@
 	});
 
 	afterUpdate(() => {
-		//console.log("after update")
+
+	  	console.log("after update")
+
 	});
 
 	onMount(async function() {
@@ -116,28 +124,32 @@
     projection = geoMercator()
     path = geoPath().projection(projection)
 
+    d3.selectAll('.marker').data(locations)
+
     initialWidth = width
 	  initialHeight = height
 
-    container = d3.select("#map")
-    svg = container.select("svg")
     zoomHandler.extent([[0, 0], [width, height]])
     renderPath()
 
-    svg.call(zoomHandler)
+    d3.select(svg).call(zoomHandler) 
 
-    const t = zoomTransform(svg.node())
+    const t = zoomTransform(d3.select(svg).node())
+    
     d3.selectAll('.marker').data(locations)
 
-    d3.selectAll('.popover-wrapper').data(locations)
-      .style("top", (d) => {
-        return `${t.y + projection(d.loc.coordinates)[1] * t.k}px`
-      })
-
-    g = svg.select(".zoom-container")
-
-
     
+    /*g.attr("transform", t);
+    	g.attr("stroke-width", 1 / t.k);
+
+      g.select(".marker-layer").selectAll(".marker")
+      .select(".circle")
+      .attr("transform", () => `scale(${1/t.k})`)*/
+
+    d3.selectAll('.popover-wrapper').data(locations)
+    .style("top", (d) => {
+      return `${t.y + projection(d.loc.coordinates)[1] * t.k}px`
+    })
 
     /*const delaunay = d3.Delaunay.from(locations.map( (d) => { return projection(d.loc.coordinates)} ))
     const voronoi = delaunay.voronoi([0, 0, width, height])
@@ -162,6 +174,7 @@
 
     componentisLoaded = true
     loaded = true
+
 	});
 
   async function outsideClick(e) {
@@ -194,7 +207,7 @@
 
     //const [[x0, y0], [x1, y1]] = path.bounds(d);
     const point = projection(d.loc.coordinates)
-    const t0 = zoomTransform(svg.node())
+    const t0 = zoomTransform(d3.select(svg).node())
     const outScale : number = (t0.k < 2) ? t0.k : t0.k *0.8
     const distance = getProjectedDistance(d.closestNeighbour.loc.coordinates, d.loc.coordinates)
     const minScale = markerRadius*3 / distance // zoom in so dots are seperated by atleast 1 marker radius
@@ -206,7 +219,7 @@
 
       const zOutPoint = [-point[0]*outScale + width*0.5, -point[1]*outScale + height*0.5]
 
-      svg.transition().duration(750).call(
+      d3.select(svg).transition().duration(750).call(
           zoomHandler.transform,
           zoomIdentity 
             .translate( zOutPoint[0], zOutPoint[1]  )
@@ -244,7 +257,7 @@
 
         const zInPoint = [-point[0]*scale + width*0.5, -point[1]*scale + height*0.38]
 
-        svg.transition().duration(750).call(
+        d3.select(svg).transition().duration(750).call(
           zoomHandler.transform,
           zoomIdentity
             .translate(zInPoint[0], zInPoint[1])
@@ -292,7 +305,7 @@
 	function resizeMap() {
 
     // Just reset on resize
-    svg.call(zoomHandler.transform, zoomIdentity);
+    d3.select(svg).call(zoomHandler.transform, zoomIdentity);
 
     projection = geoMercator()
     path = geoPath().projection(projection)
@@ -322,6 +335,7 @@
         <MapDetail location={d} />
     </div>
     {/each}
+    
 
     <aside id="legend">
       <ul>
@@ -334,8 +348,8 @@
 
     <!--viewBox="0 0 {initialWidth} {initialHeight}"-->
 
-	  <svg viewBox="0 0 {width} {height}" on:click={outsideClick}> 
-		<g class="zoom-container">
+	  <svg viewBox="0 0 {width} {height}" on:click={outsideClick} bind:this={svg}> 
+		<g class="zoom-container" bind:this={zoomContainer}>
 			<rect style="fill: none; pointer-events: all;"></rect>
 
       <g class="map-layer">
@@ -405,6 +419,9 @@
     transition-duration: 0.6s;
     &.loading {
       opacity: 0;
+      .popover-wrapper {
+        display: none
+      }
     }
 
 	}
