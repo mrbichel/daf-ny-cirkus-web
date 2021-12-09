@@ -16,7 +16,7 @@ export async function handle({ request, resolve }) {
     } 
     
     else if( path.includes("api/") ) {
-        extraHeaders['Cache-Control'] = 'max-age=0, s-maxage=5 stale-while-revalidate=120'
+        extraHeaders['Cache-Control'] = 'max-age=0, s-maxage=5, stale-while-revalidate=120'
     }
 
     /*if(request.path === '/service-worker.js') {
