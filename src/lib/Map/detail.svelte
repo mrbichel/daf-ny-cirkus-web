@@ -8,71 +8,74 @@
     import Icon from 'svelte-awesome/components/Icon.svelte'
     import { phoneSquare, envelopeSquare, facebookSquare, instagram, externalLinkSquare } from 'svelte-awesome/icons';
 
-    let d;
+    import type { Location } from '../../types'
+
     onMount(async () => {
-        // const res = await fetch(`https://jsonplaceholder.typicode.com/photos?_limit=20`);
-        // photos = await res.json();
-
-        /*const url = `/api/locations/${slug}.json`;
-        const res = await fetch(url);
-        if(res.ok) {
-            d = await res.json()
-        }*/
-
         // fetch images here
     });
 
-    export let location
-    //export let topOffset
+    /*export let type
+    export let expand
+    export let address
+    export let web
+    export let ig
+    export let fb
+    export let n
+    export let about
+    export let mail
+    export let phone = undefined*/
+
+    export let data : Location
+    $: ({type, expand, address, web, ig, fb, n, about, mail, phone} = data)
 
 </script>
 
     
-<div class="popover {location.type} {location.expand ? 'expand' : ''}" >
+<div class="popover {type} {expand ? 'expand' : ''}" >
  
-    {#if location.expand }
+    {#if expand }
 
 <div class="detail-wrapper" >
 
     <div class="top-info">
         <address>
-            {#if location.address}{location.address}{/if }
+            {#if address}{address}{/if }
         </address>
             
         <ul class="links">
-                {#if location.web}
-                    <li><a rel="external" title="website" alt="Website of {location.n}" href="{location.web}" target="new"><Icon data={externalLinkSquare}/></a></li>
+                {#if web}
+                    <li><a rel="external" title="website" alt="Website of {n}" href="{web}" target="new"><Icon data={externalLinkSquare}/></a></li>
                 {/if}
     
-                {#if location.ig}
-                <li><a rel="external" title="instagram" alt="{location.n} on instagram" href="https://instagram.com/{location.ig}"><Icon data={instagram}/></a></li>
+                {#if ig}
+                <li><a rel="external" title="instagram" alt="{n} on instagram" href="https://instagram.com/{ig}"><Icon data={instagram}/></a></li>
                 {/if}
     
-                {#if location.fb}
-                <li><a rel="external" title="facebook" alt="{location.n} on facebook" href="https://facebook.com/{location.fb}"><Icon data={facebookSquare}/></a></li>
+                {#if fb}
+                <li><a rel="external" title="facebook" alt="{n} on facebook" href="https://facebook.com/{fb}"><Icon data={facebookSquare}/></a></li>
                 {/if}
                 
             </ul>
         </div>
             
-            <h1>{location.n}</h1>
+            <h1>{n}</h1>
     
-            {#if location.about}
-            <p>{location.about}</p>
+            {#if about}
+            <p>{about}</p>
             {/if}
             
             <div class="bottom-info">
     
             <ul>
-             {#if location.mail}
+             {#if mail}
              <li>
-                <span class="icon"><Icon data={envelopeSquare}/></span> <a href="mailto:{location.mail}">{location.mail}</a>
+                <span class="icon"><Icon data={envelopeSquare}/></span> <a href="mailto:{mail}">{mail}</a>
             </li>
                 {/if}
                 
-                {#if location.phone}
+                {#if phone}
                 <li>
-                <span class="icon"><Icon data={phoneSquare}/></span> {location.phone}
+                <span class="icon"><Icon data={phoneSquare}/></span> {phone}
                 </li>
                 {/if}
     
@@ -115,11 +118,9 @@
             }
         }
 	}
-
     h1, h2, h3, h4, h5, h6, p, a, span {
       pointer-events: auto;
     }
-
     .detail-wrapper::before {
         content: "";
         position: absolute;

@@ -3,6 +3,7 @@ import _ from 'lodash'
 
 import dayjs from 'dayjs'
 //export const activeLocation = writable()
+import type { Location } from '../types'
 
 const maxAgeSeconds = 120
 
@@ -60,7 +61,7 @@ function createLocationStore() {
 		},
 		isExpired: (slug = undefined) => {
 
-			const current : location[] = get(store)
+			const current : Location[] = get(store)
 
 			if(current.length < 1) return true
 
@@ -84,7 +85,7 @@ function createLocationStore() {
 		},
 
 		getBySlug: (slug) => {
-			const current : location[] = get(store)
+			const current : Location[] = get(store)
 			return _.find(current, {slug: slug})
 		}
 

@@ -3,6 +3,8 @@ import _ from 'lodash'
 //import slug from 'slug'
 
 import { Location } from './_location.schema'
+import type { Location as LocationType } from '../../../types'
+
 import { geoDistance } from 'd3-geo'
 
 /** @type {import('@sveltejs/kit').RequestHandler} */
@@ -11,7 +13,7 @@ export async function get({ params }) {
     const result = await Location.find({loc: { $ne: null } }, 'n slug loc type' )
 
     // TODO: reverse address lookup if loc is missing
-    const objects : location[] = result.map(d => d.toObject())
+    const objects : LocationType[] = result.map(d => d.toObject())
     //const locations = objects
 
     const locations = objects.map(d => {

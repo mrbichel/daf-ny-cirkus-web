@@ -92,13 +92,12 @@
 	export let slug
 
 	import { onMount } from 'svelte';
-	import Map from '$lib/Map/index.svelte'
+	import Map from '$lib/Map/Map.svelte'
 
 	//let Map;
 	onMount(async () => {
 		/*const module = await import('$lib/Map/index.svelte');
 		Map = module.default;*/
-		console.log("onMount for route is run")
 	});
 
 	$: if(location) {

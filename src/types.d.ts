@@ -1,6 +1,6 @@
 import type { Dayjs } from "dayjs";
 
-interface location {
+export type Location = {
     readonly _id: number;
     readonly type: string;
     readonly n: string;
@@ -27,6 +27,6 @@ interface location {
       loc: { coordinates: [number, number] };
       _id: number;
     };
-    [propName: string]: any;
-}
+    //[propName: string]: any;
+};
 
