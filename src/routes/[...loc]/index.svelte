@@ -6,8 +6,6 @@
     //export const prerender = false;
 	/** @type {import('@sveltejs/kit').Load} */
 	export async function load({ page, fetch, session, stuff }) {
-
-		console.log("load for route is run")
 		const slug = page.params.loc
 
 		/*let data

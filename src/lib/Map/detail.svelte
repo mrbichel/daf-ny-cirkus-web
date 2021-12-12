@@ -5,8 +5,12 @@
 <script lang="ts">
 
     import { onMount } from 'svelte';
-    import Icon from 'svelte-awesome/components/Icon.svelte'
-    import { phoneSquare, envelopeSquare, facebookSquare, instagram, externalLinkSquare } from 'svelte-awesome/icons';
+    //import Icon from 'svelte-awesome/components/Icon.svelte'
+    import Facebook from 'svelte-bootstrap-icons/lib/Facebook'
+    import Instagram from 'svelte-bootstrap-icons/lib/Instagram'
+    import Phone from 'svelte-bootstrap-icons/lib/Phone'
+    import Envelope from 'svelte-bootstrap-icons/lib/Envelope'
+    import BoxArrowUpRight from 'svelte-bootstrap-icons/lib/BoxArrowUpRight'
 
     import type { Location } from '../../types'
 
@@ -44,15 +48,15 @@
             
         <ul class="links">
                 {#if web}
-                    <li><a rel="external" title="website" alt="Website of {n}" href="{web}" target="new"><Icon data={externalLinkSquare}/></a></li>
+                    <li><a rel="external" title="website" alt="Website of {n}" href="{web}" target="new"><BoxArrowUpRight/></a></li>
                 {/if}
     
                 {#if ig}
-                <li><a rel="external" title="instagram" alt="{n} on instagram" href="https://instagram.com/{ig}"><Icon data={instagram}/></a></li>
+                <li><a rel="external" title="instagram" alt="{n} on instagram" href="https://instagram.com/{ig}"><Instagram/></a></li>
                 {/if}
     
                 {#if fb}
-                <li><a rel="external" title="facebook" alt="{n} on facebook" href="https://facebook.com/{fb}"><Icon data={facebookSquare}/></a></li>
+                <li><a rel="external" title="facebook" alt="{n} on facebook" href="https://facebook.com/{fb}"><Facebook/></a></li>
                 {/if}
                 
             </ul>
@@ -69,13 +73,13 @@
             <ul>
              {#if mail}
              <li>
-                <span class="icon"><Icon data={envelopeSquare}/></span> <a href="mailto:{mail}">{mail}</a>
+                <span class="icon"><Envelope/></span> <a href="mailto:{mail}">{mail}</a>
             </li>
                 {/if}
                 
                 {#if phone}
                 <li>
-                <span class="icon"><Icon data={phoneSquare}/></span> {phone}
+                <span class="icon"><Phone/></span> {phone}
                 </li>
                 {/if}
     

@@ -1,25 +1,23 @@
 <script context="module" lang="ts">
   let componentisLoaded = false;
 
-
+  import type { Location } from '../../types'
 
 </script>
 
 <script lang="ts">
 
-  import dkgeo from '../../../static/map-data/dk.geo.json'
+  import dkgeo from './map-data/dk.geo.json'
   const land = dkgeo;
   const features = land.features
 
   import { page } from '$app/stores';
-  import { goto, prefetch } from '$app/navigation';
+  import { goto } from '$app/navigation';
 	import { onMount, beforeUpdate, afterUpdate, onDestroy, setContext } from "svelte";
 
-  import * as d3 from 'd3'
+  import { select } from 'd3-selection'
   import { zoom, zoomIdentity, zoomTransform } from 'd3-zoom'
-  import { interpolateNumber } from 'd3-interpolate'
 	import { geoMercator, geoPath } from "d3-geo";
-
   import { getDistance } from './utils'
   
   import lodash_pkg from 'lodash';
@@ -29,23 +27,21 @@
   import Marker from './Marker.svelte'
   import Legend from './Legend.svelte'
 
-  import type { Location } from '../../types'
-
   const markerRadius = 8
   let loaded = false;
 
   export let locations : Location[] = []
   export let expanded : Location = undefined
 
-
   let projection = geoMercator()
   let T = zoomTransform(1, 0, 0)
 
   $: {
-    const pad = mapWidth*0.01;
+    console.log("recompute projection")
+    /*const pad = mapWidth*0.01;
     projection = geoMercator()
     projection.fitExtent([[pad, pad], [mapWidth-pad*2, mapHeight-pad*2]], dkgeo)
-    zoomHandler.extent([[0, 0], [mapWidth, mapHeight]])
+    zoomHandler.extent([[0, 0], [mapWidth, mapHeight]])*/
   }
 
   $: path = geoPath().projection(projection)
@@ -108,8 +104,18 @@
     mapWidth = width
 	  mapHeight = height
 
-    d3.select(svg).call(zoomHandler) 
-    T = zoomTransform(d3.select(svg).node())
+    select(svg).call(zoomHandler) 
+
+    const pad = mapWidth*0.01;
+    projection = geoMercator()
+    projection.fitExtent([[pad, pad], [mapWidth-pad*2, mapHeight-pad*2]], dkgeo)
+    zoomHandler.extent([[0, 0], [mapWidth, mapHeight]])
+
+    T = zoomTransform(select(svg).node())
+
+    if(expanded) {
+      expandLocation(expanded)
+    }
 
     /*const delaunay = d3.Delaunay.from(locations.map( (d) => { return projection(d.loc.coordinates)} ))
     const voronoi = delaunay.voronoi([0, 0, width, height])
@@ -146,13 +152,34 @@
     return getDistance(projection(a), projection(b))
   }
 
-  async function expandLocation(d : Location) {
-    // move expand location here from clicked and fire on load if it has slug
+  async function expandLocation(d: Location) {
+
+    const point = projection(d.loc.coordinates)
+    const distance = getProjectedDistance(d.closestNeighbour.loc.coordinates, d.loc.coordinates)
+    const minScale = markerRadius*3 / distance // zoom in so dots are seperated by atleast 1 marker radius
+    const scale : number = (T.k > minScale) ? T.k : minScale
+
+    const zInPoint = [-point[0]*scale + width*0.5, -point[1]*scale + height*0.38]
+        zoomTo(zInPoint, scale, 750)
+
   }
+
+
+  async function closeLocation(d: Location) {
+
+    const point = projection(d.loc.coordinates)
+    const outScale : number = (T.k < 2) ? T.k : T.k *0.8
+
+    const zOutPoint = [-point[0]*outScale + width*0.5, -point[1]*outScale + height*0.5]
+      zoomTo(zOutPoint, outScale, 750)
+
+}
+
+
 
   function zoomTo( point, scale, duration=750) {
 
-    return d3.select(svg).transition().duration(duration).call(
+    return select(svg).transition().duration(duration).call(
           zoomHandler.transform,
           zoomIdentity 
             .translate( point[0], point[1]  )
@@ -161,33 +188,6 @@
 
   }
 
-	async function clicked(e, d: Location) {
-    e.stopPropagation()
-
-    const point = projection(d.loc.coordinates)
-    const t0 = zoomTransform(d3.select(svg).node())
-    const outScale : number = (t0.k < 2) ? t0.k : t0.k *0.8
-    const distance = getProjectedDistance(d.closestNeighbour.loc.coordinates, d.loc.coordinates)
-    const minScale = markerRadius*3 / distance // zoom in so dots are seperated by atleast 1 marker radius
-    const scale : number = (t0.k > minScale) ? t0.k : minScale
-
-    if(d.expand) {
-
-      // TODO: zoom out
-      const zOutPoint = [-point[0]*outScale + width*0.5, -point[1]*outScale + height*0.5]
-      zoomTo(zOutPoint, outScale, 750)
-
-
-    } else {
-
-      // TODO: zoom in 
-        const zInPoint = [-point[0]*scale + width*0.5, -point[1]*scale + height*0.38]
-        zoomTo(zInPoint, scale, 750)
-
-      }	  
-    }
-  
-
   var throttledResize = _.throttle(resizeMap, 800, {leading: false, trailing: true});
 
   function resize(event) {
@@ -195,11 +195,11 @@
   }
 
 	function resizeMap(event) {
-    //console.log("resize")
+    console.log("resize")
     const t = zoomTransform(svg)
 
     // Just reset on resize
-    //d3.select(svg).call(zoomHandler.transform, zoomIdentity);
+    //select(svg).call(zoomHandler.transform, zoomIdentity);
     //projection = geoMercator()
     //zoomHandler.extent([[0, 0], [width, height]])
 
@@ -209,19 +209,25 @@
     mapWidth = width
     mapHeight = height
 
-    //d3.select(svg).call(zoomHandler.transform, zoomIdentity.scale(t.k));
+    const pad = mapWidth*0.01;
+    projection = geoMercator()
+    projection.fitExtent([[pad, pad], [mapWidth-pad*2, mapHeight-pad*2]], dkgeo)
+    zoomHandler.extent([[0, 0], [mapWidth, mapHeight]])
+
+    select(svg).call(zoomHandler.transform, zoomIdentity.scale(t.k));
     //zoomHandler.scale(t.k)
-    // FIXME zoomHandler.translateBy(d3.select(svg), wDiff*0.5, hDiff*0.5)
-    zoomHandler.scaleTo(d3.select(svg), t.k)
+    //zoomHandler.translateTo(select(svg), /*-t.x*t.k +*/ width*0.5 + (t.x), /*-t.y*t.k +*/ height*0.5 + (t.y))
+    //zoomHandler.translateTo(select(svg).translate)
+    //zoomHandler.scaleTo(select(svg), t.k)
     // FIXME: preserve center
-    //d3.select(svg).call(zoomHandler.transform, t);
+    //select(svg).call(zoomHandler.transform, t);
     // const zInPoint = [-point[0]*scale + width*0.5, -point[1]*scale + height*0.38]
     console.log(t)
     //const point = [-t.x + width*0.5 + (wDiff*t.k *0.5), -t.y + width*0.5 + (hDiff*t.k *0.5)]
 
     /*zoomIdentity.translateBy(x, y).scale(k);
 
-    d3.select(svg).call(
+    select(svg).call(
           zoomHandler.transform,
           zoomIdentity 
             .translate( wDiff, hDiff  )
@@ -273,7 +279,11 @@
           coordinates={d.loc.coordinates} 
           slug={d.slug} 
           projection={projection}
-          transform={T} />
+          transform={T} 
+          radius={markerRadius}
+          on:select={ () => expandLocation(d) }
+          on:deselect={ () => closeLocation(d) }
+          />
 		  {/each}
 			</g>
 

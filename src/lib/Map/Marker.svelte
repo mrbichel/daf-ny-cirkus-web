@@ -13,26 +13,17 @@
     import { tweened } from 'svelte/motion';
 	import { cubicOut } from 'svelte/easing';
 
-
-
-    /*onMount(async () => {
-    });*/
-
     import { goto, prefetch } from '$app/navigation';
 
-    //const { getProjection } = getContext('map');
     export let projection 
     export let transform 
-
-    export let markerRadius = 8
-
+    export let radius = 8
     export let selected = false
     export let coordinates = [0,0]
 
     export let slug = ""
     export let type = ""
 
-    
     const angleEndTween = tweened(270, {
 		duration: 750,
 		easing: cubicOut
@@ -55,13 +46,6 @@
 
     let marker, circle;
 
-    /*export function zoomed() {
-        d3.select(circle)
-          .attr("transform", () => `scale(${1/transform.k})`)
-        
-	}*/
-
-
 
 </script>
 
@@ -72,13 +56,12 @@ transform="{`translate(${projection(coordinates)})`}"
 
   <path bind:this={circle} class="circle"
       on:click|stopPropagation={ clickHandler  }
-      d="{describeArc(0,0,markerRadius, -90, $angleEndTween)}"
-      stroke-width={markerRadius*0.6}
+      d="{describeArc(0,0,radius, -90, $angleEndTween)}"
+      stroke-width={radius*0.6}
       transform={`scale(${1/transform.k})`}
   />
 
 </g>
-
 
 <style lang="scss">
     @import 'src/lib/style/variables.scss';
