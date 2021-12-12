@@ -1,7 +1,6 @@
 
 <script lang="ts">
     export let data = {}
-
 </script>
 
 
@@ -45,29 +44,12 @@
                 width: 1em;
                 height: 1em;
             }
-            /*li:before {
-                content:"";
-                height:1em;
-                width:1em;
-                display:block;
-                float:left;
-                margin-left:-1.5em;
-                background-position:center;
-                background-repeat:no-repeat;
-                background-size:100%;
-            }*/
         }
         
       @each $class, $color in $locColorMap {
         li.#{$class} {
             fill: $color;
             stroke: lighten($color, 20);
-          /*&::before {
-            fill: $color;
-            stroke: lighten($color, 20); 
-            background-image:url("data:image/svg+xml;utf8,");   
-        }*/
-
         }
       }
     }
