@@ -36,13 +36,13 @@
   let projection = geoMercator()
   let T = zoomTransform(1, 0, 0)
 
-  $: {
+  /*$: {
     console.log("recompute projection")
-    /*const pad = mapWidth*0.01;
+    const pad = mapWidth*0.01;
     projection = geoMercator()
     projection.fitExtent([[pad, pad], [mapWidth-pad*2, mapHeight-pad*2]], dkgeo)
-    zoomHandler.extent([[0, 0], [mapWidth, mapHeight]])*/
-  }
+    zoomHandler.extent([[0, 0], [mapWidth, mapHeight]])
+  }*/
 
   $: path = geoPath().projection(projection)
 
@@ -214,7 +214,9 @@
     projection.fitExtent([[pad, pad], [mapWidth-pad*2, mapHeight-pad*2]], dkgeo)
     zoomHandler.extent([[0, 0], [mapWidth, mapHeight]])
 
-    select(svg).call(zoomHandler.transform, zoomIdentity.scale(t.k));
+    select(svg).call(zoomHandler.transform, zoomIdentity)
+
+    //select(svg).call(zoomHandler.transform, zoomIdentity.scale(t.k));
     //zoomHandler.scale(t.k)
     //zoomHandler.translateTo(select(svg), /*-t.x*t.k +*/ width*0.5 + (t.x), /*-t.y*t.k +*/ height*0.5 + (t.y))
     //zoomHandler.translateTo(select(svg).translate)

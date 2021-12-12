@@ -2,6 +2,9 @@
 <script context="module" lang="ts">
 
     // TODO: export staticmarker for legend
+    /*export function getStaticMarker() {
+        return "<svg xmlns='http://www.w3.org/2000/svg' width='100%' height='100%' viewBox='-8 -8 16 16' preserveAspectRatio='xMidYMid meet'><circle cx='0' cy='0' r='8'/></svg>"
+    }*/
 
 </script>
 
@@ -44,17 +47,15 @@
         }
     }
 
-    let marker, circle;
-
 
 </script>
 
-<g bind:this={marker} class:selected="{selected}" class="marker {type}" 
+<g class:selected="{selected}" class="marker {type}" 
 transform="{`translate(${projection(coordinates)})`}"
       on:mouseover={ () => { if(!selected) {prefetch(`/${slug}`) }} }
       on:focus={ () => { return } }>
 
-  <path bind:this={circle} class="circle"
+  <path class="circle"
       on:click|stopPropagation={ clickHandler  }
       d="{describeArc(0,0,radius, -90, $angleEndTween)}"
       stroke-width={radius*0.6}
