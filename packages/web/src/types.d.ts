@@ -1,12 +1,12 @@
 import type { Dayjs } from 'dayjs';
 
 export type Location = {
-    readonly _id: number;
-    readonly type: string;
-    readonly n: string;
+    readonly _id: string;
+    readonly category: string;
+    readonly title: string;
     readonly slug: string;
 
-    location?: {
+    readonly location?: {
       lat: number;
       lng: number;
     };
@@ -15,9 +15,9 @@ export type Location = {
     readonly address?: string;
     readonly phone?: string;
     readonly mail?: string;
-    readonly web?: string;
-    readonly ig?: string;
-    readonly fb?: string;
+    readonly website?: string;
+    readonly instagram?: string;
+    readonly facebook?: string;
 
     //lastFetched?: Date;
     lastFetchedDetail?: Dayjs;

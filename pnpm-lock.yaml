@@ -46,6 +46,7 @@ importers:
 
   packages/web:
     specifiers:
+      '@portabletext/svelte': 0.2.0
       '@sanity/client': 2.23.0
       '@sveltejs/adapter-vercel': next
       '@sveltejs/kit': next
@@ -82,6 +83,7 @@ importers:
       dayjs: 1.10.7
       lodash: 4.17.21
     devDependencies:
+      '@portabletext/svelte': 0.2.0_svelte@3.44.2
       '@sveltejs/adapter-vercel': 1.0.0-next.31
       '@sveltejs/kit': 1.0.0-next.201_sass@1.44.0+svelte@3.44.2
       '@typescript-eslint/eslint-plugin': 5.6.0_0d0cecf582ba45923647a091322795b0
@@ -2342,6 +2344,14 @@ packages:
   /@popperjs/core/2.11.0:
     resolution: {integrity: sha512-zrsUxjLOKAzdewIDRWy9nsV1GQsKBCWaGwsZQlCgr6/q+vjyZhFgqedLfFBuI9anTPEUT4APq9Mu0SZBTzIcGQ==}
     dev: false
+
+  /@portabletext/svelte/0.2.0_svelte@3.44.2:
+    resolution: {integrity: sha512-9CWGM0ud3eyjF01ox8MZVAkv0YUKBtKKok8EpAZpFpFo4RnhCBqfD8GhcsZ6AyYCRcVKreAeba8kU5pk0mo0/Q==}
+    peerDependencies:
+      svelte: ^3.40.0
+    dependencies:
+      svelte: 3.44.2
+    dev: true
 
   /@reach/auto-id/0.13.2_react-dom@17.0.2+react@17.0.2:
     resolution: {integrity: sha512-dWeXt6xxjN+NPRoZFXgmNkF89t8MEPsWLYjIIDf3gNXA/Dxaoytc9YBOIfVGpDSpdOwxPpxOu8rH+4Y3Jk2gHA==}
