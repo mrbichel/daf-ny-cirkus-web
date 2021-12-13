@@ -1,8 +1,8 @@
 .DS_Store
 node_modules
-web/.svelte
-web/.svelte-kit
-web/.vercel_build_output
-web/build
-web/functions
+/packages/web/.svelte
+/packages/web/.svelte-kit
+/packages/web/.vercel_build_output
+/packages/web/build
+/packages/web/functions
 .env
