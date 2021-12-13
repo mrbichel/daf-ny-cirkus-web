@@ -1,4 +1,4 @@
-import type { Dayjs } from ".pnpm/dayjs@1.10.7/node_modules/dayjs";
+import type { Dayjs } from 'dayjs';
 
 export type Location = {
     readonly _id: number;

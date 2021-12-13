@@ -17,8 +17,8 @@ export async function get({ params }) {
         phone,
         website}`)
          
-    console.log(params.slug)
-    console.log(loc)
+    //console.log(params.slug)
+    //console.log(loc)
 
     if(loc) {
         return { 

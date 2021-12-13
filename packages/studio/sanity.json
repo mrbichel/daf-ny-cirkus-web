@@ -16,7 +16,8 @@
     "@sanity/desk-tool",
     "@sanity/google-maps-input",
     "leaflet-input",
-    "@sanity/color-input"
+    "@sanity/color-input",
+    "@sanity/form-builder"
   ],
   "env": {
     "development": {
