@@ -1,9 +1,9 @@
-import connect from '$lib/mongodb-client'
+//import connect from '$lib/mongodb-client'
 
 /** @type {import('@sveltejs/kit').Handle} */
 export async function handle({ request, resolve }) {
 	//request.locals.user = await getUserInformation(request.headers.cookie);
-    await connect()
+    //await connect()
 
     const extraHeaders = {
         'Cache-control': 'max-age=0, s-maxage=86400'

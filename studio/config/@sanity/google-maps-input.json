@@ -1,0 +1,9 @@
+{
+  "apiKey": null,
+  "defaultZoom": 11,
+  "defaultLocale": null,
+  "defaultLocation": {
+    "lat": 55.6761,
+    "lng": 12.5683
+  }
+}

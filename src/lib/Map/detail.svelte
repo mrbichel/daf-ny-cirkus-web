@@ -23,21 +23,22 @@
     export let address
     export let web
     export let ig
-    export let fb
+    export let facebook
     export let n
     export let about
     export let mail
     export let phone = undefined*/
 
     export let data : Location
-    $: ({type, expand, address, web, ig, fb, n, about, mail, phone} = data)
+    $: ({category, expand, address, web, instagram, facebook, title, about, mail, phone} = data)
 
 </script>
 
     
-<div class="popover {type} {expand ? 'expand' : ''}" >
+<div class="popover {category} {expand ? 'expand' : ''}" >
  
     {#if expand }
+
 
 <div class="detail-wrapper" >
 
@@ -48,21 +49,21 @@
             
         <ul class="links">
                 {#if web}
-                    <li><a rel="external" title="website" alt="Website of {n}" href="{web}" target="new"><BoxArrowUpRight/></a></li>
+                    <li><a rel="external" title="website" alt="Website of {title}" href="{web}" target="new"><BoxArrowUpRight/></a></li>
                 {/if}
     
-                {#if ig}
-                <li><a rel="external" title="instagram" alt="{n} on instagram" href="https://instagram.com/{ig}"><Instagram/></a></li>
+                {#if instagram}
+                <li><a rel="external" title="instagram" alt="{title} on instagram" href="https://instagram.com/{instagram}"><Instagram/></a></li>
                 {/if}
     
-                {#if fb}
-                <li><a rel="external" title="facebook" alt="{n} on facebook" href="https://facebook.com/{fb}"><Facebook/></a></li>
+                {#if facebook}
+                <li><a rel="external" title="facebook" alt="{title} on facebook" href="https://facebook.com/{facebook}"><Facebook/></a></li>
                 {/if}
                 
             </ul>
         </div>
             
-            <h1>{n}</h1>
+            <h1>{title}</h1>
     
             {#if about}
             <p>{about}</p>

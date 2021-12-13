@@ -117,10 +117,10 @@
       expandLocation(expanded)
     }
 
-    /*const delaunay = d3.Delaunay.from(locations.map( (d) => { return projection(d.loc.coordinates)} ))
+    /*const delaunay = d3.Delaunay.from(locations.map( (d) => { return projection([d.location.lng, d.location.lat])} ))
     const voronoi = delaunay.voronoi([0, 0, width, height])
     const cells = locations.map((d, i) => {
-      return [[projection(d.loc.coordinates)], voronoi.cellPolygon(i)]
+      return [[projection([d.location.lng, d.location.lat])], voronoi.cellPolygon(i)]
     });
     g.append("path")  
       .attr("fill", "none")
@@ -154,8 +154,8 @@
 
   async function expandLocation(d: Location) {
 
-    const point = projection(d.loc.coordinates)
-    const distance = getProjectedDistance(d.closestNeighbour.loc.coordinates, d.loc.coordinates)
+    const point = projection([d.location.lng, d.location.lat])
+    const distance = getProjectedDistance([d.closestNeighbour.location.lng, d.closestNeighbour.location.lat], [d.location.lng, d.location.lat])
     const minScale = markerRadius*3 / distance // zoom in so dots are seperated by atleast 1 marker radius
     const scale : number = (T.k > minScale) ? T.k : minScale
 
@@ -167,7 +167,7 @@
 
   async function closeLocation(d: Location) {
 
-    const point = projection(d.loc.coordinates)
+    const point = projection([d.location.lng, d.location.lat])
     const outScale : number = (T.k < 2) ? T.k : T.k *0.8
 
     const zOutPoint = [-point[0]*outScale + width*0.5, -point[1]*outScale + height*0.5]
@@ -254,7 +254,7 @@
 
     {#each locations as d}
     <div class="popover-wrapper" on:wheel|preventDefault={ (e) => passWheelEvent(e, svg) } 
-      style={`top: ${T.y + projection(d.loc.coordinates)[1] * T.k }px` }  >
+      style={`top: ${T.y + projection([d.location.lng, d.location.lat])[1] * T.k }px` }  >
         <Detail data={d} />
     </div>
     {/each}
@@ -276,9 +276,9 @@
 
 			<g class="marker-layer">
 			{#each locations as d}
-        <Marker type={d.type} 
+        <Marker category={d.category} 
           selected={d.expand} 
-          coordinates={d.loc.coordinates} 
+          coordinates={[d.location.lng, d.location.lat]} 
           slug={d.slug} 
           projection={projection}
           transform={T} 

@@ -36,6 +36,7 @@
     "vite": "^2.7.1"
   },
   "dependencies": {
+    "@sanity/client": "2.23.0",
     "d3-composite-projections": "^1.4.0",
     "d3-geo": "^3.0.1",
     "d3-scale": "^4.0.2",

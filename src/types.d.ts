@@ -6,8 +6,9 @@ export type Location = {
     readonly n: string;
     readonly slug: string;
 
-    loc?: {
-      coordinates: [number, number];
+    location?: {
+      lat: number;
+      lng: number;
     };
 
     readonly about?: string;
@@ -23,8 +24,11 @@ export type Location = {
 
     expand?: boolean;
     closestNeighbour?: {
-      dist: number;
-      loc: { coordinates: [number, number] };
+      distance: number;
+      location: { 
+        lat: number;
+        lng: number;
+      };
       _id: number;
     };
     //[propName: string]: any;

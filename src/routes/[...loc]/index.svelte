@@ -15,23 +15,21 @@
 
 		//console.log(data)
 
-		async function fetchAll() { // TODO: cache
-			const url = '/api/locations'
-			const res = await fetch(url)
-
-			if(!res.ok) {
-				return {
-					status: res.status,
-					error: new Error(`Could not load ${url}`)
-				}
-			}
-
-			return await res.json()	
-		}
 			
 		if(locationStore.isExpired() ) {
-			const locations = await fetchAll()
-        	locationStore.update(locations)
+				const url = '/api/locations'
+				const res = await fetch(url)
+
+				if(!res.ok) {
+					return {
+						status: res.status,
+						error: new Error(`Could not load ${url}`)
+					}
+				}
+
+				const locations = await res.json()
+        		locationStore.update(locations)
+
 		}
 
 		const props = {

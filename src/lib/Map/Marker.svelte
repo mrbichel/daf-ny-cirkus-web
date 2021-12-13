@@ -25,7 +25,7 @@
     export let coordinates = [0,0]
 
     export let slug = ""
-    export let type = ""
+    export let category = ""
 
     const angleEndTween = tweened(270, {
 		duration: 750,
@@ -47,10 +47,9 @@
         }
     }
 
-
 </script>
 
-<g class:selected="{selected}" class="marker {type}" 
+<g class:selected="{selected}" class="marker {category}" 
 transform="{`translate(${projection(coordinates)})`}"
       on:mouseover={ () => { if(!selected) {prefetch(`/${slug}`) }} }
       on:focus={ () => { return } }>

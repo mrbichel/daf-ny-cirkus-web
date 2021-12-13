@@ -35,7 +35,6 @@ function createLocationStore() {
 		//set,
 		update: (data) => {
 			lastFetched = dayjs();
-
 			return update(c => {
 				return data.map(d => {
 					const i = _.findIndex(c, {_id: d._id})
@@ -45,7 +44,7 @@ function createLocationStore() {
 
 					} else {
 
-						d.exand = false
+						d.expand = false
 						return d
 					}
 				})
@@ -61,9 +60,9 @@ function createLocationStore() {
 		},
 		isExpired: (slug = undefined) => {
 
-			const current : Location[] = get(store)
+			const c : Location[] = get(store)
 
-			if(current.length < 1) return true
+			if(c.length < 1) return true
 
 			const isExp = (t) => {
 				if(!t) {
@@ -71,9 +70,8 @@ function createLocationStore() {
 				}
 				return dayjs().isAfter(dayjs(t).add(maxAgeSeconds, 'seconds'))
 			}
-
 			if(slug) {
-				const l = _.find(current, {slug: slug})
+				const l = _.find(c, (l) => l.slug == slug )
 				if(!l || isExp(l.lastFetchedDetail)) {
 					return true
 				}
@@ -85,8 +83,8 @@ function createLocationStore() {
 		},
 
 		getBySlug: (slug) => {
-			const current : Location[] = get(store)
-			return _.find(current, {slug: slug})
+			const c : Location[] = get(store)
+			return _.find(c, (l) => l.slug == slug )
 		}
 
 	  };
