@@ -14,6 +14,7 @@ importers:
       '@sanity/default-layout': ^2.23.0
       '@sanity/default-login': ^2.23.0
       '@sanity/desk-tool': ^2.23.0
+      '@sanity/form-builder': 2.23.0
       '@sanity/google-maps-input': 2.23.0
       '@sanity/vision': ^2.23.0
       prop-types: ^15.7
@@ -29,6 +30,7 @@ importers:
       '@sanity/default-layout': 2.23.0_625185cb104c53dd960b8025c62cc00a
       '@sanity/default-login': 2.23.0_7a082f7d10047d47195aea793f958a14
       '@sanity/desk-tool': 2.23.0_9a95669a869277537d52bef135eaacf5
+      '@sanity/form-builder': 2.23.0_625185cb104c53dd960b8025c62cc00a
       '@sanity/google-maps-input': 2.23.0_9a95669a869277537d52bef135eaacf5
       '@sanity/vision': 2.23.0_9a95669a869277537d52bef135eaacf5
       prop-types: 15.7.2
@@ -37,7 +39,7 @@ importers:
       sanity-plugin-leaflet-input: 1.0.1_react-dom@17.0.2+react@17.0.2
       styled-components: 5.3.3_react-dom@17.0.2+react@17.0.2
 
-  packages/svelte:
+  packages/web:
     specifiers:
       '@sanity/client': 2.23.0
       '@sveltejs/adapter-vercel': next
