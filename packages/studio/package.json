@@ -1,9 +1,7 @@
 {
-  "name": "dafnycirkus",
+  "name": "daf-ny-cirkus-sanity-studio",
   "private": true,
   "version": "1.0.0",
-  "description": "Everything you need to build a Svelte project, powered by [`create-svelte`](https://github.com/sveltejs/kit/tree/master/packages/create-svelte);",
-  "main": "package.json",
   "author": "Johan Bichel Lindegaard <public@johan.cc>",
   "license": "UNLICENSED",
   "scripts": {
@@ -29,9 +27,5 @@
     "sanity-plugin-leaflet-input": "1.0.1",
     "styled-components": "^5.2.0"
   },
-  "devDependencies": {},
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/mrbichel/daf-ny-cirkus-web.git"
-  }
+  "devDependencies": {}
 }

@@ -1,7 +1,7 @@
-import { writable, get } from 'svelte/store';
+import { writable, get } from '.pnpm/svelte@3.44.2/node_modules/svelte/store';
 import _ from 'lodash'
 
-import dayjs from 'dayjs'
+import dayjs from '.pnpm/dayjs@1.10.7/node_modules/dayjs'
 //export const activeLocation = writable()
 import type { Location } from '../types'
 

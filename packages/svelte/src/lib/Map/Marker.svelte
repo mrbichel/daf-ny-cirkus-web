@@ -11,10 +11,10 @@
 <script lang="ts">
     import { describeArc } from './utils'
     import { onMount, getContext, createEventDispatcher } from 'svelte';
-    import { flip } from 'svelte/animate';
+    import { flip } from '.pnpm/svelte@3.44.2/node_modules/svelte/animate';
 
-    import { tweened } from 'svelte/motion';
-	import { cubicOut } from 'svelte/easing';
+    import { tweened } from '.pnpm/svelte@3.44.2/node_modules/svelte/motion';
+	import { cubicOut } from '.pnpm/svelte@3.44.2/node_modules/svelte/easing';
 
     import { goto, prefetch } from '$app/navigation';
 
