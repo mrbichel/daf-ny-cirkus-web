@@ -3,13 +3,10 @@
     "name": "daf-ny-cirkus-web",
     "author": "Johan Bichel Lindegaard <public@johan.cc>",
     "version": "0.0.1",
-    "engines": {
-        "node": ">=14",
-        "pnpm": ">=6.14.1"
-      },
     "scripts": {
     },
     "devDependencies": {
+        "typescript": "^4.5.2"
     },
     "repository": {
         "type": "git",
