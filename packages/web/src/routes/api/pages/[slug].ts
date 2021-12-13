@@ -15,12 +15,18 @@ export async function get({ params }) {
             "slug": slug.current,
             ...}`)
         
-        console.log(data)
-
-        return { 
-            body: data 
+        console.log("data")
+        
+        if(data.slug) {
+            return { 
+                body: data 
+            }
+        } else {
+            return {
+                status: 404,
+                message: "Page not found" // TODO: hide in prod
+            }
         }
-
 
     } catch (err) {
         console.error(err) // FIXME

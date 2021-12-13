@@ -30,7 +30,6 @@ export const prerender = true;
 			if (res.ok) {		
 				const pageData = await res.json()
 
-                console.log(pageData)
                 return { props: {
                     title: pageData.title,
                     content: pageData.content
