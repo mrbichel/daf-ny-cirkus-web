@@ -11,11 +11,12 @@ export async function handle({ request, resolve }) {
 
     const path = request.path.replace(/\//, "")
     
-    if(path === '' || path.match(/^[\w-]+$/) ) {
-        request.path = `/${path}`
+    if(path === '' ) {
+        console.log("rewrite path to map")
+        request.path = `/map`
     } 
     
-    else if( path.includes("api/") ) {
+    if( path.includes("api/") ) {
         extraHeaders['Cache-Control'] = 'max-age=0, s-maxage=5, stale-while-revalidate=120'
     }
 

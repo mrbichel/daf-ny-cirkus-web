@@ -7,7 +7,7 @@ import type { Location as LocationType } from '../../../types'
 export async function get({ params }) {
 
     //const loc = await Location.findOne({slug: params.slug})
-    const loc = await client.fetch(`*[slug.current == "${params.slug}"][0]{
+    const loc = await client.fetch(`*[_type == "location" && slug.current == "${params.slug}"][0]{
         _id,
         about,
         address,
@@ -15,7 +15,9 @@ export async function get({ params }) {
         instagram,
         mail,
         phone,
-        website}`)
+        website,
+        "mainImage": mainImage.asset->url,
+        }`)
          
     //console.log(params.slug)
     //console.log(loc)

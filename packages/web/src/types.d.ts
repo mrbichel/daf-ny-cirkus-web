@@ -18,6 +18,7 @@ export type Location = {
     readonly website?: string;
     readonly instagram?: string;
     readonly facebook?: string;
+    readonly mainImage?: string;
 
     //lastFetched?: Date;
     lastFetchedDetail?: Dayjs;

@@ -19,7 +19,6 @@
 
 
 <style lang='scss'>
-    @import 'src/lib/style/variables.scss';
 
     svg {
         width: 100%;

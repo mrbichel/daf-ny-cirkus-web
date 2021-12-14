@@ -12,22 +12,21 @@ export const router = browser;
 
 // since there's no dynamic data here, we can prerender
 // it so that it gets served as a static asset in prod
-export const prerender = true;
-
+//export const prerender = true;
 
     //export const prerender = false;
 	/** @type {import('@sveltejs/kit').Load} */
 	export async function load({ page, fetch, session, stuff }) {
-		const slug = page.params.page
+		const slug = page.params.slug
 
         if(slug == '') {
             return
         }
 
-		const url = `/api/pages/${slug}`;
+		const url = `/api/pages/${slug}.json`;
 		const res = await fetch(url);
 
-			if (res.ok) {		
+			if (res.ok) {
 				const pageData = await res.json()
 
                 return { props: {
@@ -35,29 +34,23 @@ export const prerender = true;
                     content: pageData.content
                 } };
 				
-			} else {
-				// TODO: render in locations popover
+			} /*else {
+				
 				return {
 					status: res.status,
 					error: new Error(`Could not load ${url}`)
 				}
-			}
-
-
+			}*/
 		
 	}
-
-
 </script>
 
-
 <script lang="ts">
-
     import PortableText from '@portabletext/svelte'
+	import ExternalLink from '$lib/PortableText/ExternalLink.svelte'
 
     export let title = "Ny Cirkus page from sanity"
     export let content = []
-
 </script>
 
 <svelte:head>
@@ -66,4 +59,32 @@ export const prerender = true;
 
 <PortableText
   blocks={content}
+  serializers={{
+    types: {
+      // block-level components
+      //callout: Callout,
+      // inline-level components
+      //userInfo: UserInfo
+    },
+    marks: {
+	  link: ExternalLink,
+      // Overwrite default mark renderers
+      //strong: CustomStrong
+    },
+    blockStyles: {
+      //normal: CustomParagraph,
+      //blockquote: Quote,
+      // Re-using the same component across multiple styles
+      //h1: CustomHeading,
+      //h2: CustomHeading,
+      //h3: CustomHeading,
+      // Swap only the list parts you need
+      //list_bullet: UnorderedListWrapper,
+      //list_number: OrderedListWrapper,
+      //listItem_bullet: ListItem,
+      //listItem_number: ListItem,
+      // Custom user-defined style
+      //textCenter: CentralizedText
+    }
+  }}
 />

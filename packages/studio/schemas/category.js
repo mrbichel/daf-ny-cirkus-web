@@ -1,7 +1,10 @@
+import { ImDrawer } from 'react-icons/im'
+
 export default {
   name: 'category',
   title: 'Category',
   type: 'document',
+  icon: ImDrawer,
   fields: [
     {
       name: 'title',

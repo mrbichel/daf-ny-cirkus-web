@@ -11,22 +11,27 @@ import client from '../../../sanityClient'
 export async function get({ params }) {
 
     try {
-        const data = await client.fetch(`*[_type == "page" && defined(slug.current)]{ 
+        const data = await client.fetch(`*[_type == "page" && slug.current == "${params.slug}"][0]{ 
             "slug": slug.current,
-            title}`)
-        
-        console.log(data)
+            ...}`)
+                
+        if(data.slug) {
+            return { 
+                body: data 
+            }
+        } else {
 
-        return { 
-            body: data 
+            return {
+                status: 404,
+                //body: "Page not found"
+            }
         }
-
 
     } catch (err) {
         console.error(err) // FIXME
         return {
             status: 500,
-            message: err.message // TODO: hide in prod
+            //message: err.message // TODO: hide in prod
         }
     }
 

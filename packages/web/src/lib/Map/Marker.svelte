@@ -39,10 +39,10 @@
     async function clickHandler(e) {
         if(selected) {
             dispatch('deselect', {});
-            await goto('/')
+            await goto('/map', {replaceState: true, keepfocus: true})
         } else {
             dispatch('select', {});
-            await goto(`/${slug}`)
+            await goto(`/map/${slug}`, {replaceState: true, keepfocus: true, noscroll: true})
         }
     }
 
@@ -50,7 +50,7 @@
 
 <g class:selected="{selected}" class="marker {category}" 
 transform="{`translate(${projection(coordinates)})`}"
-      on:mouseover={ () => { if(!selected) {prefetch(`/${slug}`) }} }
+      on:mouseover={ () => { if(!selected) {prefetch(`/map/${slug}`) }} }
       on:focus={ () => { return } }>
 
   <path class="circle"
@@ -63,8 +63,6 @@ transform="{`translate(${projection(coordinates)})`}"
 </g>
 
 <style lang="scss">
-    @import 'src/lib/style/variables.scss';
-
     g {
         &:focus {
             outline: none;

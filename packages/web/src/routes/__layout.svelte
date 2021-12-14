@@ -18,9 +18,8 @@
 
 <style lang="scss">
 	:global {
-		@import 'src/lib/style/app.scss';
+		@import 'src/styles/global.scss';
 	}
-	@import 'src/lib/style/variables.scss';
 	
 	main {
 		height: 100vh;

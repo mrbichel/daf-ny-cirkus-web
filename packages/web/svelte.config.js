@@ -14,6 +14,9 @@ export default {
 		/*scss: {
 			prependData: `@import '${srcPath}/app.scss';`
 		}*/
+		scss: {
+			prependData: `@import 'src/styles/variables.scss';`
+		},
 	}),
 
 	kit: {

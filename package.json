@@ -3,14 +3,12 @@
     "name": "daf-ny-cirkus-web",
     "author": "Johan Bichel Lindegaard <public@johan.cc>",
     "version": "0.0.1",
-    "scripts": {
-    },
+    "scripts": {},
     "devDependencies": {
-        "typescript": "^4.5.2"
+        "typescript": "^4.5.4"
     },
     "repository": {
         "type": "git",
         "url": "https://github.com/mrbichel/daf-ny-cirkus-web.git"
     }
-
-  }
+}

@@ -1,11 +1,12 @@
 {
   "root": true,
   "project": {
-    "name": "daf-ny-cirkus-studio"
+    "name": "studio.ny-cirkus.dk"
   },
   "api": {
     "projectId": "8gqxnr3u",
-    "dataset": "production"
+    "dataset": "production",
+    "apiVersion": "2021-12-14"
   },
   "plugins": [
     "@sanity/base",
@@ -16,7 +17,8 @@
     "@sanity/google-maps-input",
     "leaflet-input",
     "@sanity/color-input",
-    "@sanity/form-builder"
+    "@sanity/form-builder",
+    "@sanity/dashboard"
   ],
   "env": {
     "development": {

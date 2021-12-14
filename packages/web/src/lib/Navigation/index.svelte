@@ -2,18 +2,18 @@
 	import { page } from '$app/stores';
 	//import logo from './daf-logo.svg';
 
+// TODO: get static pages from sanity
+
 </script>
 
 <header>
-	
 	<nav>
 		<ul>
-			<li class:active={$page.params.loc !== undefined}><a sveltekit:prefetch href="/">Map</a></li>
-			<li class:active={$page.path === '/about'}><a sveltekit:prefetch href="/about">About</a></li>
-			<li class:active={$page.path === '/articles'}><a sveltekit:prefetch href="/articles">Articles</a></li>
-			<li class:active={$page.path === '/contact'}><a sveltekit:prefetch href="/contact">Contact</a></li>
+			<li class:active={$page.path.startsWith('/map') || $page.path == '/'}><a sveltekit:prefetch href="/map">Map</a></li>
+			<li class:active={$page.path === '/pages/about'}><a sveltekit:prefetch href="/pages/about">About</a></li>
+			<li class:active={$page.path === '/pages/articles'}><a sveltekit:prefetch href="/pages/articles">Articles</a></li>
+			<li class:active={$page.path === '/pages/contact'}><a sveltekit:prefetch href="/pages/contact">Contact</a></li>
 			<li id="daf-logo"><a rel="external" href="https://artisten.dk">DAF</a></li>
-
 		</ul>
 	</nav>
 

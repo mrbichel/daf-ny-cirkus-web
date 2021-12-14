@@ -6,37 +6,27 @@
     //export const prerender = false;
 	/** @type {import('@sveltejs/kit').Load} */
 	export async function load({ page, fetch, session, stuff }) {
-		const slug = page.params.loc
+		const slug = page.params.slug
 
-		/*let data
-		const unsubscribe = locationStore.subscribe(d => {
-			data = d;
-		});*/
-
-		//console.log(data)
-
-			
 		if(locationStore.isExpired() ) {
-				const url = '/api/locations'
-				const res = await fetch(url)
+			const url = '/api/locations.json'
+			const res = await fetch(url)
 
-				if(!res.ok) {
-					return {
-						status: res.status,
-						error: new Error(`Could not load ${url}`)
-					}
+			if(!res.ok) {
+				return {
+					status: res.status,
+					error: new Error(`Could not load ${url}`)
 				}
+			}
 
-				const locations = await res.json()
-        		locationStore.update(locations)
-
+			const locations = await res.json()
+        	locationStore.update(locations)
 		}
 
 		const props = {
 			title: 'Ny Cirkus',
-			location: undefined,
 			locations: locationStore,	
-			slug: slug
+			//slug: slug
 		}
 		
 		if(slug === '') {
@@ -45,12 +35,8 @@
 			}
 		}
 
-		/*if(!page.params.loc.match(/^[\w-]+$/)) {
-			return {}
-		}*/
-
-		if(locationStore.isExpired(page.params.loc)) {
-			const url = `/api/locations/${page.params.loc}`;
+		if(locationStore.isExpired(slug)) {
+			const url = `/api/locations/${slug}.json`;
 			const res = await fetch(url);
 
 			if (res.ok) {		
@@ -74,6 +60,9 @@
 				}
 		}
 
+		// Should we fetch the image here? 
+		//await fetch(location.mainImage)
+
 		props.location = location
 		props.title = props.location.n
 		return { props };
@@ -85,16 +74,9 @@
     export let title = "Ny Cirkus"
 	export let location
 	export let locations
-	export let slug
 
 	import { onMount } from 'svelte';
 	import Map from '$lib/Map/Map.svelte'
-
-	//let Map;
-	onMount(async () => {
-		/*const module = await import('$lib/Map/index.svelte');
-		Map = module.default;*/
-	});
 
 	$: if(location) {
 			locations.toggleExpand(location._id)
@@ -112,6 +94,4 @@
 
 <Map locations={$locations} expanded={location} />
 
-<style lang="scss">		
-</style>
-	
+

@@ -144,7 +144,7 @@
   async function outsideClick(e) {
     e.stopPropagation()
     if($page.path != '/') {
-      await goto('/')
+      await goto('/map', {replaceState: true, keepfocus: true})
     }
   }
 
@@ -174,8 +174,6 @@
       zoomTo(zOutPoint, outScale, 750)
 
 }
-
-
 
   function zoomTo( point, scale, duration=750) {
 
@@ -296,8 +294,6 @@
 
   <style lang="scss">
   
-  @import 'src/lib/style/variables.scss';
-
   .popover-wrapper {
     pointer-events: all;
     position: absolute;

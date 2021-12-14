@@ -14,6 +14,10 @@
 
     import type { Location } from '../../types'
 
+    export let data : Location
+    $: ({category, expand, address, website, instagram, facebook, title, about, mail, phone, mainImage} = data)
+
+
     onMount(async () => {
         // fetch images here
     });
@@ -29,16 +33,16 @@
     export let mail
     export let phone = undefined*/
 
-    export let data : Location
-    $: ({category, expand, address, web, instagram, facebook, title, about, mail, phone} = data)
+    $: mainImageStyle = mainImage ? `--background-image-url: url('${mainImage}');` : ''
+
+
 
 </script>
 
     
-<div class="popover {category} {expand ? 'expand' : ''}" >
+<div class="popover {category} {expand ? 'expand' : ''}" style="{mainImageStyle}" >
  
     {#if expand }
-
 
 <div class="detail-wrapper" >
 
@@ -48,8 +52,8 @@
         </address>
             
         <ul class="links">
-                {#if web}
-                    <li><a rel="external" title="website" alt="Website of {title}" href="{web}" target="new"><BoxArrowUpRight/></a></li>
+                {#if website}
+                    <li><a rel="external" title="website" alt="Website of {title}" href="{website}" target="new"><BoxArrowUpRight/></a></li>
                 {/if}
     
                 {#if instagram}
@@ -94,8 +98,6 @@
 
 
 <style lang="scss">
-
-    @import 'src/lib/style/variables.scss';
     .popover {
         position: absolute;
         left: 0;
@@ -123,7 +125,7 @@
             }
         }
 	}
-    h1, h2, h3, h4, h5, h6, p, a, span {
+    h1, p, a, span { // h2, h3, h4, h5, h6,
       pointer-events: auto;
     }
     .detail-wrapper::before {
@@ -132,7 +134,7 @@
         z-index: -1;
         top: -5%; left: -5%;
         width: 110%; height: 110%;
-        background-image: url('/amocbilleder-057-scaled-test-image.jpeg');
+        background-image: var(--background-image-url);
         filter: blur(1px) brightness(30%);
         pointer-events: all;
         background-size: cover;

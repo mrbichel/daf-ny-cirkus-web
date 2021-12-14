@@ -1,14 +1,21 @@
+import { BsPinMap } from 'react-icons/bs'
+
+
 export default {
   name: 'location',
   title: 'Location',
   type: 'document',
+  icon: BsPinMap,
   fields: [
     {
       name: 'title',
       title: 'Title',
       type: 'string',
+      validation: Rule => [
+        Rule.required(),
+        Rule.max(50).warning('Shorter titles are usually better')
+      ]
     },
-
     
     {
       name: 'slug',
@@ -18,12 +25,14 @@ export default {
         source: 'title',
         maxLength: 96,
       },
+      validation: Rule => Rule.required()
     },
 
     {
       name: 'location',
       title: 'Physical location',
-      type: 'geopoint'
+      type: 'geopoint',
+      validation: Rule => Rule.required().warning('Specify a coordinate for this location to show up on maps.')
     },
 
     {
@@ -59,7 +68,7 @@ export default {
     {
       name: 'website',
       title: 'Website',
-      type: 'string',
+      type: 'url',
     },
 
     {
@@ -85,13 +94,25 @@ export default {
 
   ],
 
+  orderings: [
+  ],
+
   preview: {
     select: {
       title: 'title',
-      slug: 'slug',
       media: 'mainImage',
+      location: 'location'
+    },
+
+    prepare(selection) {
+      const {title, media, location} = selection
+      return {
+        title: title,
+        subtitle: (location) ? `` : 'Coordinates missing',
+        media: media
+      }
     }
+
   },
 }
 
-// timestamps ? 

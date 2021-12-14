@@ -1,7 +1,10 @@
+import { BsJournalText } from 'react-icons/bs'
+
 export default {
     name: 'page',
     title: 'Page',
     type: 'document',
+    icon: BsJournalText,
     fields: [
       {
         name: 'title',
