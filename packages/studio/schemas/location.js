@@ -45,7 +45,7 @@ export default {
     {
       name: 'about',
       title: 'About',
-      type: 'string',
+      type: 'text',
     },
     {
       name: 'address',
