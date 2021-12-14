@@ -59,7 +59,17 @@
     },
     festival: {
       title: "Festivals", 
+    },
+    association: {
+      title: "Associations", 
+    },
+    support: {
+      title: "Supprt", 
+    },
+    'residency-stage': {
+      title: "Residencies and stages", 
     }
+
   }
 
   /*const getTypeCssVars = (key) => {
@@ -72,8 +82,10 @@
   let mapWidth: number = width, mapHeight: number = height
 	let svg
 
+  const maxScale = 90;
+
 	const zoomHandler = zoom()
-      .scaleExtent([0.8, 80])
+      .scaleExtent([0.8, maxScale])
       .on("zoom", ({transform}) => {
         T = transform
   })
@@ -156,8 +168,14 @@
 
     const point = projection([d.location.lng, d.location.lat])
     const distance = getProjectedDistance([d.closestNeighbour.location.lng, d.closestNeighbour.location.lat], [d.location.lng, d.location.lat])
-    const minScale = markerRadius*3 / distance // zoom in so dots are seperated by atleast 1 marker radius
-    const scale : number = (T.k > minScale) ? T.k : minScale
+
+    if(distance < markerRadius) {
+      // too close to seperate by zoom
+      console.log("too close to seperate by zoom")
+    }
+    
+    const max = Math.min(markerRadius*3 / Math.max(distance, 0.001), maxScale) // zoom in so dots are seperated by atleast 1 marker radius or to maxZoom
+    const scale : number = (T.k > max) ? T.k : max
 
     const zInPoint = [-point[0]*scale + width*0.5, -point[1]*scale + height*0.38]
         zoomTo(zInPoint, scale, 750)
@@ -281,6 +299,7 @@
           projection={projection}
           transform={T} 
           radius={markerRadius}
+          title={d.title}
           on:select={ () => expandLocation(d) }
           on:deselect={ () => closeLocation(d) }
           />

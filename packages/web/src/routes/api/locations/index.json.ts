@@ -25,8 +25,9 @@ export async function get({ params }) {
 
             // calculate closest neighbour for new elements
                 const neighbours = data.filter(n => n._id != d._id).map( n => {
+                    const distance = geoDistance([n.location.lng, n.location.lat], [d.location.lng, d.location.lat])
                     return {
-                        distance: geoDistance([n.location.lng, n.location.lat], [d.location.lng, d.location.lat]),
+                        distance: distance,
                         location: n.location,
                         _id: n._id
                     }

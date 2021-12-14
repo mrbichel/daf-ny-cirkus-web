@@ -23,6 +23,7 @@
     export let selected = false
     export let coordinates = [0,0]
 
+    export let title = ""
     export let slug = ""
     export let category = ""
 
@@ -42,7 +43,7 @@
             await goto('/map', {replaceState: true, keepfocus: true})
         } else {
             dispatch('select', {});
-            await goto(`/map/${slug}`, {replaceState: true, keepfocus: true, noscroll: true})
+            await goto(`/map/${slug}`, {replaceState: true, keepfocus: true})
         }
     }
 
@@ -58,7 +59,9 @@ transform="{`translate(${projection(coordinates)})`}"
       d="{describeArc(0,0,radius, -90, $angleEndTween)}"
       stroke-width={radius*0.6}
       transform={`scale(${1/transform.k})`}
-  />
+  >
+  <title>{title}</title>
+</path>
 
 </g>
 
@@ -82,6 +85,7 @@ transform="{`translate(${projection(coordinates)})`}"
             }
             &:hover {
                 cursor: pointer;
+
             }      
         }
 
