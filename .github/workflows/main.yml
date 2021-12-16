@@ -1,6 +1,6 @@
 # This is a basic workflow to help you get started with Actions
 
-name: Test and build
+name: build
 
 # Controls when the workflow will run
 on:
@@ -42,10 +42,7 @@ jobs:
       - uses: pnpm/action-setup@v2.0.1
         with:
           version: 6.0.2
-          run_install: true
-      
-      - name: Test
-        run: pnpm test
+          run_install: trues
 
       - name: Build for production
         run: pnpm build
