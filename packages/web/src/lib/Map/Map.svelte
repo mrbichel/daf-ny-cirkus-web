@@ -336,7 +336,7 @@
     transition-property: opacity;
     transition-duration: 0.6s;
     &.loading {
-      //opacity: 0;
+      opacity: 0;
     }
 	}
 
