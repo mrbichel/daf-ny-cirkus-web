@@ -129,7 +129,10 @@
       expandLocation(expanded)
     }
 
-    /*const delaunay = d3.Delaunay.from(locations.map( (d) => { return projection([d.location.lng, d.location.lat])} ))
+    // TODO: calculate if any markers are overlapping and make draw them offset or as cluster ... 
+
+    /*
+    const delaunay = d3.Delaunay.from(locations.map( (d) => { return projection([d.location.lng, d.location.lat])} ))
     const voronoi = delaunay.voronoi([0, 0, width, height])
     const cells = locations.map((d, i) => {
       return [[projection([d.location.lng, d.location.lat])], voronoi.cellPolygon(i)]

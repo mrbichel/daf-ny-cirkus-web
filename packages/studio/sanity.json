@@ -14,9 +14,7 @@
     "@sanity/default-layout",
     "@sanity/default-login",
     "@sanity/desk-tool",
-    "@sanity/google-maps-input",
     "leaflet-input",
-    "@sanity/color-input",
     "@sanity/form-builder",
     "@sanity/dashboard"
   ],

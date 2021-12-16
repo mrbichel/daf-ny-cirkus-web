@@ -12,7 +12,7 @@ export const router = browser;
 
 // since there's no dynamic data here, we can prerender
 // it so that it gets served as a static asset in prod
-//export const prerender = true;
+export const prerender = true;
 
     //export const prerender = false;
 	/** @type {import('@sveltejs/kit').Load} */
@@ -47,7 +47,8 @@ export const router = browser;
 
 <script lang="ts">
     import PortableText from '@portabletext/svelte'
-	import ExternalLink from '$lib/PortableText/ExternalLink.svelte'
+  	import ExternalLink from '$lib/PortableText/ExternalLink.svelte'
+    import FileLink from '$lib/PortableText/FileLink.svelte'
 
     export let title = "Ny Cirkus page from sanity"
     export let content = []
@@ -67,7 +68,8 @@ export const router = browser;
       //userInfo: UserInfo
     },
     marks: {
-	  link: ExternalLink,
+	    link: ExternalLink,
+      file: FileLink,
       // Overwrite default mark renderers
       //strong: CustomStrong
     },

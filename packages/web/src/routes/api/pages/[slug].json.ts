@@ -13,7 +13,17 @@ export async function get({ params }) {
     try {
         const data = await client.fetch(`*[_type == "page" && slug.current == "${params.slug}"][0]{ 
             "slug": slug.current,
-            ...}`)
+            ...,
+            content[]{
+                ...,
+                markDefs[]{
+                  ...,
+                  _type == "file" => {
+                    "asset": @.asset->
+                  }
+                }
+              }
+            }`)
                 
         if(data.slug) {
             return { 
