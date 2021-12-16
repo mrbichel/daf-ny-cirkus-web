@@ -1,6 +1,6 @@
 # This is a basic workflow to help you get started with Actions
 
-name: CI
+name: Test and build
 
 # Controls when the workflow will run
 on:
@@ -12,8 +12,9 @@ on:
 
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
-
+    
 jobs:
+      
   build:
     runs-on: ubuntu-latest
     
@@ -23,7 +24,6 @@ jobs:
         
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
-      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v2
       
       - name: Use Node.js ${{ matrix.node-version }}
@@ -43,8 +43,10 @@ jobs:
         with:
           version: 6.0.2
           run_install: true
+      
+      - name: Test
+        run: pnpm test
 
-      # Runs a single command using the runners shell
       - name: Build for production
         run: pnpm build
 
