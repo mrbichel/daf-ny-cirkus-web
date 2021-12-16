@@ -35,7 +35,7 @@ export async function get({ params }) {
                 //console.log(neighbours)
         
                 //d.closestNeighbours = _.sortBy( neighbours, 'distance');
-                d.closestNeighbour = _.sortBy( neighbours, 'dist')[0];
+                d.closestNeighbour = _.sortBy( neighbours, 'distance')[0]; // TODO write test for this sorting
                 return d
             })
 

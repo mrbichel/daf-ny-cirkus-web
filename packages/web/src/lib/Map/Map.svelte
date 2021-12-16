@@ -170,15 +170,19 @@
   async function expandLocation(d: Location) {
 
     const point = projection([d.location.lng, d.location.lat])
+    //console.log(d.closestNeighbour)
     const distance = getProjectedDistance([d.closestNeighbour.location.lng, d.closestNeighbour.location.lat], [d.location.lng, d.location.lat])
 
     if(distance < markerRadius) {
       // too close to seperate by zoom
-      console.log("too close to seperate by zoom")
+      console.warn("too close to seperate by zoom")
     }
-    
+
+    //console.log('distance', distance)
     const max = Math.min(markerRadius*3 / Math.max(distance, 0.001), maxScale) // zoom in so dots are seperated by atleast 1 marker radius or to maxZoom
+    //console.log('max', max)
     const scale : number = (T.k > max) ? T.k : max
+    //console.log('scale', scale)
 
     const zInPoint = [-point[0]*scale + width*0.5, -point[1]*scale + height*0.38]
         zoomTo(zInPoint, scale, 750)
@@ -214,7 +218,7 @@
   }
 
 	function resizeMap(event) {
-    console.log("resize")
+    //console.log("resize")
     const t = zoomTransform(svg)
 
     // Just reset on resize
