@@ -25,8 +25,6 @@
     ><slot />
   </a>
 
-
-
   {:else}
     <slot />
   {/if}

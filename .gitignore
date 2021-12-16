@@ -6,3 +6,4 @@ node_modules
 /packages/web/build
 /packages/web/functions
 .env
+packages/studio/public
