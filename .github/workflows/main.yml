@@ -1,6 +1,6 @@
 # This is a basic workflow to help you get started with Actions
 
-name: build
+name: Test and build
 
 # Controls when the workflow will run
 on:
@@ -14,7 +14,6 @@ on:
   workflow_dispatch:
     
 jobs:
-      
   build:
     runs-on: ubuntu-latest
     
@@ -42,7 +41,7 @@ jobs:
       - uses: pnpm/action-setup@v2.0.1
         with:
           version: 6.0.2
-          run_install: trues
+          run_install: true
 
       - name: Build for production
         run: pnpm build
