@@ -64,7 +64,7 @@
       title: "Associations", 
     },
     support: {
-      title: "Supprt", 
+      title: "Support", 
     },
     'residency-stage': {
       title: "Residencies and stages", 
