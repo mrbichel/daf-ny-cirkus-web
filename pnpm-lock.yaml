@@ -61,8 +61,10 @@ importers:
       '@sveltejs/kit': next
       '@typescript-eslint/eslint-plugin': ^5.7.0
       '@typescript-eslint/parser': ^5.7.0
+      d3-array: 3.1.1
       d3-composite-projections: ^1.4.0
       d3-geo: ^3.0.1
+      d3-hierarchy: 3.1.1
       d3-scale: ^4.0.2
       d3-selection: ^3.0.0
       d3-zoom: ^3.0.0
@@ -81,6 +83,8 @@ importers:
       tslib: ^2.3.1
       typescript: ^4.5.4
       vite: ^2.7.2
+    dependencies:
+      d3-array: 3.1.1
     devDependencies:
       '@portabletext/svelte': 0.2.0_svelte@3.44.3
       '@sanity/client': 2.23.0
@@ -90,6 +94,7 @@ importers:
       '@typescript-eslint/parser': 5.7.0_eslint@8.4.1+typescript@4.5.4
       d3-composite-projections: 1.4.0
       d3-geo: 3.0.1
+      d3-hierarchy: 3.1.1
       d3-scale: 4.0.2
       d3-selection: 3.0.0
       d3-zoom: 3.0.0
@@ -4178,7 +4183,6 @@ packages:
     engines: {node: '>=12'}
     dependencies:
       internmap: 2.0.3
-    dev: true
 
   /d3-color/3.0.1:
     resolution: {integrity: sha512-6/SlHkDOBLyQSJ1j1Ghs82OIUXpKWlR0hCsw0XrLSQhuUPuCSmLQ1QPH98vpnQxMUQM2/gfAkUEWsupVpd9JGw==}
@@ -4226,6 +4230,11 @@ packages:
     engines: {node: '>=12'}
     dependencies:
       d3-array: 3.1.1
+    dev: true
+
+  /d3-hierarchy/3.1.1:
+    resolution: {integrity: sha512-LtAIu54UctRmhGKllleflmHalttH3zkfSi4NlKrTAoFKjC+AFBJohsCAdgCBYQwH0F8hIOGY89X1pPqAchlMkA==}
+    engines: {node: '>=12'}
     dev: true
 
   /d3-interpolate/3.0.1:
@@ -6185,7 +6194,6 @@ packages:
   /internmap/2.0.3:
     resolution: {integrity: sha512-5Hh7Y1wQbvY5ooGgPbDaL5iYLAPzMTUrjMulskHLH6wnv/A+1q5rgEaiuqEjB+oxGXIVZs1FF+R/KPN3ZSQYYg==}
     engines: {node: '>=12'}
-    dev: true
 
   /interop-require/1.0.0:
     resolution: {integrity: sha1-5TEDZ5lEyI1+YQW2Kp9EdceDlx4=}

@@ -21,7 +21,11 @@
     export let transform 
     export let radius = 8
     export let selected = false
-    export let coordinates = [0,0]
+
+    //export let coordinates = [0,0]
+
+    export let x = 0
+    export let y = 0
 
     export let title = ""
     export let slug = ""
@@ -50,7 +54,7 @@
 </script>
 
 <g class:selected="{selected}" class="marker {category}" 
-transform="{`translate(${projection(coordinates)})`}"
+transform="translate({x*1/transform.k}, {y*1/transform.k}) "
       on:mouseover={ () => { if(!selected) {prefetch(`/map/${slug}`) }} }
       on:focus={ () => { return } }>
 

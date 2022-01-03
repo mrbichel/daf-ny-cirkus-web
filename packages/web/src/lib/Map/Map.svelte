@@ -13,11 +13,16 @@
 
   import { page } from '$app/stores';
   import { goto } from '$app/navigation';
-	import { onMount, beforeUpdate, afterUpdate, onDestroy, setContext } from "svelte";
+	import { onMount, beforeUpdate, afterUpdate, onDestroy, setContext } from 'svelte';
 
   import { select } from 'd3-selection'
   import { zoom, zoomIdentity, zoomTransform } from 'd3-zoom'
-	import { geoMercator, geoPath } from "d3-geo";
+	import { geoMercator, geoPath } from 'd3-geo';
+  import { pack, hierarchy, packSiblings, packEnclose } from 'd3-hierarchy';
+
+  import { mean } from 'd3-array';
+
+
   import { getDistance } from './utils'
   
   import lodash_pkg from 'lodash';
@@ -27,7 +32,7 @@
   import Marker from './Marker.svelte'
   import Legend from './Legend.svelte'
 
-  const markerRadius = 8
+  const markerRadius = 10
   let loaded = false;
 
   export let locations : Location[] = []
@@ -88,6 +93,8 @@
       .scaleExtent([0.8, maxScale])
       .on("zoom", ({transform}) => {
         T = transform
+
+        computeClusters()
   })
 
   function renderPath() {
@@ -110,7 +117,90 @@
 
 	afterUpdate(() => {
 	});*/
+  let clusters = []
 
+  function computeClusters() {
+
+    let clusterCount = 0;
+    const clusteredIds = []
+    const clusterData = locations.map(d0 => {
+
+      //d0.inCluster = false
+      const p0 = [d0.location.lng, d0.location.lat]
+      const neighbours = _.sortBy(locations.filter(d1 => d1._id != d0._id).map(d1 => {
+        const p1 = [d1.location.lng, d1.location.lat]
+        d1._distance = getProjectedDistance(p0, p1) * maxScale
+        d1._point = projection(p1)
+
+        return d1
+      }).filter(d => d._distance < markerRadius*2), 'distance')
+
+      d0._neighbours = neighbours
+      d0._point = projection(p0)
+
+      return d0
+
+    }).filter(d => (d._neighbours.length > 0) == true)
+    .map((d, idx) => {
+      if(clusteredIds.includes(d._id)) {
+        return false
+      } else {
+        clusteredIds.push(d._id)
+        
+        const children = d._neighbours.filter(n => {
+          return !clusteredIds.includes(n._id)
+        }).map(n => {
+          clusteredIds.push(n._id)
+          return n
+        })
+        children.push(d)
+
+        const center = [ mean(children.map(c => c._point[0])), mean(children.map(c => c._point[1]))]
+
+        const packChildren = packSiblings(children.map(c => {
+          c.r = markerRadius*1.2
+          return c
+        }))
+
+        const enclosing = packEnclose(packChildren)
+
+        return {
+          name: `cluster ${clusterCount++}`,
+          children: packChildren,
+          x: center[0],
+          y: center[1],
+          enclosing: enclosing
+        }
+      }
+    }).filter(Boolean)
+
+    // TODO: recursive packing, packed circles will overlap woth others or hide non packed circles - recursively pack untill all circles are "free"
+
+    // Consider only packing at max zoom level and have it constant!!
+
+    clusters = clusterData
+    console.log(clusters)
+    //const packs = clusterData.map(packFunction)
+      
+    //console.log(packs)
+
+    /*packs.map(p => {
+      const node = select(svg).select('.marker-layer').append("g")
+    .selectAll("circle")
+    .data(p.descendants().slice(1))
+    .join("circle")
+      .attr("fill", "white")
+      .attr("r", d => d.r)
+      .attr("pointer-events", d => !d.children ? "none" : null)
+      .on("mouseover", function() { select(this).attr("stroke", "#000"); })
+      .on("mouseout", function() { select(this).attr("stroke", null); })
+      .on("click", (event, d) => focus !== d && (zoom(event, d), event.stopPropagation()));
+    })*/
+
+    //clusters = clusterData
+
+
+  }
 
 	onMount(async function() {    
     mapWidth = width
@@ -125,11 +215,62 @@
 
     T = zoomTransform(select(svg).node())
 
+    computeClusters()
+
     if(expanded) {
       expandLocation(expanded)
     }
 
     // TODO: calculate if any markers are overlapping and make draw them offset or as cluster ... 
+
+
+    
+    /*markersToCluster.map(d => {
+      // calculate neighbour clusters for filtered list
+      const neighbours = markersToCluster.filter(n => n._id != d._id).map( n => {
+                    const distance = geoDistance([n.location.lng, n.location.lat], [d.location.lng, d.location.lat])
+                    return {
+                        distance: distance,
+                        location: n.location,
+                        _id: n._id
+                    }
+                })
+                //console.log(neighbours)
+        
+                //d.closestNeighbours = _.sortBy( neighbours, 'distance');
+                d.closestNeighbour = _.sortBy( neighbours, 'distance')[0];
+
+    })*/
+
+
+    //console.log(markersToCluster)
+
+    /*locations.map(d => {
+      const point = projection([d.location.lng, d.location.lat])
+      //console.log(d.closestNeighbour)
+      const distance = getProjectedDistance([d.closestNeighbour.location.lng, d.closestNeighbour.location.lat], [d.location.lng, d.location.lat])
+
+      if(distance < markerRadius) {
+        // too close to seperate by zoom
+        console.warn("too close to seperate by zoom")
+
+        if(clusteredIds.includes[d._id]) {
+          console.log("already in cluster")
+        } else {
+          clusteredIds.push(d._id)
+          const cluster = {name: `cluster for ${d.title}`, children: [] }
+          // make cluster call recursively
+          locations.map(n => {
+
+
+          })
+
+          clusters.children.push(cluster)
+        }
+      }
+
+    })*/
+
 
     /*
     const delaunay = d3.Delaunay.from(locations.map( (d) => { return projection([d.location.lng, d.location.lat])} ))
@@ -247,7 +388,7 @@
     // FIXME: preserve center
     //select(svg).call(zoomHandler.transform, t);
     // const zInPoint = [-point[0]*scale + width*0.5, -point[1]*scale + height*0.38]
-    console.log(t)
+    //console.log(t)
     //const point = [-t.x + width*0.5 + (wDiff*t.k *0.5), -t.y + width*0.5 + (hDiff*t.k *0.5)]
 
     /*zoomIdentity.translateBy(x, y).scale(k);
@@ -291,26 +432,55 @@
 			<rect style="fill: none; pointer-events: all;"></rect>
 
       <g class="map-layer">
-      {#each features as feature}
-      <path
-        d={path(feature)} />
-       {/each}
-      </g>    
+        {#each features as feature}
+          <path d={path(feature)} />
+        {/each}
+      </g>
 
-			<g class="marker-layer">
-			{#each locations as d}
+
+      <g class="marker-layer">
+
+      {#each clusters as cluster}
+
+      <g class="cluster" transform="translate({cluster.x},{cluster.y})">
+
+      <circle cx="0" cy="0" r="{cluster.enclosing.r}" transform={`scale(${1/T.k})`}/>
+
+        {#each cluster.children as d}
+
+        <Marker category={d.category} 
+        selected={d.expand}
+        x={d.x}
+        y={d.y}
+        slug={d.slug} 
+        projection={projection}
+        transform={T} 
+        radius={ markerRadius }
+        title={d.title}r
+        on:select={ () => expandLocation(d) }
+        on:deselect={ () => closeLocation(d) }
+        />
+
+          <!--<circle cx="{d.x}" cy="{d.y}" r="{d.r}" transform={`scale(${1/T.k})`}/>-->
+        {/each}
+      </g>
+
+      {/each}
+
+			<!--{#each locations as d}
+
         <Marker category={d.category} 
           selected={d.expand} 
           coordinates={[d.location.lng, d.location.lat]} 
           slug={d.slug} 
           projection={projection}
           transform={T} 
-          radius={markerRadius}
-          title={d.title}
+          radius={ markerRadius }
+          title={d.title}r
           on:select={ () => expandLocation(d) }
           on:deselect={ () => closeLocation(d) }
           />
-		  {/each}
+		  {/each}-->
 			</g>
 
 		</g>
