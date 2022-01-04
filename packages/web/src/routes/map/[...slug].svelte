@@ -64,7 +64,7 @@
 		//await fetch(location.mainImage)
 
 		props.location = location
-		props.title = props.location.n
+		props.title = location.title
 		return { props };
 	}
 </script>   
