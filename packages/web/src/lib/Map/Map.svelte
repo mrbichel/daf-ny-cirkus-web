@@ -158,7 +158,7 @@
 
   async function outsideClick(e) {
     e.stopPropagation()
-    if($page.path != '/') {
+    if($page.url.pathname != '/') {
       await goto('/map', {replaceState: true, keepfocus: true})
     }
   }

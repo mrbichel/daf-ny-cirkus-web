@@ -16,15 +16,15 @@ export const prerender = true;
 
     //export const prerender = false;
 	/** @type {import('@sveltejs/kit').Load} */
-	export async function load({ page, fetch, session, stuff }) {
-		const slug = page.params.slug
+	export async function load({ url, params, fetch, session, stuff }) {
+		const slug = params.slug
 
         if(slug == '') {
             return
         }
 
-		const url = `/api/pages/${slug}.json`;
-		const res = await fetch(url);
+		const fetchUrl = `/api/pages/${slug}.json`;
+		const res = await fetch(fetchUrl);
 
 			if (res.ok) {
 				const pageData = await res.json()

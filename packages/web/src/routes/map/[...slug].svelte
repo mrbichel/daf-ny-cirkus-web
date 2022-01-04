@@ -5,8 +5,8 @@
 
     //export const prerender = false;
 	/** @type {import('@sveltejs/kit').Load} */
-	export async function load({ page, fetch, session, stuff }) {
-		const slug = page.params.slug
+	export async function load({ url, params, fetch, session, stuff }) {
+		const slug = params.slug
 
 		if(locationStore.isExpired() ) {
 			const url = '/api/locations.json'

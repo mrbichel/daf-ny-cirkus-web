@@ -9,10 +9,10 @@
 <header>
 	<nav>
 		<ul>
-			<li class:active={$page.path.startsWith('/map') || $page.path == '/'}><a sveltekit:prefetch href="/map">Map</a></li>
-			<li class:active={$page.path === '/pages/about'}><a sveltekit:prefetch href="/pages/about">About</a></li>
-			<li class:active={$page.path === '/pages/articles'}><a sveltekit:prefetch href="/pages/articles">Articles</a></li>
-			<li class:active={$page.path === '/pages/contact'}><a sveltekit:prefetch href="/pages/contact">Contact</a></li>
+			<li class:active={$page.url.pathname.startsWith('/map') || $page.url.pathname == '/'}><a sveltekit:prefetch href="/map">Map</a></li>
+			<li class:active={$page.url.pathname === '/pages/about'}><a sveltekit:prefetch href="/pages/about">About</a></li>
+			<li class:active={$page.url.pathname === '/pages/articles'}><a sveltekit:prefetch href="/pages/articles">Articles</a></li>
+			<li class:active={$page.url.pathname === '/pages/contact'}><a sveltekit:prefetch href="/pages/contact">Contact</a></li>
 			<li id="daf-logo"><a rel="external" href="https://artisten.dk">DAF</a></li>
 		</ul>
 	</nav>

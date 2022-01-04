@@ -9,18 +9,18 @@ export async function handle({ request, resolve }) {
         'Cache-control': 'max-age=0, s-maxage=86400'
     }
 
-    const path = request.path.replace(/\//, "")
+    const path = request.url.pathname.replace(/\//, "")
     
     if(path === '' ) {
         console.log("rewrite path to map")
-        request.path = `/map`
+        request.url.pathname = `/map`
     } 
     
     if( path.includes("api/") ) {
         extraHeaders['Cache-Control'] = 'max-age=0, s-maxage=5, stale-while-revalidate=120'
     }
 
-    /*if(request.path === '/service-worker.js') {
+    /*if(request.url.pathname === '/service-worker.js') {
         return
     }*/
 
