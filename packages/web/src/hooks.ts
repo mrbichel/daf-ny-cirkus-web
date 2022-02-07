@@ -1,36 +1,23 @@
 //import connect from '$lib/mongodb-client'
 
 /** @type {import('@sveltejs/kit').Handle} */
-export async function handle({ request, resolve }) {
+export async function handle({ event, resolve }) {
 	//request.locals.user = await getUserInformation(request.headers.cookie);
     //await connect()
 
-    const extraHeaders = {
-        'Cache-control': 'max-age=0, s-maxage=86400'
-    }
-
-    const path = request.url.pathname.replace(/\//, "")
+    const path = event.url.pathname.replace(/\//, "")
     
     if(path === '' ) {
         console.log("rewrite path to map")
-        request.url.pathname = `/map`
+        event.url.pathname = `/map`
     } 
-    
+
+    const response = await resolve(event);
     if( path.includes("api/") ) {
-        extraHeaders['Cache-Control'] = 'max-age=0, s-maxage=5, stale-while-revalidate=120'
+        response.headers.set('Cache-Control', 'max-age=0, s-maxage=5, stale-while-revalidate=120');
+    } else {    
+        response.headers.set('Cache-Control', 'max-age=0, s-maxage=86400'); 
     }
 
-    /*if(request.url.pathname === '/service-worker.js') {
-        return
-    }*/
-
-	const response = await resolve(request);
-
-	return {
-		...response,
-		headers: {
-			...response.headers,
-            ...extraHeaders
-		}
-	};
+    return response
 }

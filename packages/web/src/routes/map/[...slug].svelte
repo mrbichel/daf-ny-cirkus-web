@@ -72,7 +72,7 @@
 <script lang="ts">
 
     export let title = "Ny Cirkus"
-	export let location
+	export let location : Location
 	export let locations
 
 	import { onMount } from 'svelte';

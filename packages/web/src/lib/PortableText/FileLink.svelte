@@ -2,7 +2,6 @@
     import type {MarkProps} from '@portabletext/svelte'
 
     //import BoxArrowUpRight from 'svelte-bootstrap-icons/lib/BoxArrowUpRight'
-
     //import url from 'url'
   
     // Property custom marks receive from @portabletext/svelte when redered
@@ -19,7 +18,7 @@
 
   </script>
   
-  {#if mark.asset.url}
+  {#if mark.asset && mark.asset.url}
 
   <a href={mark.asset.url} title={mark.asset.originalFilename} rel="external" target={newWindow ? '_blank' : undefined}
     ><slot />
