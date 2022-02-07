@@ -16,6 +16,9 @@ export async function get({ params }) {
             ...,
             content[]{
                 ...,
+                _type == "image" => {
+                    "asset": @.asset->
+                  },
                 markDefs[]{
                   ...,
                   _type == "file" => {

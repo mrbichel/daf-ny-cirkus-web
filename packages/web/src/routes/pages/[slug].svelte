@@ -49,6 +49,8 @@ export const prerender = true;
     import PortableText from '@portabletext/svelte'
   	import ExternalLink from '$lib/PortableText/ExternalLink.svelte'
     import FileLink from '$lib/PortableText/FileLink.svelte'
+    import Image from '$lib/PortableText/Image.svelte'
+
 
     export let title = "Ny Cirkus page from sanity"
     export let content = []
@@ -66,6 +68,7 @@ export const prerender = true;
       //callout: Callout,
       // inline-level components
       //userInfo: UserInfo
+      image: Image,
     },
     marks: {
 	    link: ExternalLink,

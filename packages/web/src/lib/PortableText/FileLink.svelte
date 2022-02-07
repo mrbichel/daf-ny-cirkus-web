@@ -10,7 +10,7 @@
       asset?: object
       newWindow?: boolean
     }>
-  
+    
     $: mark = portableText.mark 
     $: newWindow = mark.newWindow || true
 
