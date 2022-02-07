@@ -57,6 +57,7 @@ importers:
     specifiers:
       '@portabletext/svelte': ^0.2.0
       '@sanity/client': ^2.23.2
+      '@sanity/image-url': 1.0.1
       '@sveltejs/adapter-vercel': next
       '@sveltejs/kit': next
       '@typescript-eslint/eslint-plugin': ^5.10.2
@@ -81,6 +82,8 @@ importers:
       tslib: ^2.3.1
       typescript: ^4.5.5
       vite: ^2.7.13
+    dependencies:
+      '@sanity/image-url': 1.0.1
     devDependencies:
       '@portabletext/svelte': 0.2.0_svelte@3.46.4
       '@sanity/client': 2.23.2
